@@ -12,12 +12,12 @@ using Unity.Lifetime;
 namespace Unity.Regression.Tests
 {
     [TestClass]
-    public partial class UnityContainerFixture : TestFixtureBase
+    public partial class UnityContainerFixture
     {
         [TestMethod]
         public void CanCreateObjectFromUnconfiguredContainer()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
 
             object o = container.Resolve<object>();
 
@@ -27,7 +27,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ContainerResolvesRecursiveConstructorDependencies()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
             ObjectWithOneDependency dep = container.Resolve<ObjectWithOneDependency>();
 
             Assert.IsNotNull(dep);
@@ -38,7 +38,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ContainerResolvesMultipleRecursiveConstructorDependencies()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
             ObjectWithTwoConstructorDependencies dep = container.Resolve<ObjectWithTwoConstructorDependencies>();
 
             dep.Validate();
@@ -47,7 +47,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanResolveTypeMapping()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>();
 
             ILogger logger = container.Resolve<ILogger>();
@@ -59,7 +59,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanRegisterTypeMappingsWithNames()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>()
                 .RegisterType<ILogger, SpecialLogger>("special");
 
@@ -76,7 +76,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ShouldDoPropertyInjection()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
 
             ObjectWithTwoProperties obj = container.Resolve<ObjectWithTwoProperties>();
 
@@ -86,7 +86,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ShouldSkipIndexers()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
 
             ObjectWithIndexer obj = container.Resolve<ObjectWithIndexer>();
 
@@ -96,7 +96,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ShouldSkipStaticProperties()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
             container.RegisterInstance<object>(this);
 
             var obj = container.Resolve<ObjectWithStaticAndInstanceProperties>();
@@ -107,7 +107,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ShouldDoAllInjections()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>();
 
             ObjectWithLotsOfDependencies obj = container.Resolve<ObjectWithLotsOfDependencies>();
@@ -119,7 +119,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanGetObjectsUsingNongenericMethod()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType(typeof(ILogger), typeof(MockLogger));
 
             object logger = container.Resolve(typeof(ILogger));
@@ -131,7 +131,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanGetNamedObjectsUsingNongenericMethod()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType(typeof(ILogger), typeof(MockLogger))
                 .RegisterType(typeof(ILogger), typeof(SpecialLogger), "special");
 
@@ -148,7 +148,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void AllInjectionsWorkFromNongenericMethods()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType(typeof(ILogger), typeof(MockLogger));
 
             ObjectWithLotsOfDependencies obj = (ObjectWithLotsOfDependencies)container.Resolve(typeof(ObjectWithLotsOfDependencies));
@@ -158,7 +158,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ContainerSupportsSingletons()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>(new ContainerControlledLifetimeManager());
 
             ILogger logger1 = container.Resolve<ILogger>();
@@ -171,7 +171,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanCreatedNamedSingletons()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>()
                 .RegisterType<ILogger, SpecialLogger>("special", new ContainerControlledLifetimeManager());
 
@@ -187,7 +187,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanRegisterSingletonsWithNongenericMethods()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>(new ContainerControlledLifetimeManager())
                 .RegisterType<ILogger, SpecialLogger>("special", new ContainerControlledLifetimeManager());
 
@@ -204,7 +204,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void DisposingContainerDisposesSingletons()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<DisposableObject>(new ContainerControlledLifetimeManager());
 
             DisposableObject dobj = container.Resolve<DisposableObject>();
@@ -218,7 +218,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void SingletonsRegisteredAsDefaultGetInjected()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ObjectWithOneDependency>(new ContainerControlledLifetimeManager());
 
             ObjectWithOneDependency dep = container.Resolve<ObjectWithOneDependency>();
@@ -231,7 +231,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanDoInjectionOnExistingObjects()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
 
             ObjectWithTwoProperties o = new ObjectWithTwoProperties();
             Assert.IsNull(o.Obj1);
@@ -245,7 +245,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanBuildUpExistingObjectWithNonGenericObject()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>();
 
             ObjectUsingLogger o = new ObjectUsingLogger();
@@ -260,7 +260,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanBuildupObjectWithExplicitInterface()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>();
 
             ObjectWithExplicitInterface o = new ObjectWithExplicitInterface();
@@ -272,7 +272,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanBuildupObjectWithExplicitInterfaceUsingNongenericMethod()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>();
 
             ObjectWithExplicitInterface o = new ObjectWithExplicitInterface();
@@ -287,7 +287,7 @@ namespace Unity.Regression.Tests
         {
             //MockLogger logger = new MockLogger();
 
-            //IUnityContainer container = GetContainer()
+            //IUnityContainer container = new UnityContainer()
             //    .RegisterInstance(typeof(ILogger), "logger", logger, new ContainerControlledLifetimeManager());
 
             //ILogger o = container.Resolve<ILogger>("logger");
@@ -299,7 +299,7 @@ namespace Unity.Regression.Tests
         {
             MockLogger logger = new MockLogger();
 
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance<ILogger>("logger", logger);
 
             ILogger o = container.Resolve<ILogger>("logger");
@@ -310,7 +310,7 @@ namespace Unity.Regression.Tests
         public void DisposingContainerDisposesOwnedInstances()
         {
             DisposableObject o = new DisposableObject();
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance(typeof(object), o);
 
             container.Dispose();
@@ -321,7 +321,7 @@ namespace Unity.Regression.Tests
         public void DisposingContainerDoesNotDisposeUnownedInstances()
         {
             DisposableObject o = new DisposableObject();
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance(typeof(object), o, new ExternallyControlledLifetimeManager());
 
             container.Dispose();
@@ -333,7 +333,7 @@ namespace Unity.Regression.Tests
         public void ContainerDefaultsToInstanceOwnership()
         {
             DisposableObject o = new DisposableObject();
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance(typeof(object), o);
             container.Dispose();
             Assert.IsTrue(o.WasDisposed);
@@ -343,7 +343,7 @@ namespace Unity.Regression.Tests
         public void ContainerDefaultsToInstanceOwnershipViaGenericMethod()
         {
             DisposableObject o = new DisposableObject();
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance(typeof(DisposableObject), o);
             container.Dispose();
             Assert.IsTrue(o.WasDisposed);
@@ -353,7 +353,7 @@ namespace Unity.Regression.Tests
         public void InstanceRegistrationWithoutNameRegistersDefault()
         {
             MockLogger l = new MockLogger();
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance(typeof(ILogger), l);
 
             ILogger o = container.Resolve<ILogger>();
@@ -364,7 +364,7 @@ namespace Unity.Regression.Tests
         public void InstanceRegistrationWithoutNameRegistersDefaultViaGenericMethod()
         {
             MockLogger l = new MockLogger();
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance<ILogger>(l);
 
             ILogger o = container.Resolve<ILogger>();
@@ -376,7 +376,7 @@ namespace Unity.Regression.Tests
         {
             DisposableObject o = new DisposableObject();
 
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance(typeof(object), o, new ExternallyControlledLifetimeManager());
 
             object result = container.Resolve<object>();
@@ -393,7 +393,7 @@ namespace Unity.Regression.Tests
         {
             DisposableObject o = new DisposableObject();
 
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance<object>(o, new ExternallyControlledLifetimeManager());
 
             object result = container.Resolve<object>();
@@ -409,7 +409,7 @@ namespace Unity.Regression.Tests
         public void CanSpecifyInjectionConstructorWithDefaultDependencies()
         {
             string sampleString = "Hi there";
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance(sampleString);
 
             ObjectWithInjectionConstructor o = container.Resolve<ObjectWithInjectionConstructor>();
@@ -421,7 +421,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanGetInstancesOfAllRegisteredTypes()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>("mock")
                 .RegisterType<ILogger, SpecialLogger>("special")
                 .RegisterType<ILogger, MockLogger>("another");
@@ -438,7 +438,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void GetAllDoesNotReturnTheDefault()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, SpecialLogger>("special")
                 .RegisterType<ILogger, MockLogger>();
 
@@ -451,7 +451,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanGetAllWithNonGenericMethod()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>("mock")
                 .RegisterType<ILogger, SpecialLogger>("special")
                 .RegisterType<ILogger, MockLogger>("another");
@@ -470,7 +470,7 @@ namespace Unity.Regression.Tests
         {
             MockLogger l = new MockLogger();
 
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>("normal")
                 .RegisterType<ILogger, SpecialLogger>("special")
                 .RegisterInstance<ILogger>("instance", l);
@@ -487,7 +487,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanRegisterLifetimeAsSingleton()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, MockLogger>()
                 .RegisterType<ILogger, SpecialLogger>("special", new ContainerControlledLifetimeManager());
 
@@ -503,7 +503,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ShouldThrowIfAttemptsToResolveUnregisteredInterface()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
 
             Assert.ThrowsException<ResolutionFailedException>(() =>
                 {
@@ -514,7 +514,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanBuildSameTypeTwice()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
 
             container.Resolve<ObjectWithTwoConstructorDependencies>();
             container.Resolve<ObjectWithTwoConstructorDependencies>();
@@ -523,7 +523,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanRegisterMultipleStringInstances()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
             string first = "first";
             string second = "second";
 
@@ -556,7 +556,7 @@ namespace Unity.Regression.Tests
             myDict.Add("One", "two");
             myDict.Add("Two", "three");
 
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterInstance(myDict)
                 .RegisterType(typeof(IDictionary<,>), typeof(Dictionary<,>));
 
@@ -567,7 +567,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void CanSpecializeGenericsViaTypeMappings()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType(typeof(IRepository<>), typeof(MockRespository<>))
                 .RegisterType<IRepository<SomeType>, SomeTypRepository>();
 
@@ -581,7 +581,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ContainerResolvesItself()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
 
             Assert.AreSame(container, container.Resolve<IUnityContainer>());
         }
@@ -590,7 +590,7 @@ namespace Unity.Regression.Tests
         //[TestMethod]
         //public void ContainerResolvesItselfEvenAfterGarbageCollect()
         //{
-        //    IUnityContainer container = GetContainer();
+        //    IUnityContainer container = new UnityContainer();
         //    container.AddNewExtension<GarbageCollectingExtension>();
 
         //    Assert.IsNotNull(container.Resolve<IUnityContainer>());
@@ -634,7 +634,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ResolvingOpenGenericGivesInnerInvalidOperationException()
         {
-            IUnityContainer container = GetContainer()
+            IUnityContainer container = new UnityContainer()
                 .RegisterType(typeof(List<>), new InjectionConstructor(10));
 
             //Assert.ThrowsException<ResolutionFailedException>(
@@ -646,7 +646,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void ResovingObjectWithPrivateSetterGivesUsefulException()
         {
-            //IUnityContainer container = GetContainer();
+            //IUnityContainer container = new UnityContainer();
 
             //Assert.ThrowsException<ResolutionFailedException>(
             //    () => { container.Resolve<ObjectWithPrivateSetter>(); },
@@ -675,7 +675,7 @@ namespace Unity.Regression.Tests
 
         private void ResolvingUnconfiguredPrimitiveGivesResonableException<T>()
         {
-            IUnityContainer container = GetContainer();
+            IUnityContainer container = new UnityContainer();
             try
             {
                 container.Resolve<TypeWithPrimitiveDependency<T>>();
