@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Regression.Tests;
-using Unity.Extension;
 #if NET45
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 #else
+using Unity.Extension;
 using Unity.Policy;
 using Unity;
 #endif
