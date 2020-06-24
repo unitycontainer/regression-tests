@@ -9,7 +9,7 @@
     <PackageIconUrl>https://avatars1.githubusercontent.com/u/12849707</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <TargetFrameworks Condition=" '$(Framework)' == '' ">net48;net46;net45</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(Framework)' == '' ">net48;net47;net46;net45</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,28 +22,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove=".git" />
     <None Remove=".gitignore" />
     <None Remove="LICENSE" />
   </ItemGroup>
 
   <PropertyGroup>
-    <DefineConstants Condition="'$(TargetFramework)' == 'net48'">$(DefineConstants);UNITY_V6</DefineConstants>
+    <DefineConstants Condition="'$(TargetFramework)' == 'net48'">$(DefineConstants);UNITY</DefineConstants>
+    <DefineConstants Condition="'$(TargetFramework)' == 'net47'">$(DefineConstants);UNITY_V6</DefineConstants>
     <DefineConstants Condition="'$(TargetFramework)' == 'net46'">$(DefineConstants);UNITY_V5</DefineConstants>
     <DefineConstants Condition="'$(TargetFramework)' == 'net45'">$(DefineConstants);UNITY_V4</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Condition="'$(TargetFramework)' == 'net48'" Include="Unity.Container" Version="6.0.*-*" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net47'" Include="..\Container\src\Unity.Container.csproj" />
+    <PackageReference Condition="'$(TargetFramework)' == 'net47'" Include="Unity.Container" Version="6.0.*-*" />
     <PackageReference Condition="'$(TargetFramework)' == 'net46'" Include="Unity.Container" Version="5.11.*" />
     <PackageReference Condition="'$(TargetFramework)' == 'net45'" Include="Unity" Version="4.0.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net45'" >
+  <ItemGroup Condition="'$(TargetFramework)' != 'net45'">
     <Compile Remove="Container\UnityContainerFixture.4.cs" />
     <Compile Remove="Injection\InjectionParameterValueFixture.v4.cs" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net45'" >
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <Compile Remove="Injection\InjectionParameterValueFixture.v5.cs" />
   </ItemGroup>
 
