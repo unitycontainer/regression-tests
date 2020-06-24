@@ -1,9 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Regression.Tests;
+using Unity.Extension;
 #if NET45
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 #else
+using Unity.Policy;
 using Unity;
 #endif
 
@@ -13,8 +15,12 @@ namespace Container.Extending
     [TestClass]
     public partial class ExtensionContextTests
     {
+#if NET45
         ExtensionContext context;   
-        UnityContainer   container;
+#else
+        IExtensionContext context;
+#endif
+        UnityContainer container;
 
         [TestInitialize]
         public void TestInitialize()
@@ -26,7 +32,15 @@ namespace Container.Extending
         }
 
         [TestMethod]
-        public void BaselineTest() => Assert.IsNotNull(context);
+        public void BaselineTest()
+        {
+            var unity = new UnityContainer();
+            var extension = new MockContainerExtension();
+            unity.AddExtension(extension);
+
+            Assert.IsTrue(extension.InitializeWasCalled);
+            Assert.IsNotNull(((IMockConfiguration)extension).Context);
+        }
 
         [TestMethod]
         public void ContainerTest()
