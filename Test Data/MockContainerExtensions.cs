@@ -9,11 +9,7 @@ namespace Unity.Regression.Tests
 {
     public interface IMockConfiguration : IUnityContainerExtensionConfigurator 
     {
-#if NET45
         ExtensionContext Context { get; }
-#else
-        IExtensionContext Context { get; }
-#endif
     }
 
     public interface IOtherConfiguration : IMockConfiguration
@@ -23,11 +19,8 @@ namespace Unity.Regression.Tests
     {
         public bool InitializeWasCalled { get; private set; } = false;
 
-#if NET45
-        ExtensionContext Context => Context;
-#else
-        IExtensionContext IMockConfiguration.Context => Context;
-#endif
+        ExtensionContext IMockConfiguration.Context => Context;
+
 
         protected override void Initialize() => InitializeWasCalled = true;
     }
@@ -39,11 +32,7 @@ namespace Unity.Regression.Tests
     {
         public bool InitializeWasCalled { get; private set; } = false;
 
-#if NET45
-        ExtensionContext Context => Context;
-#else
-        IExtensionContext IMockConfiguration.Context => Context;
-#endif
+        ExtensionContext IMockConfiguration.Context => Context;
 
         protected override void Initialize() => InitializeWasCalled = true;
     }

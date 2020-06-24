@@ -15,11 +15,7 @@ namespace Container.Extending
     [TestClass]
     public partial class ExtensionContextTests
     {
-#if NET45
         ExtensionContext context;   
-#else
-        IExtensionContext context;
-#endif
         UnityContainer container;
 
         [TestInitialize]
