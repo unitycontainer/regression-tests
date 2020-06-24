@@ -9,8 +9,14 @@
     <PackageIconUrl>https://avatars1.githubusercontent.com/u/12849707</PackageIconUrl>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <TargetFrameworks Condition=" '$(Framework)' == '' ">net48;net47;net46;net45</TargetFrameworks>
+    <UnityContainer>..\Container\src\Unity.Container.csproj</UnityContainer>
+    <UnityLegacy>..\unity\source\Unity\Src\Unity.csproj</UnityLegacy>
   </PropertyGroup>
+  
+  <PropertyGroup>
+    <TargetFrameworks Condition="!Exists('$(UnityContainer)')">net47;net46;net45</TargetFrameworks>
+    <TargetFrameworks Condition="Exists('$(UnityContainer)')">net48;net47;net46;net45</TargetFrameworks>
+  </PropertyGroup>  
 
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2">
@@ -27,6 +33,7 @@
     <None Remove="LICENSE" />
   </ItemGroup>
 
+  
   <PropertyGroup>
     <DefineConstants Condition="'$(TargetFramework)' == 'net48'">$(DefineConstants);UNITY</DefineConstants>
     <DefineConstants Condition="'$(TargetFramework)' == 'net47'">$(DefineConstants);UNITY_V6</DefineConstants>
@@ -35,19 +42,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Condition="'$(TargetFramework)' == 'net47'" Include="..\Container\src\Unity.Container.csproj" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net48'" Include="$(UnityContainer)" />
     <PackageReference Condition="'$(TargetFramework)' == 'net47'" Include="Unity.Container" Version="6.0.*-*" />
     <PackageReference Condition="'$(TargetFramework)' == 'net46'" Include="Unity.Container" Version="5.11.*" />
-    <PackageReference Condition="'$(TargetFramework)' == 'net45'" Include="Unity" Version="4.0.1" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' != 'net45'">
-    <Compile Remove="Container\UnityContainerFixture.4.cs" />
-    <Compile Remove="Injection\InjectionParameterValueFixture.v4.cs" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-    <Compile Remove="Injection\InjectionParameterValueFixture.v5.cs" />
+    <PackageReference Condition="'$(TargetFramework)' == 'net45' AND !Exists('$(UnityLegacy)')" Include="Unity" Version="4.0.1" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net45' AND Exists('$(UnityLegacy)')" Include="$(UnityLegacy)"  />
   </ItemGroup>
 
 </Project>
