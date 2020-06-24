@@ -1,0 +1,37 @@
+﻿#if NET45
+using Microsoft.Practices.Unity;
+#else
+using Unity;
+#endif
+
+namespace Unity.Regression.Tests
+{
+    public interface IMockConfiguration : IUnityContainerExtensionConfigurator 
+    {
+        ExtensionContext Context { get; }
+    }
+
+    public interface IOtherConfiguration : IMockConfiguration
+    { }
+
+    public class MockContainerExtension : UnityContainerExtension, IMockConfiguration
+    {
+        public bool InitializeWasCalled { get; private set; } = false;
+
+        ExtensionContext IMockConfiguration.Context => base.Context;
+
+        protected override void Initialize() => InitializeWasCalled = true;
+    }
+
+    public class DerivedContainerExtension : MockContainerExtension
+    {}
+
+    public class OtherContainerExtension : UnityContainerExtension, IOtherConfiguration
+    {
+        public bool InitializeWasCalled { get; private set; } = false;
+
+        ExtensionContext IMockConfiguration.Context => base.Context;
+
+        protected override void Initialize() => this.InitializeWasCalled = true;
+    }
+}

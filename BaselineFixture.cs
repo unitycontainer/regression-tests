@@ -11,7 +11,7 @@ using Unity;
 #endif
 
 
-namespace Unity.Regression
+namespace Unity.Regression.Tests
 {
     [TestClass]
     public class BaselineFixture
