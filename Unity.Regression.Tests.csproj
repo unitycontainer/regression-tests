@@ -50,4 +50,8 @@
     <ProjectReference Condition="'$(TargetFramework)' == 'net45' AND Exists('$(UnityLegacy)')" Include="$(UnityLegacy)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Condition="'$(TargetFramework)' != 'net48'" Remove="Legacy\IUnityContainerExtensionConfigurator.cs" />
+  </ItemGroup>
+
 </Project>

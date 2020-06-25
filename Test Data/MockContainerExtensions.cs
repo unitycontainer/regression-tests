@@ -7,7 +7,7 @@ using Unity.Extension;
 
 namespace Unity.Regression.Tests
 {
-    public interface IMockConfiguration : IUnityContainerExtensionConfigurator 
+    public interface IMockConfiguration : IUnityContainerExtensionConfigurator
     {
         ExtensionContext Context { get; }
     }
