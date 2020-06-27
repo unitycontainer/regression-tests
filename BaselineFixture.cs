@@ -19,7 +19,7 @@ namespace Unity.Regression.Tests
         [TestMethod]
         public void BaselineTest()
         {
-            var container = new UnityContainer();
+            //IUnityContainer container = new UnityContainer();
         
         }
     }

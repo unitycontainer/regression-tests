@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity.Regression.Tests;
+using System;
 #if NET45
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
@@ -28,7 +29,7 @@ namespace Container.Extending
         }
 
         [TestMethod]
-        public void BaselineTest()
+        public void Baseline()
         {
             var unity = new UnityContainer();
             var extension = new MockContainerExtension();
@@ -39,6 +40,24 @@ namespace Container.Extending
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ContainerNullAddNew()
+        {
+            UnityContainer unity = null;
+            
+            unity.AddNewExtension<MockContainerExtension>();
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ContainerNullConfigure()
+        {
+            UnityContainer unity = null;
+
+            unity.Configure<MockContainerExtension>();
+        }
+
+        [TestMethod]
         public void ContainerTest()
         {
             // Validate
@@ -46,6 +65,7 @@ namespace Container.Extending
             Assert.IsInstanceOfType(context.Container, typeof(UnityContainer));
         }
 
+        [Ignore]
         [TestMethod]
         public void PoliciesTest()
         {
