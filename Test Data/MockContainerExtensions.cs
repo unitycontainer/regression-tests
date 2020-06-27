@@ -2,6 +2,7 @@
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Extension;
 #endif
 
 namespace Unity.Regression.Tests
@@ -18,7 +19,8 @@ namespace Unity.Regression.Tests
     {
         public bool InitializeWasCalled { get; private set; } = false;
 
-        ExtensionContext IMockConfiguration.Context => base.Context;
+        ExtensionContext IMockConfiguration.Context => Context;
+
 
         protected override void Initialize() => InitializeWasCalled = true;
     }
@@ -30,8 +32,8 @@ namespace Unity.Regression.Tests
     {
         public bool InitializeWasCalled { get; private set; } = false;
 
-        ExtensionContext IMockConfiguration.Context => base.Context;
+        ExtensionContext IMockConfiguration.Context => Context;
 
-        protected override void Initialize() => this.InitializeWasCalled = true;
+        protected override void Initialize() => InitializeWasCalled = true;
     }
 }
