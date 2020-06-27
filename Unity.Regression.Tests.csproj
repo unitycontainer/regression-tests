@@ -13,9 +13,16 @@
     <UnityLegacy>..\unity\source\Unity\Src\Unity.csproj</UnityLegacy>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFrameworks Condition="!Exists('$(UnityContainer)')">net47;net46;net45</TargetFrameworks>
-    <TargetFramework Condition="Exists('$(UnityContainer)')">net48</TargetFramework>
+  <PropertyGroup Condition="Exists('$(UnityLegacy)')">
+    <TargetFramework>net45</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('$(UnityContainer)')">
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="!Exists('$(UnityContainer)') AND !Exists('$(UnityLegacy)') ">
+    <TargetFrameworks>net47;net46;net45</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
