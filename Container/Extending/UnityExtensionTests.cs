@@ -3,6 +3,7 @@ using Unity.Regression.Tests;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
+using Unity.Extension;
 using Unity;
 #endif
 
@@ -41,7 +42,7 @@ namespace Container.Extending
         }
 
         [TestMethod]
-        public void ConfigureTest()
+        public void ConfigureOrderTest()
         {
             // Act
             container.AddExtension(mock)
@@ -50,8 +51,20 @@ namespace Container.Extending
 
             // Validate
             Assert.AreSame(derived, container.Configure(typeof(DerivedContainerExtension)));
-            Assert.AreSame(other, container.Configure(typeof(OtherContainerExtension)));
-            Assert.AreSame(mock, container.Configure(typeof(MockContainerExtension)));
+            Assert.AreSame(mock,    container.Configure(typeof(MockContainerExtension)));
+        }
+
+        [TestMethod]
+        public void ConfigureOrderReversed()
+        {
+            // Act
+            container.AddExtension(derived)
+                     .AddExtension(other)
+                     .AddExtension(mock);
+
+            // Validate
+            Assert.AreSame(derived, container.Configure(typeof(DerivedContainerExtension)));
+            Assert.AreSame(derived, container.Configure(typeof(MockContainerExtension)));
         }
 
         [TestMethod]

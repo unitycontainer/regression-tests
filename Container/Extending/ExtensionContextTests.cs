@@ -25,7 +25,7 @@ namespace Container.Extending
             container = new UnityContainer();
             var mock = new MockContainerExtension();
             container.AddExtension(mock);
-            context = ((IMockConfiguration)mock).Context;
+            context = ((IMockConfiguration)mock).ExtensionContext;
         }
 
         [TestMethod]
@@ -36,7 +36,7 @@ namespace Container.Extending
             unity.AddExtension(extension);
 
             Assert.IsTrue(extension.InitializeWasCalled);
-            Assert.IsNotNull(((IMockConfiguration)extension).Context);
+            Assert.IsNotNull(((IMockConfiguration)extension).ExtensionContext);
         }
 
         [TestMethod]
