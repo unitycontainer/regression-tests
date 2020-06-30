@@ -5,7 +5,7 @@ using Unity;
 using Unity.Extension;
 #endif
 
-namespace Unity.Regression.Tests
+namespace Container.Extending
 {
     public interface IMockConfiguration : IUnityContainerExtensionConfigurator
     {
