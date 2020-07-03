@@ -33,6 +33,18 @@ namespace Container.Registrations
             Assert.IsNotNull(Container.Registrations.Where(r => r.RegisteredType == typeof(IUnityContainer)).FirstOrDefault());
         }
 
+
+        [TestMethod]
+        public void ProperContainerInHierarchies()
+        {
+            var child1 = Container.CreateChildContainer();
+            var child2 = child1.CreateChildContainer();
+
+            var root = Container.Registrations.Single(r => r.RegisteredType == typeof(IUnityContainer));
+            var level1 =  child1.Registrations.Single(r => r.RegisteredType == typeof(IUnityContainer));
+            var level2 =  child2.Registrations.Single(r => r.RegisteredType == typeof(IUnityContainer));
+        }
+
         [TestMethod]
         public void NewRegistrationsShowUpInRegistrationsSequence()
         {

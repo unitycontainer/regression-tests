@@ -72,12 +72,10 @@ namespace Container.Extending
         {
             // Act
             container.AddExtension(mock)
-                     .AddExtension(other)
                      .AddExtension(derived);
 
             // Validate
             Assert.AreSame(derived, container.Configure<DerivedContainerExtension>());
-            Assert.AreSame(other,   container.Configure<OtherContainerExtension>());
             Assert.AreSame(mock,    container.Configure<MockContainerExtension>());
         }
 
@@ -86,12 +84,10 @@ namespace Container.Extending
         {
             // Act
             container.AddNewExtension<MockContainerExtension>()
-                     .AddNewExtension<OtherContainerExtension>()
                      .AddNewExtension<DerivedContainerExtension>();
 
             // Validate
             Assert.IsTrue(container.Configure<MockContainerExtension>().InitializeWasCalled);
-            Assert.IsTrue(container.Configure<OtherContainerExtension>().InitializeWasCalled);
             Assert.IsTrue(container.Configure<DerivedContainerExtension>().InitializeWasCalled);
         }
     }
