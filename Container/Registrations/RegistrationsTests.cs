@@ -46,6 +46,65 @@ namespace Container.Registrations
         }
 
         [TestMethod]
+        public void RepeatableEnumerations()
+        {
+            Container.RegisterType<ILogger, MockLogger>()
+                     .RegisterType<ILogger, MockLogger>("second");
+
+            var registrations1 = (from r in Container.Registrations
+                                 where r.RegisteredType == typeof(ILogger)
+                                 select r).ToArray();
+
+            var registrations2 = (from r in Container.Registrations
+                                  where r.RegisteredType == typeof(ILogger)
+                                  select r).ToArray();
+
+            Assert.AreEqual(2, registrations1.Length);
+            Assert.IsTrue(registrations1.Any(r => r.Name == null));
+            Assert.IsTrue(registrations1.Any(r => r.Name == "second"));
+
+            Assert.AreEqual(2, registrations2.Length);
+            Assert.IsTrue(registrations2.Any(r => r.Name == null));
+            Assert.IsTrue(registrations2.Any(r => r.Name == "second"));
+
+            Assert.IsTrue(registrations1.SequenceEqual(registrations2));
+        }
+
+        [TestMethod]
+        public void ReUseEnumerable()
+        {
+            Container.RegisterType<ILogger, MockLogger>()
+                     .RegisterType<ILogger, MockLogger>("second");
+            
+            var enumerable = Container.Registrations;
+
+            var registrations1 = enumerable.ToArray();
+            var registrations2 = enumerable.ToArray();
+
+            Assert.IsTrue(registrations1.SequenceEqual(registrations2));
+
+        }
+
+        [TestMethod]
+        public void EnumerableIsImmutable()
+        {
+            Container.RegisterType<ILogger, MockLogger>()
+                     .RegisterType<ILogger, MockLogger>("second");
+
+            var enumerable = Container.Registrations;
+
+            var registrations1 = enumerable.ToArray();
+
+            Container.RegisterType<MockLogger>()
+                     .RegisterType<MockLogger>("second");
+
+            var registrations2 = enumerable.ToArray();
+
+            Assert.IsTrue(registrations1.SequenceEqual(registrations2));
+            Assert.IsFalse(registrations1.SequenceEqual(Container.Registrations));
+        }
+
+        [TestMethod]
         public void NewRegistrationsShowUpInRegistrationsSequence()
         {
             Container.RegisterType<ILogger, MockLogger>()
@@ -101,9 +160,11 @@ namespace Container.Registrations
             var child = Container.CreateChildContainer()
                 .RegisterType<ILogger, MockLogger>("named");
 
-            var childRegistration = child.Registrations.Where(r => r.RegisteredType == typeof(ILogger)).First();
-            var parentRegistration =
-                Container.Registrations.Where(r => r.RegisteredType == typeof(ILogger)).FirstOrDefault();
+            var childRegistration  = child.Registrations.Where(r => r.RegisteredType == typeof(ILogger)).First();
+            var parentRegistration = Container.Registrations
+                                              .Where(r => r.RegisteredType == typeof(ILogger))
+                                              .Cast<IContainerRegistration>()
+                                              .FirstOrDefault();
 
             Assert.IsNull(parentRegistration);
             Assert.IsNotNull(childRegistration);
@@ -180,7 +241,9 @@ namespace Container.Registrations
             Assert.AreEqual(2, count);
         }
 
+
         // http://unity.codeplex.com/WorkItem/View.aspx?WorkItemId=6053
+        [Ignore]
         [TestMethod]
         public void ResolveAllWithChildDoesNotRepeatOverriddenRegistrations()
         {
