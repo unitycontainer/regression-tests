@@ -16,6 +16,7 @@ namespace Container.Registrations
     public class RegistrationsTests
     {
         IUnityContainer Container;
+        ContainerRegistrationComparer EqualityComparer = new ContainerRegistrationComparer();
 
         [TestInitialize]
         public void TestInitialize() => Container = new UnityContainer();
@@ -67,7 +68,7 @@ namespace Container.Registrations
             Assert.IsTrue(registrations2.Any(r => r.Name == null));
             Assert.IsTrue(registrations2.Any(r => r.Name == "second"));
 
-            Assert.IsTrue(registrations1.SequenceEqual(registrations2));
+            Assert.IsTrue(registrations1.SequenceEqual(registrations2, EqualityComparer));
         }
 
         [TestMethod]
@@ -81,7 +82,7 @@ namespace Container.Registrations
             var registrations1 = enumerable.ToArray();
             var registrations2 = enumerable.ToArray();
 
-            Assert.IsTrue(registrations1.SequenceEqual(registrations2));
+            Assert.IsTrue(registrations1.SequenceEqual(registrations2, new ContainerRegistrationComparer()));
 
         }
 
@@ -100,8 +101,8 @@ namespace Container.Registrations
 
             var registrations2 = enumerable.ToArray();
 
-            Assert.IsTrue(registrations1.SequenceEqual(registrations2));
-            Assert.IsFalse(registrations1.SequenceEqual(Container.Registrations));
+            Assert.IsTrue(registrations1.SequenceEqual(registrations2, EqualityComparer));
+            Assert.IsFalse(registrations1.SequenceEqual(Container.Registrations, EqualityComparer));
         }
 
         [TestMethod]
@@ -163,7 +164,7 @@ namespace Container.Registrations
             var childRegistration  = child.Registrations.Where(r => r.RegisteredType == typeof(ILogger)).First();
             var parentRegistration = Container.Registrations
                                               .Where(r => r.RegisteredType == typeof(ILogger))
-                                              .Cast<IContainerRegistration>()
+                                              .Cast<object>()
                                               .FirstOrDefault();
 
             Assert.IsNull(parentRegistration);
@@ -262,5 +263,23 @@ namespace Container.Registrations
 
             Assert.IsTrue(actual.SetEquals(expected));
         }
+
+        #region Test Data
+
+        private class ContainerRegistrationComparer : IEqualityComparer<ContainerRegistration>
+        {
+            public bool Equals(ContainerRegistration x, ContainerRegistration y)
+            {
+                return x.RegisteredType == y.RegisteredType && x.Name == y.Name;
+            }
+
+            public int GetHashCode(ContainerRegistration obj)
+            {
+                return obj.RegisteredType.GetHashCode() * 17 +
+                       obj.Name?.GetHashCode() ?? 0;
+            }
+        }
+
+        #endregion
     }
 }

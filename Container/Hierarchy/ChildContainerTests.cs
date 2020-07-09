@@ -318,6 +318,7 @@ namespace Container.Hierarchy
         }
 
         [TestMethod]
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
         public void GetObjectAfterDispose()
         {
             Container.RegisterType<Temp>("First", new ContainerControlledLifetimeManager());
@@ -325,7 +326,7 @@ namespace Container.Hierarchy
             var child = Container.CreateChildContainer();
             child.RegisterType<ITemporary>("First", new ContainerControlledLifetimeManager());
             Container.Dispose();
-            Assert.ThrowsException<ResolutionFailedException>(() => child.Resolve<ITemporary>("First"));
+            child.Resolve<ITemporary>("First");
         }
 
         [TestMethod]
