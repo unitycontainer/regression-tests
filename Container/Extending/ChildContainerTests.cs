@@ -59,9 +59,6 @@ namespace Container.Extending
             Assert.IsNotNull(extension1.ExtensionContext.Policies);
             Assert.IsNotNull(extension2.ExtensionContext.Policies);
 
-            Assert.AreNotSame(extension1.ExtensionContext.Policies,
-                              extension2.ExtensionContext.Policies);
-
             Assert.AreEqual(1, extension1.ExtensionContext.Lifetime.Count);
             Assert.AreEqual(0, extension2.ExtensionContext.Lifetime.Count);
         }
