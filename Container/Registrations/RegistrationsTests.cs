@@ -77,7 +77,11 @@ namespace Container.Registrations
             Container.RegisterType<ILogger, MockLogger>()
                      .RegisterType<ILogger, MockLogger>("second");
             
-            var enumerable = Container.Registrations;
+            var child = Container.CreateChildContainer()
+                                 .RegisterType<MockLogger>()
+                                 .RegisterType<MockLogger>("second");
+
+            var enumerable = child.Registrations;
 
             var registrations1 = enumerable.ToArray();
             var registrations2 = enumerable.ToArray();
