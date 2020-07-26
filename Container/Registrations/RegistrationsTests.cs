@@ -2,6 +2,7 @@
 using Unity.Regression.Tests;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -91,6 +92,7 @@ namespace Container.Registrations
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void EnumerableIsImmutable()
         {
             Container.RegisterType<ILogger, MockLogger>()
@@ -176,7 +178,7 @@ namespace Container.Registrations
         }
 
         [TestMethod]
-        public void DuplicateRegistrationsInParentAndChildOnlyShowUpOnceInChild()
+        public void DuplicateRegistrationsOnlyShowUpOnceInChild()
         {
             Container.RegisterType<ILogger, MockLogger>("one");
 
@@ -247,9 +249,7 @@ namespace Container.Registrations
         }
 
 
-        // http://unity.codeplex.com/WorkItem/View.aspx?WorkItemId=6053
-        [Ignore]
-        [TestMethod]
+        [TestMethod] // http://unity.codeplex.com/WorkItem/View.aspx?WorkItemId=6053
         public void ResolveAllWithChildDoesNotRepeatOverriddenRegistrations()
         {
             var expected = new HashSet<string>(new[] { "string1", "string20", "string30" });
@@ -262,7 +262,10 @@ namespace Container.Registrations
                 .RegisterInstance("str2", "string20")
                 .RegisterInstance("str3", "string30");
 
-            var array = child.ResolveAll<string>();
+            var array = child.Registrations.Where(r => typeof(string) == r.RegisteredType)
+                                           .Select(r => (string)r.Instance)
+                                           .ToArray();
+            
             var actual = new HashSet<string>(array);
 
             Assert.IsTrue(actual.SetEquals(expected));
