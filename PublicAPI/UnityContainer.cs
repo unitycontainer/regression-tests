@@ -13,7 +13,7 @@ using Unity;
 
 namespace Container.Interfaces
 {
-    public partial class UnityContainerV4
+    public partial class UnityContainerAPI
     {
         #region IUnityContainer
 

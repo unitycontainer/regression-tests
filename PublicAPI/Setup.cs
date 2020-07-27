@@ -15,7 +15,7 @@ using Unity;
 namespace Container.Interfaces
 {
     [TestClass]
-    public partial class UnityContainerV4
+    public partial class UnityContainerAPI
     {
         protected const string Name = "name";
         IUnityContainer Container;

@@ -13,7 +13,7 @@ using Unity;
 
 namespace Container.Interfaces
 {
-    public partial class UnityContainerV4
+    public partial class UnityContainerAPI
     {
         IService Instance = new Service();
 
@@ -30,7 +30,7 @@ namespace Container.Interfaces
             // Validate
             var registration = Container.Registrations.First(r => typeof(IService) == r.RegisteredType);
             Assert.AreEqual(typeFrom, registration.RegisteredType);
-            Assert.AreEqual(typeFrom, registration.MappedToType);
+            Assert.AreEqual(Instance.GetType(), registration.MappedToType);
             Assert.AreEqual(Name, registration.Name);
             Assert.AreSame(manager, registration.LifetimeManager);
         }
@@ -48,7 +48,7 @@ namespace Container.Interfaces
             // Validate
             var registration = Container.Registrations.First(r => typeof(IService) == r.RegisteredType);
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
-            Assert.AreEqual(typeof(IService), registration.MappedToType);
+            Assert.AreEqual(Instance.GetType(), registration.MappedToType);
             Assert.IsNull(registration.Name);
             Assert.IsInstanceOfType(registration.LifetimeManager, typeof(ContainerControlledLifetimeManager));
         }
@@ -65,7 +65,7 @@ namespace Container.Interfaces
             // Validate
             var registration = Container.Registrations.First(r => typeof(IService) == r.RegisteredType);
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
-            Assert.AreEqual(typeof(IService), registration.MappedToType);
+            Assert.AreEqual(Instance.GetType(), registration.MappedToType);
             Assert.IsNull(registration.Name);
             Assert.AreSame(manager, registration.LifetimeManager);
         }
@@ -79,7 +79,7 @@ namespace Container.Interfaces
             // Validate
             var registration = Container.Registrations.First(r => typeof(IService) == r.RegisteredType);
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
-            Assert.AreEqual(typeof(IService), registration.MappedToType);
+            Assert.AreEqual(Instance.GetType(), registration.MappedToType);
             Assert.AreEqual(Name, registration.Name);
             Assert.IsInstanceOfType(registration.LifetimeManager, typeof(ContainerControlledLifetimeManager));
         }
@@ -96,7 +96,7 @@ namespace Container.Interfaces
             // Validate
             var registration = Container.Registrations.First(r => typeof(IService) == r.RegisteredType);
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
-            Assert.AreEqual(typeof(IService), registration.MappedToType);
+            Assert.AreEqual(Instance.GetType(), registration.MappedToType);
             Assert.AreEqual(Name, registration.Name);
             Assert.AreSame(manager, registration.LifetimeManager);
         }
@@ -114,7 +114,7 @@ namespace Container.Interfaces
             // Validate
             var registration = Container.Registrations.First(r => typeof(IService) == r.RegisteredType);
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
-            Assert.AreEqual(typeof(IService), registration.MappedToType);
+            Assert.AreEqual(Instance.GetType(), registration.MappedToType);
             Assert.IsNull(registration.Name);
             Assert.IsInstanceOfType(registration.LifetimeManager, typeof(ContainerControlledLifetimeManager));
         }
@@ -131,7 +131,7 @@ namespace Container.Interfaces
             // Validate
             var registration = Container.Registrations.First(r => typeof(IService) == r.RegisteredType);
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
-            Assert.AreEqual(typeof(IService), registration.MappedToType);
+            Assert.AreEqual(Instance.GetType(), registration.MappedToType);
             Assert.IsNull(registration.Name);
             Assert.AreSame(manager, registration.LifetimeManager);
         }
@@ -145,7 +145,7 @@ namespace Container.Interfaces
             // Validate
             var registration = Container.Registrations.First(r => typeof(IService) == r.RegisteredType);
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
-            Assert.AreEqual(typeof(IService), registration.MappedToType);
+            Assert.AreEqual(Instance.GetType(), registration.MappedToType);
             Assert.AreEqual(Name, registration.Name);
             Assert.IsInstanceOfType(registration.LifetimeManager, typeof(ContainerControlledLifetimeManager));
         }
@@ -162,7 +162,7 @@ namespace Container.Interfaces
             // Validate
             var registration = Container.Registrations.First(r => typeof(IService) == r.RegisteredType);
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
-            Assert.AreEqual(typeof(IService), registration.MappedToType);
+            Assert.AreEqual(Instance.GetType(), registration.MappedToType);
             Assert.AreEqual(Name, registration.Name);
             Assert.AreSame(manager, registration.LifetimeManager);
         }
