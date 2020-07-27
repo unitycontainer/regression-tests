@@ -22,10 +22,10 @@ namespace Container.Interfaces
         [TestMethod]
         public void Registrations_ToEnumerable()
         {
-#if NET45
-            Assert.IsNotNull(Container.Registrations as IEnumerable<ContainerRegistration>);
-#else
+#if NET46
             Assert.IsNotNull(Container.Registrations as IEnumerable<IContainerRegistration>);
+#else
+            Assert.IsNotNull(Container.Registrations as IEnumerable<ContainerRegistration>);
 #endif
         }
 
