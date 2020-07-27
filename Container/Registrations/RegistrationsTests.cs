@@ -35,7 +35,6 @@ namespace Container.Registrations
             Assert.IsNotNull(Container.Registrations.Where(r => r.RegisteredType == typeof(IUnityContainer)).FirstOrDefault());
         }
 
-
         [TestMethod]
         public void ProperContainerInHierarchies()
         {
@@ -43,8 +42,8 @@ namespace Container.Registrations
             var child2 = child1.CreateChildContainer();
 
             var root = Container.Registrations.Single(r => r.RegisteredType == typeof(IUnityContainer));
-            var level1 =  child1.Registrations.Single(r => r.RegisteredType == typeof(IUnityContainer));
-            var level2 =  child2.Registrations.Single(r => r.RegisteredType == typeof(IUnityContainer));
+            var level1 = child1.Registrations.Single(r => r.RegisteredType == typeof(IUnityContainer));
+            var level2 = child2.Registrations.Single(r => r.RegisteredType == typeof(IUnityContainer));
         }
 
         [TestMethod]
@@ -54,8 +53,8 @@ namespace Container.Registrations
                      .RegisterType<ILogger, MockLogger>("second");
 
             var registrations1 = (from r in Container.Registrations
-                                 where r.RegisteredType == typeof(ILogger)
-                                 select r).ToArray();
+                                  where r.RegisteredType == typeof(ILogger)
+                                  select r).ToArray();
 
             var registrations2 = (from r in Container.Registrations
                                   where r.RegisteredType == typeof(ILogger)
@@ -77,7 +76,7 @@ namespace Container.Registrations
         {
             Container.RegisterType<ILogger, MockLogger>()
                      .RegisterType<ILogger, MockLogger>("second");
-            
+
             var child = Container.CreateChildContainer()
                                  .RegisterType<MockLogger>()
                                  .RegisterType<MockLogger>("second");
@@ -167,7 +166,7 @@ namespace Container.Registrations
             var child = Container.CreateChildContainer()
                 .RegisterType<ILogger, MockLogger>("named");
 
-            var childRegistration  = child.Registrations.Where(r => r.RegisteredType == typeof(ILogger)).First();
+            var childRegistration = child.Registrations.Where(r => r.RegisteredType == typeof(ILogger)).First();
             var parentRegistration = Container.Registrations
                                               .Where(r => r.RegisteredType == typeof(ILogger))
                                               .Cast<object>()
@@ -238,7 +237,7 @@ namespace Container.Registrations
         [TestMethod]
         public void WhenRegistrationsAreRetrievedFromAContainerByLifeTimeManager()
         {
-            Container.RegisterType<ILogger, MockLoggerWithCtor>(       new PerResolveLifetimeManager(), new InjectionConstructor("default"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>(new PerResolveLifetimeManager(), new InjectionConstructor("default"));
             Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", new PerResolveLifetimeManager(), new InjectionConstructor("foo"));
 
             var registrations = Container.Registrations;
@@ -248,7 +247,7 @@ namespace Container.Registrations
             Assert.AreEqual(2, count);
         }
 
-
+#if !NET45
         [TestMethod] // http://unity.codeplex.com/WorkItem/View.aspx?WorkItemId=6053
         public void ResolveAllWithChildDoesNotRepeatOverriddenRegistrations()
         {
@@ -270,6 +269,7 @@ namespace Container.Registrations
 
             Assert.IsTrue(actual.SetEquals(expected));
         }
+#endif
 
         #region Test Data
 
