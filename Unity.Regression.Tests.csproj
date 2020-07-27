@@ -59,13 +59,6 @@
     <Compile Condition="'$(TargetFramework)' == 'net45'" Remove="PublicAPI\RegisterSingleton.cs" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <DefineConstants Condition="'$(TargetFramework)' == 'net48'">$(DefineConstants);UNITY</DefineConstants>
-    <DefineConstants Condition="'$(TargetFramework)' == 'net47'">$(DefineConstants);UNITY_V6</DefineConstants>
-    <DefineConstants Condition="'$(TargetFramework)' == 'net46'">$(DefineConstants);UNITY_V5</DefineConstants>
-    <DefineConstants Condition="'$(TargetFramework)' == 'net45'">$(DefineConstants);UNITY_V4</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Condition="'$(TargetFramework)' == 'net48'" Include="$(UnityContainer)" />
     <PackageReference Condition="'$(TargetFramework)' == 'net47'" Include="Unity.Container" Version="6.0.*-*" />
