@@ -1,9 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Regression.Tests;
-using System.Linq;
-using System.Collections.Generic;
-using System;
-using System.CodeDom;
 #if NET45
 using Microsoft.Practices.Unity;
 #else

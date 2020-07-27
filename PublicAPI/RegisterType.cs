@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Regression.Tests;
 using System.Linq;
-using System.Collections.Generic;
-using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -49,7 +46,6 @@ namespace Container.Interfaces
             Assert.AreEqual(typeof(Service), registration.RegisteredType);
             Assert.AreEqual(typeof(Service), registration.MappedToType);
             Assert.IsNull(registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
         [TestMethod]
@@ -80,7 +76,6 @@ namespace Container.Interfaces
             Assert.AreEqual(typeof(Service), registration.RegisteredType);
             Assert.AreEqual(typeof(Service), registration.MappedToType);
             Assert.AreEqual(Name, registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
         [TestMethod]
@@ -111,7 +106,6 @@ namespace Container.Interfaces
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
             Assert.AreEqual(typeof(Service), registration.MappedToType);
             Assert.IsNull(registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
         [TestMethod]
@@ -142,7 +136,6 @@ namespace Container.Interfaces
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
             Assert.AreEqual(typeof(Service), registration.MappedToType);
             Assert.AreEqual(Name, registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
         [TestMethod]
@@ -177,7 +170,6 @@ namespace Container.Interfaces
             Assert.AreEqual(typeof(Service), registration.RegisteredType);
             Assert.AreEqual(typeof(Service), registration.MappedToType);
             Assert.IsNull(registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
         [TestMethod]
@@ -208,7 +200,6 @@ namespace Container.Interfaces
             Assert.AreEqual(typeof(Service), registration.RegisteredType);
             Assert.AreEqual(typeof(Service), registration.MappedToType);
             Assert.AreEqual(Name, registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
         [TestMethod]
@@ -239,7 +230,6 @@ namespace Container.Interfaces
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
             Assert.AreEqual(typeof(Service), registration.MappedToType);
             Assert.IsNull(registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
         [TestMethod]
@@ -270,7 +260,6 @@ namespace Container.Interfaces
             Assert.AreEqual(typeof(IService), registration.RegisteredType);
             Assert.AreEqual(typeof(Service), registration.MappedToType);
             Assert.AreEqual(Name, registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
         }
 
         [TestMethod]

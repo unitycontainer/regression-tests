@@ -71,12 +71,6 @@ namespace Container.Interfaces
             //IUnityContainer CreateChildContainer();
         }
 
-        [TestMethod]
-        public void RegistrationsTest()
-        {
-            //IEnumerable<ContainerRegistration> Registrations { get; }
-        }
-
         #endregion
     }
 }

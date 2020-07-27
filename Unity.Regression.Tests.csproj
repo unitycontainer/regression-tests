@@ -37,6 +37,7 @@
     <None Remove="Container\Registrations\**" />
   </ItemGroup>
 
+
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2">
       <PrivateAssets>all</PrivateAssets>
@@ -53,6 +54,10 @@
     <None Remove="LICENSE" />
   </ItemGroup>
 
+  <ItemGroup> <!-- v5.0.0 and up -->
+    <Compile Condition="'$(TargetFramework)' == 'net45'" Remove="PublicAPI\RegisterFactory.cs" />
+    <Compile Condition="'$(TargetFramework)' == 'net45'" Remove="PublicAPI\RegisterSingleton.cs" />
+  </ItemGroup>
 
   <PropertyGroup>
     <DefineConstants Condition="'$(TargetFramework)' == 'net48'">$(DefineConstants);UNITY</DefineConstants>
