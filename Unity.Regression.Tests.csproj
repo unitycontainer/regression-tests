@@ -25,18 +25,6 @@
     <TargetFrameworks>net47;net46;net45</TargetFrameworks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Container\Extending\**" />
-    <Compile Remove="Container\Hierarchy\**" />
-    <Compile Remove="Container\Registrations\**" />
-    <EmbeddedResource Remove="Container\Extending\**" />
-    <EmbeddedResource Remove="Container\Hierarchy\**" />
-    <EmbeddedResource Remove="Container\Registrations\**" />
-    <None Remove="Container\Extending\**" />
-    <None Remove="Container\Hierarchy\**" />
-    <None Remove="Container\Registrations\**" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2">
@@ -65,10 +53,6 @@
     <PackageReference Condition="'$(TargetFramework)' == 'net46'" Include="Unity.Container" Version="5.11.*" />
     <PackageReference Condition="'$(TargetFramework)' == 'net45' AND !Exists('$(UnityLegacy)')" Include="Unity" Version="4.0.1" />
     <ProjectReference Condition="'$(TargetFramework)' == 'net45' AND Exists('$(UnityLegacy)')" Include="$(UnityLegacy)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Container\" />
   </ItemGroup>
 
 </Project>

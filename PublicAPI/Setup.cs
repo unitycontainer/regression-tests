@@ -13,10 +13,10 @@ namespace Container.Interfaces
     public partial class UnityContainerAPI
     {
         protected const string Name = "name";
-        IUnityContainer Container;
+        protected IUnityContainer Container;
 
         [TestInitialize]
-        public void TestInitialize() => Container = new UnityContainer();
+        public virtual void TestInitialize() => Container = new UnityContainer();
     }
 
     #region Test Data
