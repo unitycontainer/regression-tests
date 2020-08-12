@@ -22,7 +22,7 @@ namespace Container.Interfaces
         public void RegisterFactroryTest()
         {
             // Arrange
-            IFactoryLifetimeManager manager = new TransientLifetimeManager();
+            var manager = new TransientLifetimeManager();
 
             // Act
             Container.RegisterFactory(typeof(IService), Name, FullFactory, manager);
@@ -58,7 +58,7 @@ namespace Container.Interfaces
         public void RegisterFactrory_Short_T_Manager()
         {
             // Arrange
-            IFactoryLifetimeManager manager = new TransientLifetimeManager();
+            var manager = new TransientLifetimeManager();
 
             // Act
             Container.RegisterFactory<IService>(ShortFactory, manager);
@@ -89,7 +89,7 @@ namespace Container.Interfaces
         public void RegisterFactrory_Short_T_Name_Manager()
         {
             // Arrange
-            IFactoryLifetimeManager manager = new TransientLifetimeManager();
+            var manager = new TransientLifetimeManager();
 
             // Act
             Container.RegisterFactory<IService>(Name, ShortFactory, manager);
@@ -125,7 +125,7 @@ namespace Container.Interfaces
         public void RegisterFactrory_Full_T_Manager()
         {
             // Arrange
-            IFactoryLifetimeManager manager = new TransientLifetimeManager();
+            var manager = new TransientLifetimeManager();
 
             // Act
             Container.RegisterFactory<IService>(FullFactory, manager);
@@ -156,7 +156,7 @@ namespace Container.Interfaces
         public void RegisterFactrory_Full_T_Name_Manager()
         {
             // Arrange
-            IFactoryLifetimeManager manager = new TransientLifetimeManager();
+            var manager = new TransientLifetimeManager();
 
             // Act
             Container.RegisterFactory<IService>(Name, FullFactory, manager);
@@ -195,7 +195,7 @@ namespace Container.Interfaces
         public void RegisterFactrory_Short_Type_Manager()
         {
             // Arrange
-            IFactoryLifetimeManager manager = new TransientLifetimeManager();
+            var manager = new TransientLifetimeManager();
 
             // Act
             Container.RegisterFactory(typeof(IService), ShortFactory, manager);
@@ -226,7 +226,7 @@ namespace Container.Interfaces
         public void RegisterFactrory_Short_Type_Name_Manager()
         {
             // Arrange
-            IFactoryLifetimeManager manager = new TransientLifetimeManager();
+            var manager = new TransientLifetimeManager();
 
             // Act
             Container.RegisterFactory(typeof(IService), Name, ShortFactory, manager);
@@ -262,7 +262,7 @@ namespace Container.Interfaces
         public void RegisterFactrory_Full_Type_Manager()
         {
             // Arrange
-            IFactoryLifetimeManager manager = new TransientLifetimeManager();
+            var manager = new TransientLifetimeManager();
 
             // Act
             Container.RegisterFactory(typeof(IService), FullFactory, manager);
@@ -293,7 +293,7 @@ namespace Container.Interfaces
         public void RegisterFactrory_Full_Type_Name_Manager()
         {
             // Arrange
-            IFactoryLifetimeManager manager = new TransientLifetimeManager();
+            var manager = new TransientLifetimeManager();
 
             // Act
             Container.RegisterFactory(typeof(IService), Name, FullFactory, manager);

@@ -18,8 +18,7 @@ namespace Breaking.Changes
         #region Scaffolding
 
         IUnityContainer Container;
-        ContainerRegistrationComparer EqualityComparer = new ContainerRegistrationComparer();
-        IService Instance = new Service();
+        readonly ContainerRegistrationComparer EqualityComparer = new ContainerRegistrationComparer();
 
         [TestInitialize]
         public void TestInitialize() => Container = new UnityContainer();
@@ -53,6 +52,8 @@ namespace Breaking.Changes
         [TestMethod]
         public virtual void Registrations_InstanceType_MappedTo()
         {
+            IService Instance = new Service();
+
             // Arrange
             Container.RegisterInstance(typeof(IService), Instance);
 
@@ -72,7 +73,7 @@ namespace Breaking.Changes
         /// </remarks>
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void Registrations_Enumerable_IsImmutable()
+        public void Registrations_Enumerable_Is_Immutable()
         {
             Container.RegisterType<IService, Service>()
                      .RegisterType<IService, Service>("second");
@@ -89,6 +90,33 @@ namespace Breaking.Changes
             Assert.IsTrue(registrations1.SequenceEqual(registrations2, EqualityComparer));
             Assert.IsFalse(registrations1.SequenceEqual(Container.Registrations, EqualityComparer));
         }
+
+        /// <summary>
+        /// This method demonstrates a case where <see cref="Type"/> mapping created
+        /// with <see cref="InjectionConstructor"/> failed to build. 
+        /// </summary>
+        /// <remarks>
+        /// When any injection members are present, the mapping should never redirect to 
+        /// other registrations, instead it should create its own pipeline using 
+        /// provided <see cref="InjectionMember"/> instances.
+        /// </remarks>
+        [TestMethod]
+        public void Always_Build_If_Injected()
+        {
+            var instance = new Service<object>();
+
+            // Arrange
+            Container.RegisterType(typeof(IService<>), typeof(Service<>), new InjectionConstructor(typeof(object)))
+                     .RegisterInstance(instance);
+            // Act
+            var value = Container.Resolve<IService<object>>();
+
+            // Validate
+            Assert.IsNotNull(value);
+            // Should never be the same
+            Assert.AreNotSame(instance, value);
+        }
+
     }
 
     #region Test Data
@@ -98,6 +126,25 @@ namespace Breaking.Changes
 
     public class Service : IService
     { }
+
+    public interface IService<T>
+    {
+        string Id { get; }
+    }
+
+    public class Service<T> : IService<T>
+    {
+        public string Id { get; } = Guid.NewGuid().ToString();
+
+        public Service()
+        {
+        }
+
+        public Service(object inject)
+        {
+            Id = $"Ctor injected with: { inject.GetHashCode() }";
+        }
+    }
 
 #if NET46
     public class ContainerRegistrationComparer : IEqualityComparer<IContainerRegistration>

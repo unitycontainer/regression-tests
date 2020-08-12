@@ -42,9 +42,8 @@
     <None Remove="LICENSE" />
   </ItemGroup>
 
-  <ItemGroup> <!-- v5.0.0 and up -->
-    <Compile Condition="'$(TargetFramework)' == 'net45'" Remove="PublicAPI\RegisterFactory.cs" />
-    <Compile Condition="'$(TargetFramework)' == 'net45'" Remove="PublicAPI\RegisterSingleton.cs" />
+  <ItemGroup>
+    <Compile Condition="'$(TargetFramework)' != 'net45'" Remove="Compatibility.v4.cs" />
   </ItemGroup>
 
   <ItemGroup>
