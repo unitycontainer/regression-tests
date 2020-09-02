@@ -17,11 +17,15 @@
     <TargetFramework>net45</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="Exists('$(UnityContainer)')">
-    <TargetFramework>net48</TargetFramework>
+  <PropertyGroup Condition="Exists('$(UnityContainer)') AND Exists('..\Container\package.props')">
+    <TargetFramework>net46</TargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="!Exists('$(UnityContainer)') AND !Exists('$(UnityLegacy)') ">
+	<PropertyGroup Condition="Exists('$(UnityContainer)') AND !Exists('..\Container\package.props')">
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="!Exists('$(UnityContainer)') AND !Exists('$(UnityLegacy)') ">
     <TargetFrameworks>net47;net46;net45</TargetFrameworks>
   </PropertyGroup>
 
