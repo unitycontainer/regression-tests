@@ -1,7 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+#if NET45
+using Microsoft.Practices.Unity;
+#else
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
+#endif
 
 namespace Container.Resolution
 {
