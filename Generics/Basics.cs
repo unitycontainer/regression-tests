@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -53,7 +54,7 @@ namespace Generics
         /// There is a named <see cref="Other"/> registration
         /// </remarks>
         [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
         public void No_Default()
         {
             // Act
@@ -67,7 +68,7 @@ namespace Generics
         /// There are anonymous and named <see cref="Name"/> registrations
         /// </remarks>
         [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
         public void No_Name()
         {
             // Act

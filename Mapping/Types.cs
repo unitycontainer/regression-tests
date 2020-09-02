@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -118,7 +119,7 @@ namespace Mapping
 
 
         [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
         public void Throw_If_No_Matching_Registration()
         {
             // Arrange
