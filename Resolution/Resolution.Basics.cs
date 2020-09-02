@@ -30,5 +30,27 @@ namespace Container.Resolution
             Assert.IsNotNull(Container.Resolve<object>());
         }
 
+
+        [TestMethod]
+        public void ServiceRegistered()
+        {
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager());
+
+            // Act/Verify
+            Assert.IsNotNull(Container.Resolve<Service>());
+        }
     }
+
+    #region Test Data
+
+    public class Service 
+    {
+        public Service(IUnityContainer container)
+        {
+        }
+    }
+
+    #endregion
 }
+
+
