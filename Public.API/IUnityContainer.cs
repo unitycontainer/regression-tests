@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -16,8 +16,8 @@ namespace Public.API
     public partial class IUnityContainer_Interface
     {
         protected IUnityContainer Container;
-        protected Type TypeFrom = typeof(IList<>);
-        protected Type TypeTo   = typeof(List<>);
+        protected Type TypeFrom = typeof(IDictionary);
+        protected Type TypeTo   = typeof(Hashtable);
         protected const string Name = "name";
         protected InjectionConstructor Constructor = new InjectionConstructor();
         protected ContainerControlledLifetimeManager Manager = new ContainerControlledLifetimeManager();
@@ -44,7 +44,6 @@ namespace Public.API
             Assert.AreEqual(TypeFrom, registration.RegisteredType);
             Assert.AreEqual(TypeTo,   registration.MappedToType);
             Assert.AreEqual(Name,     registration.Name);
-            Assert.AreSame(Manager,   registration.LifetimeManager);
         }
 
 
@@ -52,14 +51,13 @@ namespace Public.API
         public void RegisterInstance()
         {
             // Act 
-            Container.RegisterInstance(TypeFrom, Name, TypeTo, Manager);
+            Container.RegisterInstance(TypeFrom, Name, new Hashtable(), Manager);
 
             // Validate
             var registration = Container.Registrations.Last();
 
             Assert.AreEqual(TypeFrom, registration.RegisteredType);
             Assert.AreEqual(Name, registration.Name);
-            Assert.AreSame(Manager, registration.LifetimeManager);
         }
 
         /*
