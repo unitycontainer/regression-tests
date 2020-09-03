@@ -82,7 +82,11 @@ namespace Resolution
         }
 
         [TestMethod]
+#if NET45
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+#else
         [ExpectedException(typeof(InvalidOperationException))]
+#endif
         public void AppropriateExceptionIsThrownWhenNoMatchingConstructorCanBeFound()
         {
             Container.RegisterType(typeof(ClassWithOneGenericParameter<>),

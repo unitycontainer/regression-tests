@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -67,7 +68,11 @@ namespace Resolution
         }
 
         [TestMethod]
+#if NET45
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+#else
         [ExpectedException(typeof(ResolutionFailedException))]
+#endif
         public void Named_null_Name_null()
         {
             // Arrange
@@ -83,7 +88,11 @@ namespace Resolution
         }
 
         [TestMethod]
+#if NET45
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+#else
         [ExpectedException(typeof(ResolutionFailedException))]
+#endif
         public void Named_null_Name_name()
         {
             // Arrange

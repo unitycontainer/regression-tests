@@ -54,6 +54,7 @@
 
   <ItemGroup>
     <Compile Condition="'$(TargetFramework)' != 'net45'" Remove="Compatibility.v4.cs" />
+	<Compile Condition="'$(TargetFramework)' == 'net45'" Remove="Resolution\Generic\Enumerables.cs" />
   </ItemGroup>
 
   <ItemGroup>
