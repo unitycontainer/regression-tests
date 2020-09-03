@@ -17,7 +17,7 @@ namespace Spec.Constructors
             // Arrange
             #region inject_count_first_arrange
 
-            Container.RegisterType<SampleType>( Invoke.Constructor( Resolve.Parameter() ));
+            Container.RegisterType<SampleType>(new InjectionConstructor(new GenericParameter("T")));
 
             #endregion
 
@@ -40,7 +40,7 @@ namespace Spec.Constructors
             // Arrange
             #region inject_count_first_arrange_generic
 
-            Container.RegisterType(typeof(SampleType<>), Invoke.Constructor( Resolve.Parameter() ));
+            Container.RegisterType(typeof(SampleType<>), new InjectionConstructor(new GenericParameter("T")));
 
             #endregion
 
@@ -67,9 +67,9 @@ namespace Spec.Constructors
                      .RegisterType<IService, ServiceTwo>("two");
 
             Container.RegisterType(typeof(SampleType<>),
-                Invoke.Constructor(
-                    Resolve.Parameter(),
-                    Resolve.Parameter()));
+                new InjectionConstructor(
+                    new ResolvedParameter(typeof(IService)),
+                    new GenericParameter("T")));
 
             var instance = Container.Resolve<SampleType<object>>();
 
@@ -93,9 +93,9 @@ namespace Spec.Constructors
             #region inject_count_name_override_generic
 
             Container.RegisterType(typeof(SampleType<>),
-                Invoke.Constructor(
-                    Resolve.Parameter("two"),
-                    Resolve.Parameter()));
+                new InjectionConstructor(
+                    new ResolvedParameter(typeof(IService),"two"),
+                    new GenericParameter("T")));
 
             var instance = Container.Resolve<SampleType<object>>();
 

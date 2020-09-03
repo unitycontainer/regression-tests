@@ -55,7 +55,7 @@ namespace Spec.Constructors
                     typeof(TypeWithMultipleCtors),             //  Type typeTo, 
                     typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
                     new object[] {
-                        Resolve.Parameter(typeof(string)),      //  object[] parameters, 
+                        new ResolvedParameter(typeof(string)),      //  object[] parameters, 
                         string.Empty,
                         string.Empty },
                     new Func<object, bool>(r =>                 //  Func<object, bool> validator
@@ -140,7 +140,7 @@ namespace Spec.Constructors
         public void Injection_Selection(string name, Type typeFrom, Type typeTo, Type typeToResolve, object[] parameters, Func<object, bool> validator)
         {
             // Setup
-            Container.RegisterType(typeFrom, typeTo, name, null, Invoke.Constructor(parameters));
+            Container.RegisterType(typeFrom, typeTo, name, null, new InjectionConstructor(parameters));
             Container.RegisterInstance(TypeWithMultipleCtors.Four);
             Container.RegisterInstance(TypeWithMultipleCtors.Five, TypeWithMultipleCtors.Five);
 
@@ -158,7 +158,7 @@ namespace Spec.Constructors
         public void Injection_Default(Type typeFrom, Type typeTo, string name, Type typeToResolve)
         {
             // Setup
-            Container.RegisterType(typeFrom, typeTo, name, null, Invoke.Constructor());
+            Container.RegisterType(typeFrom, typeTo, name, null, new InjectionConstructor());
 
             // Act
             var result = Container.Resolve(typeToResolve, name);
@@ -175,7 +175,7 @@ namespace Spec.Constructors
         public void Injection_DefaultCtorValidation(Type type, string name)
         {
             // Setup
-            Container.RegisterType((Type)null, type, name, null, Invoke.Constructor());
+            Container.RegisterType((Type)null, type, name, null, new InjectionConstructor());
 
             // Act
             var result = Container.Resolve(type, name);

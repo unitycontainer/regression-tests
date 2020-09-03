@@ -16,7 +16,7 @@ namespace Spec.Constructors
         public void Injection_NoDefaultConstructor()
         {
             // Act
-            Container.RegisterType<ClassWithTreeConstructors>(Invoke.Constructor());
+            Container.RegisterType<ClassWithTreeConstructors>(new InjectionConstructor());
         }
 
         [TestMethod]
@@ -25,7 +25,7 @@ namespace Spec.Constructors
         {
             // Act
             Container.RegisterType<ClassWithTreeConstructors>(
-                Invoke.Constructor(typeof(int), typeof(string)));
+                new InjectionConstructor(typeof(int), typeof(string)));
         }
 
 
@@ -35,7 +35,7 @@ namespace Spec.Constructors
         {
             // Act
             Container.RegisterType<ClassWithTreeConstructors>(
-                Invoke.Constructor( 1, "test"));
+                new InjectionConstructor( 1, "test"));
         }
 
 
@@ -43,9 +43,9 @@ namespace Spec.Constructors
         [TestMethod]
         public void Injection_SelectByValueTypes()
         {
-            Container.RegisterType<TypeWithMultipleCtors>(Invoke.Constructor(Inject.Parameter(typeof(string)),
-                Inject.Parameter(typeof(string)),
-                Inject.Parameter(typeof(int))));
+            Container.RegisterType<TypeWithMultipleCtors>(new InjectionConstructor(new InjectionParameter(typeof(string)),
+                new InjectionParameter(typeof(string)),
+                new InjectionParameter(typeof(int))));
             Assert.AreEqual(TypeWithMultipleCtors.Three, Container.Resolve<TypeWithMultipleCtors>().Signature);
         }
     }

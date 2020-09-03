@@ -18,7 +18,7 @@ namespace Spec.Constructors
             Container.RegisterType<Service>(new InjectionConstructor(_data));
 
             // Act
-            var value = Container.Resolve<Service>(Override.Dependency<string>(_override));
+            var value = Container.Resolve<Service>(new DependencyOverride<string>(_override));
 
             // Verify
             Assert.AreSame(_data, value.Data);

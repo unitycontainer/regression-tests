@@ -29,7 +29,7 @@ namespace Spec.Constructors
         {
             // Arrange
             Container.RegisterInstance(_data)
-                     .RegisterType<Foo>(Invoke.Constructor(_override));
+                     .RegisterType<Foo>(new InjectionConstructor(_override));
 
             // Act
             var value = Container.Resolve<Foo>();

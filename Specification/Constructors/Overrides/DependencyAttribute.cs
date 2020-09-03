@@ -25,7 +25,7 @@ namespace Spec.Constructors
             Assert.AreEqual(_override, instance.Data);
         }
 
-
+#if !NET45
         [TestMethod]
         public void Override_NamedDependencyLegacy()
         {
@@ -41,21 +41,6 @@ namespace Spec.Constructors
         }
 
         [TestMethod]
-        public void Override_Dependency()
-        {
-            // Arrange
-            Container.RegisterInstance(_data)
-                     .RegisterInstance(Name, Name);
-
-            // Act
-            var instance = Container.Resolve<CtorWithDependency>(Override.Dependency<string>(_override));
-
-            // Validate
-            Assert.AreEqual(_override, instance.Data);
-        }
-
-
-        [TestMethod]
         public void Override_NamedDependency()
         {
             // Arrange
@@ -64,6 +49,21 @@ namespace Spec.Constructors
 
             // Act
             var instance = Container.Resolve<CtorWithNamedDependency>(Override.Dependency<string>(Name, _override));
+
+            // Validate
+            Assert.AreEqual(_override, instance.Data);
+        }
+#endif
+
+        [TestMethod]
+        public void Override_Dependency()
+        {
+            // Arrange
+            Container.RegisterInstance(_data)
+                     .RegisterInstance(Name, Name);
+
+            // Act
+            var instance = Container.Resolve<CtorWithDependency>(new DependencyOverride<string>(_override));
 
             // Validate
             Assert.AreEqual(_override, instance.Data);

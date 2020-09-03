@@ -17,7 +17,7 @@ namespace Spec.Constructors
             // Arrange
             #region inject_default_ctor_arrange
 
-            Container.RegisterType<Service>(Invoke.Constructor());
+            Container.RegisterType<Service>(new InjectionConstructor());
 
             #endregion
 
@@ -40,7 +40,7 @@ namespace Spec.Constructors
             // Arrange
             #region inject_default_ctor_closed_generic_arrange
 
-            Container.RegisterType<Service<object>>(Invoke.Constructor());
+            Container.RegisterType<Service<object>>(new InjectionConstructor());
 
             #endregion
 
@@ -64,7 +64,7 @@ namespace Spec.Constructors
             // Arrange
             #region inject_default_ctor_open_generic_arrange
 
-            Container.RegisterType(typeof(Service<>), Invoke.Constructor());
+            Container.RegisterType(typeof(Service<>), new InjectionConstructor());
 
             #endregion
 

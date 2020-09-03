@@ -17,7 +17,7 @@ namespace Spec.Constructors
         {
             // Act
             Container.RegisterType<TypeWithAmbiguousCtors>(
-                Invoke.Constructor(Resolve.Parameter()));
+                new InjectionConstructor(new ResolvedParameter(typeof(object))));
         }
 
         [TestMethod]
@@ -25,8 +25,8 @@ namespace Spec.Constructors
         {
             // Arrange
             Container.RegisterType<TypeWithAmbiguousCtors>(
-                Invoke.Constructor(),
-                Invoke.Constructor());
+                new InjectionConstructor(),
+                new InjectionConstructor());
 
             // Act
             var instance = Container.Resolve<TypeWithAmbiguousCtors>();
