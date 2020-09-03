@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Regression.Tests;
 using System.Linq;
-using System.Collections.Generic;
 using System;
 #if NET45
 using Microsoft.Practices.Unity;
@@ -11,15 +9,15 @@ using Unity.Lifetime;
 using Unity;
 #endif
 
-namespace Container.Interfaces
+namespace Public.API
 {
-    public partial class UnityContainerAPI
+    public partial class IUnityContainer_Extensions
     {
         protected Func<IUnityContainer, object> ShortFactory = (c) => c;
         protected Func<IUnityContainer, Type, string, object> FullFactory = (c, t, n) => c;
 
         [TestMethod]
-        public void RegisterFactroryTest()
+        public void RegisterFactrory()
         {
             // Arrange
             var manager = new TransientLifetimeManager();
@@ -41,7 +39,7 @@ namespace Container.Interfaces
         #region Generics Short Factory overloads
 
         [TestMethod]
-        public void RegisterFactrory_Short_T()
+        public void RegisterFactrory_C_T()
         {
             // Act
             Container.RegisterFactory<IService>(ShortFactory);
@@ -55,7 +53,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Short_T_Manager()
+        public void RegisterFactrory_C_T_Manager()
         {
             // Arrange
             var manager = new TransientLifetimeManager();
@@ -72,7 +70,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Short_T_Name()
+        public void RegisterFactrory_C_T_Name()
         {
             // Act
             Container.RegisterFactory<IService>(Name, ShortFactory);
@@ -86,7 +84,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Short_T_Name_Manager()
+        public void RegisterFactrory_C_T_Name_Manager()
         {
             // Arrange
             var manager = new TransientLifetimeManager();
@@ -108,7 +106,7 @@ namespace Container.Interfaces
         #region Generics Full Factory overloads
 
         [TestMethod]
-        public void RegisterFactrory_Full_T()
+        public void RegisterFactrory_CTN_T()
         {
             // Act
             Container.RegisterFactory<IService>(FullFactory);
@@ -122,7 +120,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Full_T_Manager()
+        public void RegisterFactrory_CTN_T_Manager()
         {
             // Arrange
             var manager = new TransientLifetimeManager();
@@ -139,7 +137,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Full_T_Name()
+        public void RegisterFactrory_CTN_T_Name()
         {
             // Act
             Container.RegisterFactory<IService>(Name, FullFactory);
@@ -153,7 +151,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Full_T_Name_Manager()
+        public void RegisterFactrory_CTN_T_Name_Manager()
         {
             // Arrange
             var manager = new TransientLifetimeManager();
@@ -178,7 +176,7 @@ namespace Container.Interfaces
         #region Short Factory overloads
 
         [TestMethod]
-        public void RegisterFactrory_Short_Type()
+        public void RegisterFactrory_C_Type()
         {
             // Act
             Container.RegisterFactory(typeof(IService), ShortFactory);
@@ -192,7 +190,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Short_Type_Manager()
+        public void RegisterFactrory_C_Type_Manager()
         {
             // Arrange
             var manager = new TransientLifetimeManager();
@@ -209,7 +207,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Short_Type_Name()
+        public void RegisterFactrory_C_Type_Name()
         {
             // Act
             Container.RegisterFactory(typeof(IService), Name, ShortFactory);
@@ -223,7 +221,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Short_Type_Name_Manager()
+        public void RegisterFactrory_C_Type_Name_Manager()
         {
             // Arrange
             var manager = new TransientLifetimeManager();
@@ -245,7 +243,7 @@ namespace Container.Interfaces
         #region Full Factory overloads
 
         [TestMethod]
-        public void RegisterFactrory_Full_Type()
+        public void RegisterFactrory_CTN_Type()
         {
             // Act
             Container.RegisterFactory(typeof(IService), FullFactory);
@@ -259,7 +257,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Full_Type_Manager()
+        public void RegisterFactrory_CTN_Type_Manager()
         {
             // Arrange
             var manager = new TransientLifetimeManager();
@@ -276,7 +274,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Full_Type_Name()
+        public void RegisterFactrory_CTN_Type_Name()
         {
             // Act
             Container.RegisterFactory(typeof(IService), Name, FullFactory);
@@ -290,7 +288,7 @@ namespace Container.Interfaces
         }
 
         [TestMethod]
-        public void RegisterFactrory_Full_Type_Name_Manager()
+        public void RegisterFactrory_CTN_Type_Name_Manager()
         {
             // Arrange
             var manager = new TransientLifetimeManager();

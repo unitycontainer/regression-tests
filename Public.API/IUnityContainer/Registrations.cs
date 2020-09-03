@@ -9,12 +9,12 @@ using Unity.Lifetime;
 using Unity;
 #endif
 
-namespace Container.Interfaces
+namespace Public.API
 {
-    public partial class UnityContainerAPI
+    public partial class IUnityContainer_Extensions
     {
         [TestMethod]
-        public void RegistrationsTest()
+        public void Registrations()
         {
             Assert.IsNotNull(Container.Registrations);
         }

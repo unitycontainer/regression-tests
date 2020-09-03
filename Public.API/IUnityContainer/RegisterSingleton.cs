@@ -1,8 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Regression.Tests;
 using System.Linq;
-using System.Collections.Generic;
-using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -11,9 +8,9 @@ using Unity.Lifetime;
 using Unity;
 #endif
 
-namespace Container.Interfaces
+namespace Public.API
 {
-    public partial class UnityContainerAPI
+    public partial class IUnityContainer_Extensions
     {
         #region RegisterSingleton overloads
 
@@ -138,6 +135,5 @@ namespace Container.Interfaces
         #endregion
 
         #endregion
-
     }
 }

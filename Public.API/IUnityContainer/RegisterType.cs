@@ -8,12 +8,12 @@ using Unity.Lifetime;
 using Unity;
 #endif
 
-namespace Container.Interfaces
+namespace Public.API
 {
-    public partial class UnityContainerAPI
+    public partial class IUnityContainer_Extensions
     {
         [TestMethod]
-        public void RegisterTypeTest()
+        public void RegisterType()
         {
             // Arrange
             var typeFrom = typeof(IService);

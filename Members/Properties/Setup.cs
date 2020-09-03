@@ -1,31 +1,30 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
-using Unity.Injection;
-using Unity.Lifetime;
 using Unity;
 #endif
 
-namespace Container.Interfaces
+namespace Defaults.Property
 {
     [TestClass]
-    public partial class UnityContainerAPI
+    public partial class PropertyTests
     {
         protected const string Name = "name";
         protected IUnityContainer Container;
 
         [TestInitialize]
         public virtual void TestInitialize() => Container = new UnityContainer();
+
+        [TestMethod]
+        public void Baseline()
+        { }
     }
+
 
     #region Test Data
 
-    public interface IService
-    { }
-
-    public class Service : IService
-    { }
 
     #endregion
 }

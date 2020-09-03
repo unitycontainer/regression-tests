@@ -58,4 +58,9 @@
     <ProjectReference Condition="'$(TargetFramework)' == 'net45' AND Exists('$(UnityLegacy)')" Include="$(UnityLegacy)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Registration\Lifetime\" />
+    <Folder Include="Registration\Hierarchy\" />
+  </ItemGroup>
+
 </Project>

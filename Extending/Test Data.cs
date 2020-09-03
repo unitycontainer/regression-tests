@@ -4,7 +4,7 @@ using Microsoft.Practices.Unity;
 using Unity.Extension;
 #endif
 
-namespace Container.Extending
+namespace Extending.Container
 {
     public interface IMockConfiguration
     {

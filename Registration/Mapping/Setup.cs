@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace Mapping
+namespace Registrations.Mapping
 {
     #region Test Data
 

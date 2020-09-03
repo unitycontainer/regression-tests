@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Unity.Regression.Tests;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -8,7 +7,7 @@ using Unity;
 #endif
 
 
-namespace Container.Extending
+namespace Extending.Container
 {
     [TestClass]
     public class UnityExtensionTests

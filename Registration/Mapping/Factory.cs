@@ -7,7 +7,7 @@ using Unity.Lifetime;
 using Unity;
 #endif
 
-namespace Mapping
+namespace Registrations.Mapping
 {
     [TestClass]
     public class Factory
