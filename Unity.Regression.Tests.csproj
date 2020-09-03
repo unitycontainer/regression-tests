@@ -29,6 +29,12 @@
     <TargetFrameworks>net47;net46;net45</TargetFrameworks>
   </PropertyGroup>
 
+	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+	  <None Remove="Members\Variants\**" />
+	  <Compile Remove="Members\Variants\**" />
+	  <EmbeddedResource Remove="Members\Variants\**" />
+	</ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2">
