@@ -12,6 +12,7 @@ namespace Spec.Constructors
 {
     public partial class Constructors
     {
+#if !NET45
         [TestMethod]
         public void Injection_ByCountFirst()
         {
@@ -34,6 +35,7 @@ namespace Spec.Constructors
             // Validate
             Assert.AreEqual(1, instance.Ctor);
         }
+#endif
 
         [TestMethod]
         public void Injection_ByCountFirstGeneric()
