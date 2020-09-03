@@ -12,6 +12,7 @@ namespace Spec.Constructors
     public partial class BuiltUp : Constructors
     {
 #if !NET45
+        [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
@@ -22,31 +23,34 @@ namespace Spec.Constructors
     [TestClass]
     public partial class Compiled : Constructors
     {
-#if !NET45
+        [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
+#if !NET45
             Container.AddExtension(new ForceCompillation());
-        }
 #endif
+        }
     }
 
     [TestClass]
     public partial class Activated : Constructors
     {
-#if !NET45
+        [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
+#if !NET45
             Container.AddExtension(new ForceActivation());
-        }
 #endif
+        }
     }
 
     [TestClass]
     public partial class BuiltUp_Diagnostic : Constructors_Diagnostic
     {
 #if !NET45
+        [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
@@ -57,24 +61,26 @@ namespace Spec.Constructors
     [TestClass]
     public partial class Compiled_Diagnostic : Constructors_Diagnostic
     {
-#if !NET45
+        [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
+#if !NET45
             Container.AddExtension(new ForceCompillation());
-        }
 #endif
+        }
     }
 
     [TestClass]
     public partial class Activated_Diagnostic : Constructors_Diagnostic
     {
-#if !NET45
+        [TestInitialize]
         public override void TestInitialize()
         {
             base.TestInitialize();
+#if !NET45
             Container.AddExtension(new ForceActivation());
-        }
 #endif
+        }
     }
 }
