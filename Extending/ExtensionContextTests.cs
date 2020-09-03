@@ -10,7 +10,7 @@ using Unity;
 #endif
 
 
-namespace Extending.Container
+namespace Extending
 {
     [TestClass]
     public partial class ExtensionContextTests

@@ -6,10 +6,24 @@ using Microsoft.Practices.Unity;
 using Unity;
 #endif
 
-namespace Constructors.Diagnostic
+namespace Spec.Fields
 {
     [TestClass]
-    public partial class Specification : Constructors.Specification
+    public partial class Fields
+    {
+        protected const string Name = "name";
+        protected IUnityContainer Container;
+
+        [TestInitialize]
+        public virtual void TestInitialize() => Container = new UnityContainer();
+
+        [TestMethod]
+        public void Baseline()
+        { }
+    }
+
+    [TestClass]
+    public partial class Fields_Diagnostic : Fields
     {
         [TestInitialize]
 #if NET45
@@ -18,6 +32,10 @@ namespace Constructors.Diagnostic
         public override void TestInitialize() => Container = new UnityContainer()
             .AddExtension(new Unity.Diagnostic());
 #endif
+
+        [TestMethod]
+        public void Baseline_Diagnostic()
+        { }
     }
 
 

@@ -1,15 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
 using Unity;
 #endif
 
-namespace Defaults.Parameter
+namespace Registrations
 {
+
     [TestClass]
-    public partial class ParameterTests
+    public partial class Lifetime
     {
         protected const string Name = "name";
         protected IUnityContainer Container;
@@ -24,7 +24,6 @@ namespace Defaults.Parameter
 
 
     #region Test Data
-
 
     #endregion
 }

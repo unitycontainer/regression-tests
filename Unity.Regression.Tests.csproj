@@ -30,9 +30,9 @@
   </PropertyGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-	  <None Remove="Members\Variants\**" />
-	  <Compile Remove="Members\Variants\**" />
-	  <EmbeddedResource Remove="Members\Variants\**" />
+	  <None Remove="Specification\Variants\**" />
+	  <Compile Remove="Specification\Variants\**" />
+	  <EmbeddedResource Remove="Specification\Variants\**" />
 	</ItemGroup>
 
 
@@ -62,11 +62,6 @@
     <PackageReference Condition="'$(TargetFramework)' == 'net46'" Include="Unity.Container" Version="5.11.*" />
     <PackageReference Condition="'$(TargetFramework)' == 'net45' AND !Exists('$(UnityLegacy)')" Include="Unity" Version="4.0.1" />
     <ProjectReference Condition="'$(TargetFramework)' == 'net45' AND Exists('$(UnityLegacy)')" Include="$(UnityLegacy)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Registration\Lifetime\" />
-    <Folder Include="Registration\Hierarchy\" />
   </ItemGroup>
 
 </Project>

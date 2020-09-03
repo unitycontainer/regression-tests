@@ -7,7 +7,7 @@ using Unity;
 #endif
 
 
-namespace Extending.Container
+namespace Extending
 {
     [TestClass]
     public class ChildContainerTests

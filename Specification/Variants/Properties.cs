@@ -6,10 +6,10 @@ using Microsoft.Practices.Unity;
 using Unity;
 #endif
 
-namespace Constructors 
+namespace Spec.Properties
 {
     [TestClass]
-    public partial class BuiltUp : Specification
+    public partial class BuiltUp : Properties
     {
 #if !NET45
         public override void TestInitialize()
@@ -20,7 +20,7 @@ namespace Constructors
     }
 
     [TestClass]
-    public partial class Compiled : Specification
+    public partial class Compiled : Properties
     {
 #if !NET45
         public override void TestInitialize()
@@ -32,7 +32,7 @@ namespace Constructors
     }
 
     [TestClass]
-    public partial class Activated : Specification
+    public partial class Activated : Properties
     {
 #if !NET45
         public override void TestInitialize()
@@ -42,13 +42,9 @@ namespace Constructors
         }
 #endif
     }
-}
-
-namespace Constructors.Diagnostic
-{
 
     [TestClass]
-    public partial class BuiltUp : Specification
+    public partial class BuiltUp_Diagnostic : Properties_Diagnostic
     {
 #if !NET45
         public override void TestInitialize()
@@ -59,7 +55,7 @@ namespace Constructors.Diagnostic
     }
 
     [TestClass]
-    public partial class Compiled : Specification
+    public partial class Compiled_Diagnostic : Properties_Diagnostic
     {
 #if !NET45
         public override void TestInitialize()
@@ -71,7 +67,7 @@ namespace Constructors.Diagnostic
     }
 
     [TestClass]
-    public partial class Activated : Specification
+    public partial class Activated_Diagnostic : Properties_Diagnostic
     {
 #if !NET45
         public override void TestInitialize()
