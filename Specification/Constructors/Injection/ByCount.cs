@@ -4,6 +4,7 @@ using System;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 using Unity.Resolution;
 #endif
 
@@ -17,7 +18,7 @@ namespace Spec.Constructors
             // Arrange
             #region inject_count_first_arrange
 
-            Container.RegisterType<SampleType>(new InjectionConstructor(new GenericParameter("T")));
+            Container.RegisterType<SampleType>(new InjectionConstructor(new ResolvedParameter()));
 
             #endregion
 
