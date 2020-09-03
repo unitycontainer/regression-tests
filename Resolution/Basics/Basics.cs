@@ -145,7 +145,11 @@ namespace Resolution
         }
 
         [TestMethod]
+#if NET45
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+#else
         [ExpectedException(typeof(ResolutionFailedException))]
+#endif
         public void NamedTypeNegative()
         {
             // Arrange
@@ -157,7 +161,11 @@ namespace Resolution
         }
 
         [TestMethod]
+#if NET45
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+#else
         [ExpectedException(typeof(ResolutionFailedException))]
+#endif
         public void NamedInstanceNegative()
         {
             // Arrange
@@ -169,7 +177,11 @@ namespace Resolution
         }
 
         [TestMethod]
+#if NET45
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+#else
         [ExpectedException(typeof(ResolutionFailedException))]
+#endif
         public void NamedFactoryNegative()
         {
             // Arrange
@@ -181,7 +193,11 @@ namespace Resolution
         }
 
         [TestMethod]
+#if NET45
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+#else
         [ExpectedException(typeof(InvalidOperationException))]
+#endif
         public void UserExceptionIsNotWrappad()
         {
             // Arrange

@@ -35,7 +35,7 @@ namespace Resolution
         {
             // Act/Verify
             var instance1 = Container.Resolve(typeof(Foo));
-            Container.RegisterType<Foo>(TypeLifetime.PerContainer, Invoke.Constructor());
+            Container.RegisterType<Foo>(new ContainerControlledLifetimeManager(), new InjectionConstructor());
             var instance2 = Container.Resolve(typeof(Foo));
             var instance3 = Container.Resolve(typeof(Foo));
 

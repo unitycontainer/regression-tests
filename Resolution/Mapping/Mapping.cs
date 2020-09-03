@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -43,7 +44,7 @@ namespace Resolution
             var factory = new Foo();
 
             Container.RegisterType<Foo>();
-            Container.RegisterInstance(Name, instance, InstanceLifetime.Singleton);
+            Container.RegisterInstance(Name, instance, new ContainerControlledLifetimeManager());
             Container.RegisterFactory<Foo>(Legacy, (c, t, n) => factory);
 
             // Act
@@ -160,7 +161,11 @@ namespace Resolution
         }
 
         [TestMethod]
+#if NET45
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+#else
         [ExpectedException(typeof(ResolutionFailedException))]
+#endif
         public void ThrowsExceptionOnNagative()
         {
             Container.RegisterType<IFoo1, IFoo1>();

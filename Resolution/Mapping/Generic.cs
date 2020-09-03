@@ -14,7 +14,7 @@ namespace Resolution
         public void GenericClosed()
         {
             // Arrange
-            Container.RegisterType(typeof(Test<int>), TypeLifetime.PerContainer);
+            Container.RegisterType(typeof(Test<int>), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITest1<int>), typeof(Test<int>));
             Container.RegisterType(typeof(ITest2<int>), typeof(Test<int>));
 
@@ -33,7 +33,7 @@ namespace Resolution
         public void GenericOpen()
         {
             // Arrange
-            Container.RegisterType(typeof(Test<>), TypeLifetime.PerContainer);
+            Container.RegisterType(typeof(Test<>), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITest1<>), typeof(Test<>));
             Container.RegisterType(typeof(ITest2<>), typeof(Test<>));
 
@@ -52,7 +52,7 @@ namespace Resolution
         public void OpenGenericServicesCanBeResolved()
         {
             // Arrange
-            Container.RegisterType<IService, Service>(TypeLifetime.PerContainer);
+            Container.RegisterType<IService, Service>(new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
 
             // Act
