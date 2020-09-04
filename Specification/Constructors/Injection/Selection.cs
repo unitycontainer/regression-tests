@@ -10,7 +10,7 @@ using Unity.Lifetime;
 using Unity.Resolution;
 #endif
 
-namespace Spec.Constructors
+namespace Specification
 {
     public partial class Constructors
     {

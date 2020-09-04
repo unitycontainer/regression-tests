@@ -56,7 +56,7 @@
 	<!-- Not supported by v4 -->
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-		<Compile Remove="Resolution\Generic\Enumerables.cs" />
+		<Compile Remove="Resolving\Generic\Enumerables.cs" />
 		<Compile Remove="Specification\Constructors\Parameters\WithDefault.v5.cs" />
 		<Compile Remove="Specification\Variants\**" />
 		<None Remove="Specification\Variants\**" />

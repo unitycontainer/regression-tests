@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 using Unity;
 #endif
 
-namespace Spec.Properties
+namespace Specification
 {
     [TestClass]
     public partial class Properties

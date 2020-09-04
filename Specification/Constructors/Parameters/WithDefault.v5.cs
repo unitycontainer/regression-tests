@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;
 
-namespace Spec.Constructors
+namespace Specification
 {
     /// <summary>
     /// Tests in this file are only supported in Unity v5 and up

@@ -7,7 +7,7 @@ using Unity;
 using Unity.Resolution;
 #endif
 
-namespace Spec.Constructors
+namespace Specification
 {
     public partial class Constructors
     {

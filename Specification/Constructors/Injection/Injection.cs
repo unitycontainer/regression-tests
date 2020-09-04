@@ -8,7 +8,7 @@ using Unity.Injection;
 using Unity.Resolution;
 #endif
 
-namespace Spec.Constructors
+namespace Specification
 {
     public partial class Constructors
     {

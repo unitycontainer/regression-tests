@@ -4,7 +4,7 @@ using Microsoft.Practices.Unity;
 using Unity;
 #endif
 
-namespace Spec.Constructors
+namespace Specification
 {
     public partial class Constructors
     {

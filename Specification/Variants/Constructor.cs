@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Specification;
 using System;
 #if NET45
 using Microsoft.Practices.Unity;
@@ -6,10 +7,10 @@ using Microsoft.Practices.Unity;
 using Unity;
 #endif
 
-namespace Spec.Constructors
+namespace Specification.Variants
 {
     [TestClass]
-    public partial class BuiltUp : Constructors
+    public partial class Constructors_BuiltUp : Specification.Constructors
     {
 #if !NET45
         [TestInitialize]
@@ -21,7 +22,7 @@ namespace Spec.Constructors
     }
 
     [TestClass]
-    public partial class Compiled : Constructors
+    public partial class Constructors_Compiled : Specification.Constructors
     {
         [TestInitialize]
         public override void TestInitialize()
@@ -34,7 +35,7 @@ namespace Spec.Constructors
     }
 
     [TestClass]
-    public partial class Activated : Constructors
+    public partial class Constructors_Activated : Specification.Constructors
     {
         [TestInitialize]
         public override void TestInitialize()
@@ -47,7 +48,7 @@ namespace Spec.Constructors
     }
 
     [TestClass]
-    public partial class BuiltUp_Diagnostic : Constructors_Diagnostic
+    public partial class Constructors_BuiltUp_Diagnostic : Specification.Constructors_Diagnostic
     {
 #if !NET45
         [TestInitialize]
@@ -59,7 +60,7 @@ namespace Spec.Constructors
     }
 
     [TestClass]
-    public partial class Compiled_Diagnostic : Constructors_Diagnostic
+    public partial class Constructors_Compiled_Diagnostic : Specification.Constructors_Diagnostic
     {
         [TestInitialize]
         public override void TestInitialize()
@@ -72,7 +73,7 @@ namespace Spec.Constructors
     }
 
     [TestClass]
-    public partial class Activated_Diagnostic : Constructors_Diagnostic
+    public partial class Constructors_Activated_Diagnostic : Specification.Constructors_Diagnostic
     {
         [TestInitialize]
         public override void TestInitialize()

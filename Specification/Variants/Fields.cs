@@ -6,10 +6,10 @@ using Microsoft.Practices.Unity;
 using Unity;
 #endif
 
-namespace Spec.Fields
+namespace Specification.Variants
 {
     [TestClass]
-    public partial class BuiltUp : Fields
+    public partial class Fields_BuiltUp : Specification.Fields
     {
 #if !NET45
         public override void TestInitialize()
@@ -20,7 +20,7 @@ namespace Spec.Fields
     }
 
     [TestClass]
-    public partial class Compiled : Fields
+    public partial class Fields_Compiled : Specification.Fields
     {
 #if !NET45
         public override void TestInitialize()
@@ -32,7 +32,7 @@ namespace Spec.Fields
     }
 
     [TestClass]
-    public partial class Activated : Fields
+    public partial class Fields_Activated : Specification.Fields
     {
 #if !NET45
         public override void TestInitialize()
@@ -44,7 +44,7 @@ namespace Spec.Fields
     }
 
     [TestClass]
-    public partial class BuiltUp_Diagnostic : Fields_Diagnostic
+    public partial class Fields_BuiltUp_Diagnostic : Specification.Fields_Diagnostic
     {
 #if !NET45
         public override void TestInitialize()
@@ -55,7 +55,7 @@ namespace Spec.Fields
     }
 
     [TestClass]
-    public partial class Compiled_Diagnostic : Fields_Diagnostic
+    public partial class Fields_Compiled_Diagnostic : Specification.Fields_Diagnostic
     {
 #if !NET45
         public override void TestInitialize()
@@ -67,7 +67,7 @@ namespace Spec.Fields
     }
 
     [TestClass]
-    public partial class Activated_Diagnostic : Fields_Diagnostic
+    public partial class Fields_Activated_Diagnostic : Specification.Fields_Diagnostic
     {
 #if !NET45
         public override void TestInitialize()

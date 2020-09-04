@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 using Unity;
 #endif
 
-namespace Spec.Methods
+namespace Specification
 {
     [TestClass]
     public partial class Methods

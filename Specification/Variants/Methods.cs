@@ -6,10 +6,10 @@ using Microsoft.Practices.Unity;
 using Unity;
 #endif
 
-namespace Spec.Methods
+namespace Specification.Variants
 {
     [TestClass]
-    public partial class BuiltUp : Methods
+    public partial class Methods_BuiltUp : Specification.Methods
     {
 #if !NET45
         public override void TestInitialize()
@@ -20,7 +20,7 @@ namespace Spec.Methods
     }
 
     [TestClass]
-    public partial class Compiled : Methods
+    public partial class Methods_Compiled : Specification.Methods
     {
 #if !NET45
         public override void TestInitialize()
@@ -32,7 +32,7 @@ namespace Spec.Methods
     }
 
     [TestClass]
-    public partial class Activated : Methods
+    public partial class Methods_Activated : Specification.Methods
     {
 #if !NET45
         public override void TestInitialize()
@@ -44,7 +44,7 @@ namespace Spec.Methods
     }
 
     [TestClass]
-    public partial class BuiltUp_Diagnostic : Methods_Diagnostic
+    public partial class Methods_BuiltUp_Diagnostic : Specification.Methods_Diagnostic
     {
 #if !NET45
         public override void TestInitialize()
@@ -55,7 +55,7 @@ namespace Spec.Methods
     }
 
     [TestClass]
-    public partial class Compiled_Diagnostic : Methods_Diagnostic
+    public partial class Methods_Compiled_Diagnostic : Specification.Methods_Diagnostic
     {
 #if !NET45
         public override void TestInitialize()
@@ -67,7 +67,7 @@ namespace Spec.Methods
     }
 
     [TestClass]
-    public partial class Activated_Diagnostic : Methods_Diagnostic
+    public partial class Methods_Activated_Diagnostic : Specification.Methods_Diagnostic
     {
 #if !NET45
         public override void TestInitialize()
