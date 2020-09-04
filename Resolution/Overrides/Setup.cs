@@ -18,8 +18,8 @@ namespace Resolution
         {
             Container = new UnityContainer();
             Container.RegisterType<ObjectWithProperty>(
-                    Invoke.Constructor(),
-                    Resolve.Property(nameof(ObjectWithProperty.MyProperty)))
+                    new InjectionConstructor(),
+                    new InjectionProperty(nameof(ObjectWithProperty.MyProperty)))
                 .RegisterType<IService, Service1>()
                 .RegisterType<IService, Service2>(Name)
                 .RegisterInstance(Name);

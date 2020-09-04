@@ -119,10 +119,10 @@ namespace Microsoft.Practices.Unity
     {
         #region Array
 
-        public static ParameterBase Array(Type elementType, params object[] elementValues)
+        public static ResolvedArrayParameter Array(Type elementType, params object[] elementValues)
             => new ResolvedArrayParameter(elementType, elementValues);
 
-        public static ParameterBase Array<TElement>(params object[] elementValues)
+        public static ResolvedArrayParameter Array<TElement>(params object[] elementValues)
             => new ResolvedArrayParameter(typeof(TElement), elementValues);
 
         #endregion
@@ -130,21 +130,22 @@ namespace Microsoft.Practices.Unity
 
         #region Parameter
 
-        public static ParameterBase Parameter(object value) => new InjectionParameter(value);
+        public static InjectionParameter Parameter(object value) => new InjectionParameter(value);
 
-        public static ParameterBase Parameter(Type type, object value)
+        public static InjectionParameter Parameter(Type type, object value)
             => new InjectionParameter(type ?? throw new ArgumentNullException(nameof(type)), value);
-        public static ParameterBase Parameter<TTarget>(object value) => new InjectionParameter(typeof(TTarget), value);
+
+        public static InjectionParameter Parameter<TTarget>(object value) => new InjectionParameter(typeof(TTarget), value);
 
         #endregion
 
 
-        #region Field
+        //#region Field
 
-        public static InjectionMember Field(string name, object value)
-            => new InjectionField(name ?? throw new ArgumentNullException(nameof(name)), value);
+        //public static InjectionMember Field(string name, object value)
+        //    => new InjectionField(name ?? throw new ArgumentNullException(nameof(name)), value);
 
-        #endregion
+        //#endregion
 
 
         #region Property
@@ -155,4 +156,125 @@ namespace Microsoft.Practices.Unity
         #endregion
     }
 
+    public static partial class Override
+    {
+        public static ResolverOverride Property(string name, object value) => new PropertyOverride(name, value);
+
+
+        #region Field
+
+        //public static ResolverOverride Field(string name, object value) => new FieldOverride(name, value);
+
+        #endregion
+
+
+        #region Parameter
+
+        //public static ResolverOverride Parameter(object value)
+        //    => new ParameterOverride(value?.GetType() ?? throw new ArgumentNullException(nameof(value)), value);
+
+
+        public static ResolverOverride Parameter(string name, object value)
+            => new ParameterOverride(name, value);
+
+        //public static ResolverOverride Parameter(Type type, object value)
+        //    => new ParameterOverride(type, value);
+
+
+        public static ResolverOverride Parameter(Type type, string name, object value)
+            => new ParameterOverride(name, value).OnType(type);
+
+        //public static ResolverOverride Parameter<TType>(object value)
+        //    => new ParameterOverride(typeof(TType), value);
+
+        public static ResolverOverride Parameter<TType>(string name, object value)
+            => Parameter(typeof(TType), name, value);
+
+        #endregion
+
+
+        #region Dependency
+
+        //public static ResolverOverride Dependency(object value)
+        //    => Dependency(value?.GetType() ?? throw new ArgumentNullException(nameof(value)), null, value);
+
+        //public static ResolverOverride Dependency(string name, object value)
+        //    => Dependency(value?.GetType() ?? throw new ArgumentNullException(nameof(value)), name, value);
+
+
+        public static ResolverOverride Dependency(Type type, object value)
+        {
+            return new DependencyOverride(type, value);
+        }
+
+        //public static ResolverOverride Dependency(Type type, string? name, object value)
+        //{
+        //    return new DependencyOverride(type, name, value);
+        //}
+
+
+        public static ResolverOverride Dependency<TType>(object value)
+            => new DependencyOverride(typeof(TType), value);
+
+        //public static ResolverOverride Dependency<TType>(string? name, object value)
+        //    => new DependencyOverride(typeof(TType), name, value);
+
+        #endregion
+    }
+
+    public static partial class Resolve
+    {
+        #region Dependency
+
+        public static ResolvedParameter Dependency<TTarget>() => new ResolvedParameter(typeof(TTarget));
+
+        public static ResolvedParameter Dependency<TTarget>(string name) => new ResolvedParameter(typeof(TTarget), name);
+
+        #endregion
+
+
+        #region Parameter
+
+
+        public static ResolvedParameter Parameter(Type type) => new ResolvedParameter(type);
+
+        public static ResolvedParameter Parameter<TTarget>() => new ResolvedParameter(typeof(TTarget));
+
+        public static ResolvedParameter Parameter(Type type, string name) => new ResolvedParameter(type, name);
+
+        public static ResolvedParameter Parameter<TTarget>(string name) => new ResolvedParameter(typeof(TTarget), name);
+
+        #endregion
+
+
+        #region Generic
+
+        public static GenericParameter Generic(string genericParameterName) => new GenericParameter(genericParameterName);
+
+        public static GenericParameter Generic(string genericParameterName, string registrationName) => new GenericParameter(genericParameterName, registrationName);
+
+        #endregion
+
+
+        #region Optional
+
+
+        public static OptionalParameter Optional(Type type) => new OptionalParameter(type);
+
+        public static OptionalParameter Optional<TTarget>() => new OptionalParameter(typeof(TTarget));
+
+        public static OptionalParameter Optional(Type type, string name) => new OptionalParameter(type, name);
+
+        public static OptionalParameter Optional<TTarget>(string name) => new OptionalParameter(typeof(TTarget), name);
+
+        #endregion
+
+        #region Property
+
+        public static InjectionMember Property(string name) => new InjectionProperty(name ?? throw new ArgumentNullException(nameof(name)));
+
+        public static InjectionMember OptionalProperty(string name) => new InjectionProperty(name ?? throw new ArgumentNullException(nameof(name)), true);
+
+        #endregion
+    }
 }
