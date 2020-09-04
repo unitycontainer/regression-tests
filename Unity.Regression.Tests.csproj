@@ -29,13 +29,6 @@
 		<TargetFrameworks>net47;net46;net45</TargetFrameworks>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-		<None Remove="Specification\Variants\**" />
-		<Compile Remove="Specification\Variants\**" />
-		<EmbeddedResource Remove="Specification\Variants\**" />
-	</ItemGroup>
-
-
 	<ItemGroup>
 		<PackageReference Include="MSTest.TestAdapter" Version="2.1.2">
 			<PrivateAssets>all</PrivateAssets>
@@ -56,6 +49,8 @@
 
 	<ItemGroup>
 		<Compile Condition="'$(TargetFramework)' != 'net45'" Remove="Compatibility.v4.cs" />
+		<Compile Condition="'$(TargetFramework)' != 'net45'" Remove="Breaking Changes\BreakingChanges.v4.cs" />
+		<Compile Condition="'$(TargetFramework)' != 'net46'" Remove="Breaking Changes\BreakingChanges.v5.cs" />
 	</ItemGroup>
 
 	<!-- Not supported by v4 -->
@@ -63,6 +58,17 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
 		<Compile Remove="Resolution\Generic\Enumerables.cs" />
 		<Compile Remove="Specification\Constructors\Parameters\WithDefault.v5.cs" />
+		<Compile Remove="Specification\Variants\**" />
+		<None Remove="Specification\Variants\**" />
+		<EmbeddedResource Remove="Specification\Variants\**" />
+	</ItemGroup>
+	
+	<!--Relese Buid-->
+
+	<ItemGroup Condition=" '$(Configuration)' == 'Release'">
+		<None Remove="Breaking Changes\**" />
+		<Compile Remove="Breaking Changes\**" />
+		<EmbeddedResource Remove="Breaking Changes\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,6 +77,10 @@
 		<PackageReference Condition="'$(TargetFramework)' == 'net46'" Include="Unity.Container" Version="5.11.*" />
 		<PackageReference Condition="'$(TargetFramework)' == 'net45' AND !Exists('$(UnityLegacy)')" Include="Unity" Version="4.0.1" />
 		<ProjectReference Condition="'$(TargetFramework)' == 'net45' AND Exists('$(UnityLegacy)')" Include="$(UnityLegacy)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Breaking Changes\" />
 	</ItemGroup>
 
 </Project>
