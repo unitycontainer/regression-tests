@@ -48,15 +48,18 @@
 	<!-- Build Compatibility -->
 
 	<ItemGroup>
-		<Compile Condition="'$(TargetFramework)' != 'net45'" Remove="Compatibility.v4.cs" />
-		<Compile Condition="'$(TargetFramework)' != 'net45'" Remove="Breaking Changes\BreakingChanges.v4.cs" />
 		<Compile Condition="'$(TargetFramework)' != 'net46'" Remove="Breaking Changes\BreakingChanges.v5.cs" />
 	</ItemGroup>
 
 	<!-- Not supported by v4 -->
 
+	<ItemGroup Condition="'$(TargetFramework)' != 'net45'">
+		<Compile Remove="Breaking Changes\BreakingChanges.v4.cs" />
+		<Compile Remove="Public.API\Compatibility\Compatibility.V4.cs" />
+	</ItemGroup>
+
 	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-		<Compile Remove="Resolving\Generic\Enumerables.cs" />
+		<Compile Remove="Resolution\Generic\Enumerables.cs" />
 		<Compile Remove="Specification\Constructors\Parameters\WithDefault.v5.cs" />
 		<Compile Remove="Specification\Variants\**" />
 		<None Remove="Specification\Variants\**" />
@@ -81,6 +84,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Breaking Changes\" />
+	  <Folder Include="Public.API\Compatibility\" />
 	</ItemGroup>
 
 </Project>
