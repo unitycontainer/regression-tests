@@ -39,6 +39,7 @@ namespace Spec.Constructors
 
     }
 
+#if !NET45
     public partial class Constructors_Diagnostic
     {
         [TestMethod]
@@ -46,4 +47,5 @@ namespace Spec.Constructors
         public override void Injection_MultipleConstructor() 
             => base.Injection_MultipleConstructor();
     }
+#endif
 }

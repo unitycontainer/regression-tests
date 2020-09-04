@@ -26,6 +26,7 @@ namespace Spec.Constructors
         }
     }
 
+#if !NET45
 
     public partial class Constructors_Diagnostic
     {
@@ -35,4 +36,5 @@ namespace Spec.Constructors
             => base.Override_CtorParameter();
     }
 
+#endif
 }

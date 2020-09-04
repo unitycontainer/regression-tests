@@ -207,7 +207,12 @@ namespace Spec.Constructors
                 Signature = first;
             }
 
-            public TypeWithMultipleCtors(string first, [Dependency(Five)]string second, IUnityContainer third)
+            public TypeWithMultipleCtors(string first, [Dependency]string second, Type third)
+            {
+                Signature = second;
+            }
+
+            public TypeWithMultipleCtors(string first, [Dependency(Five)] string second, IUnityContainer third)
             {
                 Signature = second;
             }

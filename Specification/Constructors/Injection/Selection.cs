@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 #else
 using Unity;
 using Unity.Injection;
+using Unity.Lifetime;
 using Unity.Resolution;
 #endif
 
@@ -63,7 +64,21 @@ namespace Spec.Constructors
                         TypeWithMultipleCtors.Four == ((TypeWithMultipleCtors)r).Signature)
                 };
 
-
+                // ResolveUnNamedTypeArgument
+                yield return new object[]
+                {
+                    "ResolveUnNamedTypeArgument",                 //  string name, 
+                    null,                                       //  Type typeFrom, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
+                    new object[] {
+                        typeof(string),                         //  object[] parameters, 
+                        typeof(string),
+                        typeof(Type)},
+                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
+                        TypeWithMultipleCtors.Four == ((TypeWithMultipleCtors)r).Signature)
+                };
+#if !NET45
                 // ResolveNamedTypeArgument
                 yield return new object[]
                 {
@@ -78,8 +93,7 @@ namespace Spec.Constructors
                     new Func<object, bool>(r =>                 //  Func<object, bool> validator
                         TypeWithMultipleCtors.Five == ((TypeWithMultipleCtors)r).Signature)
                 };
-
-
+#endif
                 // SelectByValues
                 yield return new object[]
                 {
@@ -142,8 +156,10 @@ namespace Spec.Constructors
         {
             // Setup
             Container.RegisterType(typeFrom, typeTo, name, null, new InjectionConstructor(parameters));
-            Container.RegisterInstance(TypeWithMultipleCtors.Four);
-            Container.RegisterInstance(TypeWithMultipleCtors.Five, TypeWithMultipleCtors.Five);
+
+            Container.RegisterInstance(typeof(Type),   null, typeof(TypeWithMultipleCtors), new ContainerControlledLifetimeManager())
+                     .RegisterInstance(typeof(string), null, TypeWithMultipleCtors.Four, new ContainerControlledLifetimeManager())
+                     .RegisterInstance(typeof(string), TypeWithMultipleCtors.Five, TypeWithMultipleCtors.Five, new ContainerControlledLifetimeManager());
 
             // Act
             var result = Container.Resolve(typeToResolve, name);

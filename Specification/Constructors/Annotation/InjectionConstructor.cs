@@ -26,7 +26,11 @@ namespace Spec.Constructors
             Assert.AreEqual(2, instance.Ctor);
         }
 
+
         [TestMethod]
+#if NET45
+        [ExpectedException(typeof(ResolutionFailedException))]
+#endif
         public virtual void Annotation_MultipleConstructorsAnnotated()
         {
             // Act

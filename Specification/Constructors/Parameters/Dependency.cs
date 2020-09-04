@@ -51,16 +51,6 @@ namespace Spec.Constructors
         }
 
         [TestMethod]
-        public void Parameters_RequiredWithDefaultNegative()
-        {
-            // Act
-            var result = Container.Resolve<DependencyWithDefaultCtor>();
-
-            // Assert
-            Assert.AreEqual(DefaultString, result.Value);
-        }
-
-        [TestMethod]
         public void Parameters_RequiredWithDefaultValue()
         {
             // Arrange
@@ -71,39 +61,6 @@ namespace Spec.Constructors
 
             // Assert
             Assert.AreEqual(1, result.Value);
-        }
-
-        [TestMethod]
-        public void Parameters_RequiredWithDefaultValueNegative()
-        {
-            // Act
-            var result = Container.Resolve<DependencyWithDefaultValueCtor>();
-
-            // Assert
-            Assert.AreEqual(DefaultInt, result.Value);
-        }
-
-        [TestMethod]
-        public void Parameters_RequiredWithDefaultNull()
-        {
-            // Arrange
-            Container.RegisterInstance(typeof(string), null);
-
-            // Act
-            var result = Container.Resolve<DependencyWithDefaultNullCtor>();
-
-            // Assert
-            Assert.AreEqual(null, result.Value);
-        }
-
-        [TestMethod]
-        public void Parameters_RequiredWithDefaultNullNegative()
-        {
-            // Act
-            var result = Container.Resolve<DependencyWithDefaultNullCtor>();
-
-            // Assert
-            Assert.AreEqual(null, result.Value);
         }
 
         #endregion
@@ -159,29 +116,6 @@ namespace Spec.Constructors
 
             // Assert
             Assert.AreEqual(Name, result.Value);
-        }
-
-        [TestMethod]
-        public void Parameters_RequiredUnNamedWithDefault()
-        {
-            // Arrange
-            Container.RegisterInstance(Name);
-
-            // Act
-            var result = Container.Resolve<DependencyNamedWithDefaultCtor>();
-
-            // Assert
-            Assert.AreEqual(DefaultString, result.Value);
-        }
-
-        [TestMethod]
-        public void Parameters_RequiredNamedWithDefaultNegative()
-        {
-            // Act
-            var result = Container.Resolve<DependencyNamedWithDefaultCtor>();
-
-            // Assert
-            Assert.AreEqual(DefaultString, result.Value);
         }
 
         #endregion

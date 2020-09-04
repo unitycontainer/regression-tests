@@ -117,6 +117,32 @@ namespace Breaking.Changes
             Assert.AreNotSame(instance, value);
         }
 
+        /// <summary>
+        /// Method demonstrating a case when dependency name is ignored
+        /// </summary>
+        /// <remarks>
+        /// Annotation like this: CtorWithAttributedParams([Dependency(DependencyName)] string first)
+        /// should resolve dependency with following contract: Type = string, Name = DependencyName
+        /// </remarks>
+        [TestMethod]
+        public void DependencyNameIsNotIgnored()
+        {
+            // Setup
+            Container.RegisterType(null, typeof(CtorWithAttributedParams), null, null, new InjectionConstructor(typeof(string)));
+
+                   // Register two strings with right name and no name
+            Container.RegisterInstance(typeof(string), null, "wrong_value", new ContainerControlledLifetimeManager())
+                   // When resolving it should look for this name: CtorWithAttributedParams.DependencyName
+                     .RegisterInstance(typeof(string), CtorWithAttributedParams.DependencyName, "right_value", new ContainerControlledLifetimeManager());
+
+            // Act
+            var result = Container.Resolve<CtorWithAttributedParams>();
+
+            // Verify
+            Assert.IsNotNull(result);
+            Assert.AreEqual("right_value", result.Signature);
+        }
+
     }
 
     #region Test Data
@@ -175,6 +201,23 @@ namespace Breaking.Changes
         }
     }
 #endif
+
+    public class CtorWithAttributedParams
+    {
+        public const string DependencyName = "dependency_name";
+
+        public string Signature { get; }
+
+        /// <summary>
+        /// Constructor with NAMED dependency
+        /// </summary>
+        /// <param name="first">Parameter marked for injection with named (Name == DependencyName) dependency </param>
+        /// <param name="second">not impertant</param>
+        public CtorWithAttributedParams([Dependency(DependencyName)] string first)
+        {
+            Signature = first;
+        }
+    }
 
     #endregion
 }

@@ -21,7 +21,6 @@ namespace Spec.Constructors
             Assert.AreEqual("none", result.Value);
         }
 
-
         [TestMethod]
         public void Parameters_NoAttribute()
         {
@@ -60,16 +59,6 @@ namespace Spec.Constructors
             Assert.AreEqual(Name, result.Value);
         }
 
-        [TestMethod]
-        public void Parameters_NoAttributeWithDefaultNegative()
-        {
-            // Act
-            var result = Container.Resolve<NoAttributeWithDefaultCtor>();
-
-            // Assert
-            Assert.AreEqual(DefaultString, result.Value);
-        }
-
 
         [TestMethod]
         public void Parameters_NoAttributeWithDefaultValue()
@@ -82,40 +71,6 @@ namespace Spec.Constructors
 
             // Assert
             Assert.AreEqual(1, result.Value);
-        }
-
-        [TestMethod]
-        public void Parameters_NoAttributeWithDefaultValueNegative()
-        {
-            // Act
-            var result = Container.Resolve<NoAttributeWithDefaultValueCtor>();
-
-            // Assert
-            Assert.AreEqual(DefaultInt, result.Value);
-        }
-
-
-        [TestMethod]
-        public void Parameters_NoAttributeWithDefaultNull()
-        {
-            // Arrange
-            Container.RegisterInstance(typeof(string), null);
-
-            // Act
-            var result = Container.Resolve<NoAttributeWithDefaultNullCtor>();
-
-            // Assert
-            Assert.AreEqual(null, result.Value);
-        }
-
-        [TestMethod]
-        public void Parameters_NoAttributeWithDefaultNullNegative()
-        {
-            // Act
-            var result = Container.Resolve<NoAttributeWithDefaultNullCtor>();
-
-            // Assert
-            Assert.AreEqual(null, result.Value);
         }
     }
 }
