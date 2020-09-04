@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -18,7 +16,7 @@ namespace Resolution
         public void ContainerCanResolveListOfT()
         {
             // Arrange
-            Container.RegisterType(typeof(List<>), Invoke.Constructor());
+            Container.RegisterType(typeof(List<>), new InjectionConstructor());
 
             // Act
             var result = Container.Resolve<List<EmptyClass>>();
@@ -130,7 +128,7 @@ namespace Resolution
             Container.RegisterInstance("o1", o1)
                      .RegisterInstance("o2", o2)
 
-                     .RegisterType<InjectedObject>(Invoke.Constructor(Inject.Array<object>()))
+                     .RegisterType<InjectedObject>(new InjectionConstructor(Inject.Array<object>()))
 
                      .RegisterType<InjectedObject>(Legacy, 
                         new InjectionConstructor(new ResolvedArrayParameter(typeof(object))));
@@ -159,7 +157,7 @@ namespace Resolution
                      .RegisterInstance("o2", o2)
                      
                      .RegisterType<InjectedObject>(
-                        Invoke.Constructor(Inject.Parameter(new object[] { o1, o3 })))
+                        new InjectionConstructor(Inject.Parameter(new object[] { o1, o3 })))
 
                      .RegisterType<InjectedObject>(Legacy, 
                         new InjectionConstructor(
@@ -196,7 +194,7 @@ namespace Resolution
                      .RegisterInstance("o3", o3)
 
                      .RegisterType<InjectedObject>(
-                        Invoke.Constructor(
+                        new InjectionConstructor(
                             Inject.Array(typeof(object),
                                 Resolve.Dependency<object>("o1"),
                                 Resolve.Dependency<object>("o2") )))
@@ -231,7 +229,7 @@ namespace Resolution
 
             Container.RegisterInstance("o1", o1)
                      .RegisterInstance("o2", o2)
-                     .RegisterType<InjectedObject>(Invoke.Constructor(typeof(ILogger[])))
+                     .RegisterType<InjectedObject>(new InjectionConstructor(typeof(ILogger[])))
                      .RegisterType<InjectedObject>(Legacy, new InjectionConstructor(typeof(ILogger[])));
 
             // Act

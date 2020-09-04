@@ -17,10 +17,10 @@ namespace Resolution
         public void EnumerableOfRegistered()
         {
             // Arrange
-            Container.RegisterType(null, typeof(Service), null, null);
-            Container.RegisterType(null, typeof(Service), "1", null);
-            Container.RegisterType(null, typeof(Service), "2", null);
-            Container.RegisterType(null, typeof(Service), "3", null);
+            Container.RegisterType(typeof(Service), (string)null);
+            Container.RegisterType(typeof(Service), "1");
+            Container.RegisterType(typeof(Service), "2");
+            Container.RegisterType(typeof(Service), "3");
             Service.Instances = 0;
 
 
@@ -37,10 +37,10 @@ namespace Resolution
         public void EnumerableOfRegisterMapping()
         {
             // Arrange
-            Container.RegisterType(typeof(IService), typeof(Service), null, null);
-            Container.RegisterType(typeof(IService), typeof(Service), "1",  null);
-            Container.RegisterType(typeof(IService), typeof(Service), "2",  null);
-            Container.RegisterType(typeof(IService), typeof(Service), "3",  null);
+            Container.RegisterType(typeof(IService), typeof(Service), (string)null);
+            Container.RegisterType(typeof(IService), typeof(Service), "1");
+            Container.RegisterType(typeof(IService), typeof(Service), "2");
+            Container.RegisterType(typeof(IService), typeof(Service), "3");
             Service.Instances = 0;
 
 

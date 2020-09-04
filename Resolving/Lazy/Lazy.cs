@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 #endif
 
 namespace Resolution
@@ -33,7 +34,7 @@ namespace Resolution
         public void WithMatchingName()
         {
             // Arrange
-            Container.RegisterType(typeof(IList<>), typeof(List<>), Invoke.Constructor());
+            Container.RegisterType(typeof(IList<>), typeof(List<>), new InjectionConstructor());
             Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
             Container.RegisterType<IService, Service>("1");
             Container.RegisterType<IService, Service>("2");
@@ -53,7 +54,7 @@ namespace Resolution
         public void WithOtherName()
         {
             // Arrange
-            Container.RegisterType(typeof(IList<>), typeof(List<>), Invoke.Constructor());
+            Container.RegisterType(typeof(IList<>), typeof(List<>), new InjectionConstructor());
             Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
             Container.RegisterType<IService, Service>("1");
             Container.RegisterType<IService, Service>("2");
