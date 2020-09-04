@@ -155,7 +155,7 @@ namespace Spec.Constructors
         public void Injection_Selection(string name, Type typeFrom, Type typeTo, Type typeToResolve, object[] parameters, Func<object, bool> validator)
         {
             // Setup
-            Container.RegisterType(typeFrom, typeTo, name, null, new InjectionConstructor(parameters));
+            Container.RegisterType(typeFrom, typeTo, name, new InjectionConstructor(parameters));
 
             Container.RegisterInstance(typeof(Type),   null, typeof(TypeWithMultipleCtors), new ContainerControlledLifetimeManager())
                      .RegisterInstance(typeof(string), null, TypeWithMultipleCtors.Four, new ContainerControlledLifetimeManager())
@@ -175,7 +175,7 @@ namespace Spec.Constructors
         public void Injection_Default(Type typeFrom, Type typeTo, string name, Type typeToResolve)
         {
             // Setup
-            Container.RegisterType(typeFrom, typeTo, name, null, new InjectionConstructor());
+            Container.RegisterType(typeFrom, typeTo, name, new InjectionConstructor());
 
             // Act
             var result = Container.Resolve(typeToResolve, name);
@@ -192,7 +192,7 @@ namespace Spec.Constructors
         public void Injection_DefaultCtorValidation(Type type, string name)
         {
             // Setup
-            Container.RegisterType((Type)null, type, name, null, new InjectionConstructor());
+            Container.RegisterType(type, name, new InjectionConstructor());
 
             // Act
             var result = Container.Resolve(type, name);

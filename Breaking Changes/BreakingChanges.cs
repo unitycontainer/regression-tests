@@ -128,7 +128,7 @@ namespace Breaking.Changes
         public void DependencyNameIsNotIgnored()
         {
             // Setup
-            Container.RegisterType(null, typeof(CtorWithAttributedParams), null, null, new InjectionConstructor(typeof(string)));
+            Container.RegisterType(typeof(CtorWithAttributedParams), new InjectionConstructor(typeof(string)));
 
                    // Register two strings with right name and no name
             Container.RegisterInstance(typeof(string), null, "wrong_value", new ContainerControlledLifetimeManager())

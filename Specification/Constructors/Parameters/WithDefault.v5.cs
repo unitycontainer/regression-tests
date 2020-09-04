@@ -32,7 +32,7 @@ namespace Spec.Constructors
         public void Parameters_NoAttributeWithDefaultNull()
         {
             // Arrange
-            Container.RegisterInstance(typeof(string), null);
+            Container.RegisterInstance(typeof(string), (object)null);
 
             // Act
             var result = Container.Resolve<NoAttributeWithDefaultNullCtor>();
@@ -111,7 +111,7 @@ namespace Spec.Constructors
         public void Parameters_OptionalWithDefaultNull()
         {
             // Arrange
-            Container.RegisterInstance(typeof(string), null);
+            Container.RegisterInstance(typeof(string), (object)null);
 
             // Act
             var result = Container.Resolve<OptionalWithDefaultNullCtor>();
@@ -144,7 +144,7 @@ namespace Spec.Constructors
         public void Parameters_RequiredWithDefaultNull()
         {
             // Arrange
-            Container.RegisterInstance(typeof(string), null);
+            Container.RegisterInstance(typeof(string), (object)null);
 
             // Act
             var result = Container.Resolve<DependencyWithDefaultNullCtor>();
