@@ -13,7 +13,7 @@ using Unity;
 namespace Breaking.Changes
 {
     [TestClass]
-    public class RegistrationsCollection
+    public class BreakingChangesV5
     {
         #region Scaffolding
 
