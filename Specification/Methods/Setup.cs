@@ -15,11 +15,13 @@ namespace Specification
         protected IUnityContainer Container;
 
         [TestInitialize]
-        public virtual void TestInitialize() => Container = new UnityContainer();
-
-        [TestMethod]
-        public void Baseline()
-        { }
+        public virtual void TestInitialize()
+        {
+            Container = new UnityContainer();
+            Container.RegisterInstance(Name);
+            Container.RegisterType(typeof(IInjectedMethodTest), typeof(InjectedMethodTest));
+            Container.RegisterType(typeof(IGenericInjectedMethodTest<>), typeof(GenericInjectedMethodTest<>));
+        }
     }
 
 
@@ -38,10 +40,4 @@ namespace Specification
         public void Baseline_Diagnostic()
         { }
     }
-
-
-    #region Test Data
-
-
-    #endregion
 }

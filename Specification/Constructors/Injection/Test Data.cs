@@ -122,7 +122,7 @@ namespace Specification
         {
         }
 
-        private class TestClass
+        public class TestClass
         {
             public TestClass() { }                                                    // 0
             public TestClass(object first) { }                                        // 1

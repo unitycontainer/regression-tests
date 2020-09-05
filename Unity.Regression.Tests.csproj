@@ -66,6 +66,7 @@
 		<Compile Remove="Resolution\Overrides\Dependency.V5.cs" />
 		<Compile Remove="Resolution\Enumerable\**" />
 		<Compile Remove="Specification\Constructors\Parameters\WithDefault.v5.cs" />
+ 	    <Compile Remove="Specification\Fields\**" />
 		<Compile Remove="Specification\Variants\**" />
 	</ItemGroup>
 	
