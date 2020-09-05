@@ -170,31 +170,6 @@ namespace Resolution
             Assert.IsNotNull(resolved.Value.Service.Value);
         }
 
-
-        [TestMethod]
-        public void Enumerable()
-        {
-            // Setup
-            Container.RegisterType<IService, Service>("1");
-            Container.RegisterType<IService, Service>("2");
-            Container.RegisterType<IService, Service>("3");
-            Container.RegisterType<IService, OtherService>();
-            Service.Instances = 0;
-
-            // Act
-            var lazy = Container.Resolve<Lazy<IEnumerable<IService>>>();
-
-            // Verify
-            Assert.AreEqual(0, Service.Instances);
-            Assert.IsNotNull(lazy);
-            Assert.IsNotNull(lazy.Value);
-
-            var array = lazy.Value.ToArray();
-            Assert.IsNotNull(array);
-            Assert.AreEqual(3, Service.Instances);
-            Assert.AreEqual(4, array.Length);
-        }
-
         [TestMethod]
         public void Array()
         {

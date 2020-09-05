@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-#if NET45
-using Microsoft.Practices.Unity;
-#else
 using Unity;
 using Unity.Resolution;
-#endif
 
 namespace Resolution
 {
@@ -40,30 +36,6 @@ namespace Resolution
             Assert.IsInstanceOfType(Container.Resolve<DependsOnIFooName>(new DependencyOverride(typeof(IFoo), null, new Foo3())).Foo, typeof(Foo1));
             Assert.IsInstanceOfType(Container.Resolve<DependsOnIFooName>(new DependencyOverride(typeof(IFoo), Name, new Foo3())).Foo, typeof(Foo3));
             Assert.IsInstanceOfType(Container.Resolve<DependsOnIFooName>(new DependencyOverride(typeof(IFoo), nega, new Foo3())).Foo, typeof(Foo1));
-        }
-
-        [TestMethod]
-        public void NamedInstance()
-        {
-            // Arrange
-            Container.RegisterInstance<IFoo>(new Foo2())
-                     .RegisterInstance<IFoo>(Name, new Foo1());
-
-            // Act / Validate
-            Assert.IsInstanceOfType(Container.Resolve<IFoo>(), typeof(Foo2));
-            Assert.IsInstanceOfType(Container.Resolve<IFoo>(Name), typeof(Foo1));
-        }
-
-        [TestMethod]
-        public void NamedFactory()
-        {
-            // Arrange
-            Container.RegisterFactory<IFoo>((c, t, n) => new Foo2())
-                     .RegisterFactory<IFoo>(Name, (c, t, n) => new Foo1());
-
-            // Act / Validate
-            Assert.IsInstanceOfType(Container.Resolve<IFoo>(), typeof(Foo2));
-            Assert.IsInstanceOfType(Container.Resolve<IFoo>(Name), typeof(Foo1));
         }
 
         [TestMethod]
@@ -121,25 +93,6 @@ namespace Resolution
         }
 
         [TestMethod]
-        public void DependencyOverrideOccursEverywhereTypeMatches()
-        {
-            // Setup
-            Container
-                .RegisterType<ObjectThatDependsOnSimpleObject>(Resolve.Property("OtherTestObject"))
-                .RegisterType<SimpleTestObject>(Invoke.Constructor());
-
-            // Act
-            var overrideValue = new SimpleTestObject(15); // arbitrary value
-
-            var result = Container.Resolve<ObjectThatDependsOnSimpleObject>(
-                new DependencyOverride<SimpleTestObject>(overrideValue));
-
-            // Verify
-            Assert.AreSame(overrideValue, result.TestObject);
-            Assert.AreSame(overrideValue, result.OtherTestObject);
-        }
-
-        [TestMethod]
         public void ParameterOverrideCanResolveOverride()
         {
             // Setup
@@ -154,24 +107,6 @@ namespace Resolution
             Assert.IsInstanceOfType(result.MySomething, typeof(Service2));
         }
 
-        [TestMethod]
-        public void CanOverridePropertyValueWithNullWithExplicitInjectionParameter()
-        {
-            // Setup
-            Container
-                .RegisterType<ObjectTakingASomething>(Invoke.Constructor(),
-                                                      Resolve.Property("MySomething"))
-                .RegisterType<IService, Service1>()
-                .RegisterType<IService, Service2>("other");
-
-            // Act
-            var result = Container.Resolve<ObjectTakingASomething>(
-                Override.Property(nameof(ObjectTakingASomething.MySomething), Inject.Parameter<IService>(null))
-                        .OnType<ObjectTakingASomething>());
-
-            // Verify
-            Assert.IsNull(result.MySomething);
-        }
 
         [TestMethod]
         public void CanOverrideDependencyWithExplicitInjectionParameterValue()
@@ -228,25 +163,6 @@ namespace Resolution
             Assert.AreSame(noOverride, defaultValue);
             Assert.AreSame(noOverride, dependValue);
             Assert.AreSame(depOverride, fieldValue);
-        }
-
-        [TestMethod]
-        public void InjectedPropertyWithDependencyOverride()
-        {
-            // Setup
-            var noOverride = "default";
-            var depOverride = "custom-via-override";
-            Container.RegisterType<TestType>(Inject.Property(nameof(TestType.DependencyProperty), noOverride));
-
-            // Act
-            var defaultValue = Container.Resolve<TestType>().DependencyProperty;
-            var depValue = Container.Resolve<TestType>(Override.Dependency<string>(depOverride)).DependencyProperty;
-            var propValue = Container.Resolve<TestType>(Override.Property(nameof(TestType.DependencyProperty), depOverride)).DependencyProperty;
-            
-            // Verify
-            Assert.AreSame(noOverride, defaultValue);
-            Assert.AreSame(noOverride, depValue);
-            Assert.AreSame(depOverride, propValue);
         }
     }
 }

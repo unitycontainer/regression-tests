@@ -1,16 +1,26 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
+using Unity.Resolution;
 #endif
 
-namespace Resolution
+namespace Specification
 {
-    public partial class BuildUp
+    public partial class Constructors
     {
+        /// <summary>
+        /// The BuildUp does not throw anymore. We do not care if 
+        /// constructor is invalid, we are not calling it
+        /// </summary>
         [TestMethod]
-        public void AmbuguousConstructor()
+#if NET45
+        [ExpectedException(typeof(ResolutionFailedException))]
+#endif
+        public void BuildUp_AmbuguousConstructor()
         {
             // Arrange
             var instance = new TypeWithAmbiguousCtors();
@@ -23,8 +33,15 @@ namespace Resolution
             Assert.AreEqual(Container,                  instance.Container);
         }
 
+        /// <summary>
+        /// The BuildUp does not throw anymore. We do not care if 
+        /// constructor is invalid, we are not calling it
+        /// </summary>
         [TestMethod]
-        public void AmbuguousAnnotations()
+#if NET45
+        [ExpectedException(typeof(ResolutionFailedException))]
+#endif
+        public void BuildUp_AmbuguousAnnotations()
         {
             // Arrange
             var instance = new TypeWithAmbuguousAnnotations();

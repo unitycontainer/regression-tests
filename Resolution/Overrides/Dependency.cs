@@ -3,6 +3,7 @@
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 using Unity.Resolution;
 #endif
 
@@ -80,7 +81,8 @@ namespace Resolution
             Container.RegisterType<TestType>(Inject.Property(nameof(TestType.DependencyProperty), noOverride));
 
             // Act
-            var defaultValue = Container.Resolve<TestType>().DependencyProperty;
+            var theType = Container.Resolve<TestType>();
+            var defaultValue = theType.DependencyProperty;
             var depValue = Container.Resolve<TestType>(Override.Dependency<string>(depOverride)).DependencyProperty;
             var propValue = Container.Resolve<TestType>(Override.Property(nameof(TestType.DependencyProperty), depOverride)).DependencyProperty;
             

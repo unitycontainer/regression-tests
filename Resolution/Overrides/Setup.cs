@@ -3,6 +3,7 @@
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 #endif
 
 namespace Resolution
@@ -41,6 +42,7 @@ namespace Resolution
         }
 
         public string DependencyField;
+
         public string DependencyProperty { get; set; }
 
         public override string ToString() => _dependency;
