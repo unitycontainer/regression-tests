@@ -30,14 +30,13 @@ namespace Specification
     {
         [TestInitialize]
 #if NET45
-        public override void TestInitialize() => Container = new UnityContainer();
+        public override void TestInitialize() => base.TestInitialize();
 #else
-        public override void TestInitialize() => Container = new UnityContainer()
-            .AddExtension(new Unity.Diagnostic());
+        public override void TestInitialize()
+        {
+            base.TestInitialize();
+            Container.AddExtension(new Unity.Diagnostic());
+        }
 #endif
-
-        [TestMethod]
-        public void Baseline_Diagnostic()
-        { }
     }
 }

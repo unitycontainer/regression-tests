@@ -19,7 +19,7 @@ namespace Specification
             // Verify
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Container);
-            Assert.AreEqual(Other, result.Property);
+            Assert.AreEqual(Name, result.Property);
         }
 
         [TestMethod]

@@ -25,12 +25,12 @@ namespace Specification
             public Type Type { get; private set; }
             public string Name { get; private set; }
 
-            public ResolveDelegate<TContext> GetResolver<TContext>(Type info)
+            public ResolveDelegate<TContext> GetResolver<TContext>(Type type)
                 where TContext : IResolveContext
             {
                 return (ref TContext context) =>
                 {
-                    Type = context.Type;
+                    Type = type;
                     Name = context.Name;
 
                     return _value;

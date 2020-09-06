@@ -15,32 +15,26 @@ namespace Specification
         protected IUnityContainer Container;
 
         [TestInitialize]
-        public virtual void TestInitialize() => Container = new UnityContainer();
-
-        [TestMethod]
-        public void Baseline()
-        { }
+        public virtual void TestInitialize()
+        {
+            Container = new UnityContainer();
+            Container.RegisterInstance("other");
+            Container.RegisterInstance(Name, Name);
+        }
     }
-
 
     [TestClass]
     public partial class Parameters_Diagnostic : Parameters
     {
         [TestInitialize]
 #if NET45
-        public override void TestInitialize() => Container = new UnityContainer();
+        public override void TestInitialize() => base.TestInitialize();
 #else
-        public override void TestInitialize() => Container = new UnityContainer()
-            .AddExtension(new Unity.Diagnostic());
+        public override void TestInitialize()
+        {
+            base.TestInitialize();
+            Container.AddExtension(new Unity.Diagnostic());
+        }
 #endif
-
-        [TestMethod]
-        public void Baseline_Diagnostic()
-        { }
     }
-
-    #region Test Data
-
-
-    #endregion
 }

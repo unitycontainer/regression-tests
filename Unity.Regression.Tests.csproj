@@ -17,10 +17,6 @@
 		<TargetFramework>net45</TargetFramework>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="Exists('$(UnityContainer)') AND Exists('..\Container\package.sln')">
-		<TargetFramework>net46</TargetFramework>
-	</PropertyGroup>
-
 	<PropertyGroup Condition="Exists('$(UnityContainer)') AND !Exists('..\Container\package.sln')">
 		<TargetFramework>net48</TargetFramework>
 	</PropertyGroup>
@@ -28,6 +24,18 @@
 	<PropertyGroup Condition="!Exists('$(UnityContainer)') AND !Exists('$(UnityLegacy)') ">
 		<TargetFrameworks>net47;net46;net45</TargetFrameworks>
 	</PropertyGroup>
+
+	<!-- Temporary exclusions -->
+
+	<PropertyGroup Condition="Exists('$(UnityContainer)') AND Exists('..\Container\package.sln')">
+		<TargetFramework>net461</TargetFramework>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+	  <Compile Remove="Extending\**" />
+	  <EmbeddedResource Remove="Extending\**" />
+	  <None Remove="Extending\**" />
+      <ProjectReference Include="..\Container\src\Unity.Container.csproj" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="MSTest.TestAdapter" Version="2.1.2">

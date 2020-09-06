@@ -22,7 +22,7 @@ namespace Public.API
         [TestMethod]
         public void Registrations_ToEnumerable()
         {
-#if NET46
+#if NET46 || NET461 
             Assert.IsNotNull(Container.Registrations as IEnumerable<IContainerRegistration>);
 #else
             Assert.IsNotNull(Container.Registrations as IEnumerable<ContainerRegistration>);
