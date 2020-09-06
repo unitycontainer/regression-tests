@@ -69,6 +69,7 @@ namespace Issues
             Assert.AreNotSame(Container.Resolve<ILogger>(), Container.CreateChildContainer().Resolve<ILogger>());
         }
 
+#if !NET45
         [TestMethod]
         public void Unity_164()
         {
@@ -80,34 +81,9 @@ namespace Issues
 
             Assert.AreSame(result, foo2);
         }
-        
-        [TestMethod]
-        public void Unity_156()
-        {
-            using (var container = new UnityContainer())
-            {
-                var td = new Service();
-
-                container.RegisterFactory<Service>(_ => td);
-                container.RegisterType<IService, Service>();
-
-                Assert.AreSame(td, container.Resolve<IService>());
-                Assert.AreSame(td, container.Resolve<Service>());
-            }
-            using (var container = new UnityContainer())
-            {
-                var td = new Service();
-
-                container.RegisterFactory<Service>(_ => td);
-                container.RegisterType<IService, Service>();
-
-                Assert.AreSame(td, container.Resolve<Service>());
-                Assert.AreSame(td, container.Resolve<IService>());
-            }
-        }
 
         [TestMethod]
-        public void Unity_154_2()
+        public void Unity_154_Fail()
         {
             Container.RegisterType<OtherService>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IService, OtherService>();
@@ -119,7 +95,32 @@ namespace Issues
             Assert.AreSame(Container.Resolve<IService>(),
                            Container.Resolve<OtherService>());
         }
+#endif
 
+        [TestMethod]
+        public void Unity_156_Pass()
+        {
+            using (var container = new UnityContainer())
+            {
+                var td = new Service();
+
+                container.RegisterFactory<Service>(_ => td);
+                container.RegisterType<IService, Service>();
+
+                Assert.AreSame(td, container.Resolve<IService>());
+                Assert.AreSame(td, container.Resolve<Service>());
+            }
+            using (var container = new UnityContainer())
+            {
+                var td = new Service();
+
+                container.RegisterFactory<Service>(_ => td);
+                container.RegisterType<IService, Service>();
+
+                Assert.AreSame(td, container.Resolve<Service>());
+                Assert.AreSame(td, container.Resolve<IService>());
+            }
+        }
 
         [TestMethod]
         public void Unity_154_1()
@@ -147,6 +148,8 @@ namespace Issues
                 Assert.AreSame(a, b);
             }
         }
+
+#if !NET45
 
         [TestMethod]
         public void Unity_88()
@@ -177,6 +180,8 @@ namespace Issues
 
             Assert.AreSame(container.Resolve<IService>(), logger);
         }
+
+#endif
 
         // Test types 
         public interface ITestClass

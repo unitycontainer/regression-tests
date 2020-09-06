@@ -12,6 +12,7 @@ namespace Issues
 {
     public partial class GitHub
     {
+#if !NET45
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/140
         public void Issue_Container_140()
@@ -32,6 +33,7 @@ namespace Issues
             Assert.AreSame(parOverride, parValue);
             Assert.AreSame(noOverride, depValue);
         }
+#endif
 
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/136
@@ -72,6 +74,7 @@ namespace Issues
             Assert.IsInstanceOfType(animal, typeof(Dog));
         }
 
+#if !NET45
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/129
         public void Container_129()
@@ -116,7 +119,6 @@ namespace Issues
             Assert.IsTrue(child.IsRegistered<IOtherService>());
             Assert.IsTrue(child.IsRegistered<OtherService>());
         }
-
+#endif
     }
-
 }

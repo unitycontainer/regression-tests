@@ -98,7 +98,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Breaking Changes\" />
 		<Folder Include="Public.API\Compatibility\" />
 	</ItemGroup>
 

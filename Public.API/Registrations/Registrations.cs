@@ -13,7 +13,7 @@ namespace Public.API
     public partial class IUnityContainer_Registrations
     {
         [TestMethod]
-        public void Type()
+        public void RegisteredType()
         {
             // Setup
             Container.RegisterType<object>();
@@ -25,11 +25,13 @@ namespace Public.API
             // Validate
             Assert.IsNotNull(registration);
             Assert.IsNull(registration.Name);
+#if !NET45
             Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
+#endif
         }
 
         [TestMethod]
-        public void Named()
+        public void RegisteredNamed()
         {
             // Setup
             Container.RegisterType<object>(Name);
@@ -41,7 +43,9 @@ namespace Public.API
             // Validate
             Assert.IsNotNull(registration);
             Assert.AreEqual(Name, registration.Name);
+#if !NET45
             Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
+#endif
         }
 
         [TestMethod]
@@ -85,14 +89,16 @@ namespace Public.API
 
             // Act
             var registration = Container.Registrations
-                                        .FirstOrDefault(r => typeof(IService) == r.RegisteredType);
+                                        .FirstOrDefault(r => null == r.Name && typeof(IService) == r.RegisteredType);
 
             // Validate
             Assert.IsNotNull(registration);
             Assert.IsNull(registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
             Assert.AreEqual(registration.RegisteredType, typeof(IService));
             Assert.AreEqual(registration.MappedToType, typeof(Service));
+#if !NET45
+            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
+#endif
         }
 
         [TestMethod]
@@ -104,13 +110,14 @@ namespace Public.API
             // Act
             var registration = Container.Registrations
                                         .FirstOrDefault(r =>Name == r.Name && typeof(IService) == r.RegisteredType);
-
             // Validate
             Assert.IsNotNull(registration);
             Assert.AreEqual(Name, registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
             Assert.AreEqual(registration.RegisteredType, typeof(IService));
             Assert.AreEqual(registration.MappedToType, typeof(Service));
+#if !NET45
+            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(TransientLifetimeManager));
+#endif
         }
 
         [TestMethod]
@@ -121,14 +128,15 @@ namespace Public.API
 
             // Act
             var registration = Container.Registrations
-                                        .FirstOrDefault(r => typeof(IService) == r.RegisteredType);
-
+                                        .FirstOrDefault(r => null == r.Name && typeof(IService) == r.RegisteredType);
             // Validate
             Assert.IsNotNull(registration);
             Assert.IsNull(registration.Name);
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(ContainerControlledLifetimeManager));
             Assert.AreEqual(registration.RegisteredType, typeof(IService));
             Assert.AreEqual(registration.MappedToType, typeof(Service));
+#if !NET45
+            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(ContainerControlledLifetimeManager));
+#endif
         }
 
         [TestMethod]

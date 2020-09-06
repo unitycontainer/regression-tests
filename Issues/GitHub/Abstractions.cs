@@ -23,6 +23,7 @@ namespace Issues
             Container.RegisterType<IService, Service>("name", ctor);
         }
 
+#if !NET45
         [TestMethod]
         // https://github.com/unitycontainer/abstractions/issues/83
         public void Abstractions_83()
@@ -41,10 +42,12 @@ namespace Issues
             Assert.IsNotNull(result.Container);
             Assert.IsNotNull(result.Property);
         }
+#endif
     }
 
     public partial class GitHub_Diagnostic
     {
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         // https://github.com/unitycontainer/abstractions/issues/96
@@ -55,5 +58,6 @@ namespace Issues
             Container.RegisterType<IService, Service>(ctor);
             Container.RegisterType<IService, Service>("name", ctor);
         }
+#endif
     }
 }

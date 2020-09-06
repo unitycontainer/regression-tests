@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using System.Collections.Generic;
 using System;
 #if NET45
 using Microsoft.Practices.Unity;
@@ -12,20 +11,8 @@ using Unity;
 
 namespace Breaking.Changes
 {
-    [TestClass]
-    public class BreakingChangesV4
+    public partial class BreakingChangesV4
     {
-        #region Scaffolding
-
-        IUnityContainer Container;
-        readonly ContainerRegistrationComparer EqualityComparer = new ContainerRegistrationComparer();
-
-        [TestInitialize]
-        public void TestInitialize() => Container = new UnityContainer();
-
-        #endregion
-
-
         /// <summary>
         /// ContainerRegistration <see cref="ContainerRegistration.LifetimeManager"/> 
         /// should never be null.
@@ -144,80 +131,4 @@ namespace Breaking.Changes
         }
 
     }
-
-    #region Test Data
-
-    public interface IService
-    { }
-
-    public class Service : IService
-    { }
-
-    public interface IService<T>
-    {
-        string Id { get; }
-    }
-
-    public class Service<T> : IService<T>
-    {
-        public string Id { get; } = Guid.NewGuid().ToString();
-
-        public Service()
-        {
-        }
-
-        public Service(object inject)
-        {
-            Id = $"Ctor injected with: { inject.GetHashCode() }";
-        }
-    }
-
-#if NET46
-    public class ContainerRegistrationComparer : IEqualityComparer<IContainerRegistration>
-    {
-        public bool Equals(IContainerRegistration x, IContainerRegistration y)
-        {
-            return x.RegisteredType == y.RegisteredType && x.Name == y.Name;
-        }
-
-        public int GetHashCode(IContainerRegistration obj)
-        {
-            return obj.RegisteredType.GetHashCode() * 17 +
-                    obj.Name?.GetHashCode() ?? 0;
-        }
-    }
-#else
-    public class ContainerRegistrationComparer : IEqualityComparer<ContainerRegistration>
-    {
-        public bool Equals(ContainerRegistration x, ContainerRegistration y)
-        {
-            return x.RegisteredType == y.RegisteredType && x.Name == y.Name;
-        }
-
-        public int GetHashCode(ContainerRegistration obj)
-        {
-            return obj.RegisteredType.GetHashCode() * 17 +
-                   obj.Name?.GetHashCode() ?? 0;
-        }
-    }
-#endif
-
-    public class CtorWithAttributedParams
-    {
-        public const string DependencyName = "dependency_name";
-
-        public string Signature { get; }
-
-        /// <summary>
-        /// Constructor with NAMED dependency
-        /// </summary>
-        /// <param name="first">Parameter marked for injection with named (Name == DependencyName) dependency </param>
-        /// <param name="second">not impertant</param>
-        public CtorWithAttributedParams([Dependency(DependencyName)] string first)
-        {
-            Signature = first;
-        }
-    }
-
-    #endregion
 }

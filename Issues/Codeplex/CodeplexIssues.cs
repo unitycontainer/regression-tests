@@ -193,49 +193,25 @@ namespace Issues
 
         // https://unity.codeplex.com/workitem/12745
         [TestMethod]
-        public void ResolveInterfaceThrowsExplicitException()
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+        public void ResolveInterfaceThrows()
         {
-            using (var container = new UnityContainer())
-            {
-                try
-                {
-                    var func = container.Resolve<IComparable<object>>();
-                }
-                catch (ResolutionFailedException)
-                {
-                    // Ignore
-                }
-                catch
-                {
-                    Assert.Fail("Invalid Exception Type");
-                }
-            }
+            var container = new UnityContainer();
+            _ = container.Resolve<IComparable<object>>();
         }
 
         // https://unity.codeplex.com/workitem/12745
         [TestMethod]
-        public void ResolveAbstractClassThrowsExplicitException()
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+        public void ResolveAbstractThrows()
         {
-            using (var container = new UnityContainer())
-            {
-                try
-                {
-                    var func = container.Resolve<Type>();
-                }
-                catch (ResolutionFailedException)
-                {
-                    // Ignore
-                }
-                catch
-                {
-                    Assert.Fail("Invalid Exception Type");
-                }
-            }
+            var container = new UnityContainer();
+            _ = container.Resolve<Type>();
         }
 
         // https://unity.codeplex.com/workitem/8777
         [TestMethod]
-        public void PerResolveLifetimeIsHonoredWhenResolvingArrays()
+        public void PerResolveIsHonoredInArrays()
         {
             using (var container = new UnityContainer())
             {
@@ -250,8 +226,9 @@ namespace Issues
             }
         }
 
+#if !NET45
         [TestMethod]
-        public void PerResolveLifetimeIsHonoredWhenResolvingEnumerables()
+        public void PerResolveIsHonoredInEnumerables()
         {
             using (var container = new UnityContainer())
             {
@@ -265,10 +242,11 @@ namespace Issues
                 Assert.AreSame(instances.ElementAt(0).Dependency, instances.ElementAt(1).Dependency);
             }
         }
+#endif
 
         // https://unity.codeplex.com/workitem/8777
         [TestMethod]
-        public void ResolverOverridesAreUsedWhenResolvingArrayElements()
+        public void OverridesAreUsedInArrayElements()
         {
             using (var container = new UnityContainer())
             {

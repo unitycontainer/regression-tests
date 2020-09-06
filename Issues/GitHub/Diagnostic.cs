@@ -48,6 +48,7 @@ namespace Issues
             }
         }
 
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         // https://github.com/unitycontainer/container/issues/122
@@ -98,6 +99,6 @@ namespace Issues
             Assert.IsNotNull(instance);
             Assert.AreEqual(2, instance.Value.Count());
         }
+#endif
     }
-
 }
