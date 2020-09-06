@@ -95,6 +95,7 @@
 	<ItemGroup>
 		<Folder Include="Breaking Changes\" />
 		<Folder Include="Public.API\Compatibility\" />
+		<Folder Include="Specification\Constructors\Validation\" />
 	</ItemGroup>
 
 </Project>
