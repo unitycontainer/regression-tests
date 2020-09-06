@@ -16,7 +16,7 @@ namespace Registrations
         public void ParametersAtRootTransient()
         {
             // Arrange
-            Container.RegisterType(typeof(MultiLevelType), TypeLifetime.Transient);
+            Container.RegisterType(typeof(MultiLevelType), new TransientLifetimeManager());
 
             // Act
             var result0 = iUnity0.Resolve<MultiLevelType>();
@@ -39,7 +39,7 @@ namespace Registrations
         public void ParametersAtRootPerContainer()
         {
             // Arrange
-            Container.RegisterType(typeof(MultiLevelType), TypeLifetime.PerContainer);
+            Container.RegisterType(typeof(MultiLevelType), new ContainerControlledLifetimeManager());
 
             // Act
             var result0 = iUnity0.Resolve<MultiLevelType>();
@@ -62,7 +62,7 @@ namespace Registrations
         public void ParametersAtChildTransient()
         {
             // Arrange
-            iUnity2.RegisterType(typeof(MultiLevelType), TypeLifetime.Transient);
+            iUnity2.RegisterType(typeof(MultiLevelType), new TransientLifetimeManager());
 
             // Act
             var result2 = iUnity2.Resolve<MultiLevelType>();
@@ -85,7 +85,7 @@ namespace Registrations
         public void ParametersAtChildPerContainer()
         {
             // Arrange
-            iUnity2.RegisterType(typeof(MultiLevelType), TypeLifetime.PerContainer);
+            iUnity2.RegisterType(typeof(MultiLevelType), new ContainerControlledLifetimeManager());
 
             // Act
             var result0 = iUnity0.Resolve<MultiLevelType>();

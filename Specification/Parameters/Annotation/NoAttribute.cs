@@ -14,7 +14,7 @@ namespace Specification
         public void Annotation_NoAttribute()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.NoAttributeParameter)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeParameter)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -28,7 +28,7 @@ namespace Specification
         public void Annotation_NoAttributeWithDefault()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.NoAttributeWithDefault)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeWithDefault)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -42,7 +42,7 @@ namespace Specification
         public void Annotation_NoAttributeWithDefaultInt()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.NoAttributeWithDefaultInt)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeWithDefaultInt)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -56,7 +56,7 @@ namespace Specification
         public void Annotation_NoAttributeWithDefaultUnresolved()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.NoAttributeWithDefaultUnresolved)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeWithDefaultUnresolved)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -70,7 +70,7 @@ namespace Specification
         public void Annotation_NoAttributeWithDisposableUnresolved()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.WithDefaultDisposableUnresolved)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.WithDefaultDisposableUnresolved)));
 
             // Act
             var result = Container.Resolve<Service>();

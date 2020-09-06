@@ -17,7 +17,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType(typeof(GenericService<,,>), 
-               Invoke.Method("Method", Resolve.Parameter(typeof(string))));
+               new InjectionMethod("Method", Resolve.Parameter(typeof(string))));
         }
 
         [TestMethod]
@@ -25,7 +25,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType(typeof(GenericService<,,>),
-               Invoke.Method("Method", Resolve.Generic("T1")));
+               new InjectionMethod("Method", Resolve.Generic("T1")));
 
             // Act
             var result = Container.Resolve<GenericService<object, string, int>>();
@@ -41,7 +41,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType(typeof(GenericService<,,>),
-               Invoke.Method("Method", Resolve.Generic("T2")));
+               new InjectionMethod("Method", Resolve.Generic("T2")));
 
             // Act
             var result = Container.Resolve<GenericService<object, string, int>>();
@@ -63,7 +63,7 @@ namespace Specification
             Container.RegisterInstance("1", "1");
             Container.RegisterInstance("2", "2");
             Container.RegisterType(typeof(GenericService<,,>),
-               Invoke.Method("Method", Resolve.Generic("T3")));
+               new InjectionMethod("Method", Resolve.Generic("T3")));
 
             // Act
             var result = Container.Resolve<GenericService<object, string, int>>();
@@ -79,7 +79,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType(typeof(GenericService<,,>),
-               Invoke.Method("Method", Resolve.Generic("T1", "1")));
+               new InjectionMethod("Method", Resolve.Generic("T1", "1")));
 
             // Act
             var result = Container.Resolve<GenericService<object, string, int>>();
@@ -100,7 +100,7 @@ namespace Specification
             Container.RegisterInstance("1", "1");
             Container.RegisterInstance("2", "2");
             Container.RegisterType(typeof(GenericService<,,>),
-               Invoke.Method("Method", Resolve.Generic("T2", "1")));
+               new InjectionMethod("Method", Resolve.Generic("T2", "1")));
 
             // Act
             var result = Container.Resolve<GenericService<object, string, int>>();
@@ -122,7 +122,7 @@ namespace Specification
             Container.RegisterInstance("1", "1");
             Container.RegisterInstance("2", "2");
             Container.RegisterType(typeof(GenericService<,,>),
-               Invoke.Method("Method", Resolve.Generic("T3", "1")));
+               new InjectionMethod("Method", Resolve.Generic("T3", "1")));
 
             // Act
             var result = Container.Resolve<GenericService<object, string, int>>();

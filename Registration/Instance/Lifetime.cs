@@ -18,7 +18,7 @@ namespace Registrations
             var child1 = Container.CreateChildContainer();
             var child2 = child1.CreateChildContainer();
 
-            Container.RegisterInstance(typeof(IService), null, service, InstanceLifetime.Singleton);
+            Container.RegisterInstance(typeof(IService), null, service, new ContainerControlledLifetimeManager());
 
 
             // Act/Verify
@@ -37,7 +37,7 @@ namespace Registrations
             var child1 = Container.CreateChildContainer();
             var child2 = child1.CreateChildContainer();
 
-            child1.RegisterInstance(typeof(IService), null, service, InstanceLifetime.Singleton);
+            child1.RegisterInstance(typeof(IService), null, service, new ContainerControlledLifetimeManager());
 
 
             // Act/Verify
@@ -56,7 +56,7 @@ namespace Registrations
             var child1 = Container.CreateChildContainer();
             var child2 = child1.CreateChildContainer();
 
-            Container.RegisterInstance(typeof(IService), null, service, InstanceLifetime.PerContainer);
+            Container.RegisterInstance(typeof(IService), null, service, new ContainerControlledLifetimeManager());
 
 
             // Act/Verify
@@ -75,9 +75,9 @@ namespace Registrations
             var child1 = Container.CreateChildContainer();
             var child2 = child1.CreateChildContainer();
 
-            Container.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.PerContainer);
-            child1.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.PerContainer);
-            child2.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.PerContainer);
+            Container.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ContainerControlledLifetimeManager());
+            child1.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ContainerControlledLifetimeManager());
+            child2.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ContainerControlledLifetimeManager());
 
 
             // Act/Verify
@@ -94,7 +94,7 @@ namespace Registrations
             // Arrange
             var child1 = Container.CreateChildContainer();
 
-            child1.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.PerContainer);
+            child1.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ContainerControlledLifetimeManager());
 
             // Act/Verify
             var result = Container.Resolve<IService>();
@@ -110,7 +110,7 @@ namespace Registrations
             var child1 = Container.CreateChildContainer();
             var child2 = child1.CreateChildContainer();
 
-            Container.RegisterInstance(typeof(IService), null, service, InstanceLifetime.External);
+            Container.RegisterInstance(typeof(IService), null, service, new ExternallyControlledLifetimeManager());
 
 
             // Act/Verify
@@ -129,9 +129,9 @@ namespace Registrations
             var child1 = Container.CreateChildContainer();
             var child2 = child1.CreateChildContainer();
 
-            Container.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.External);
-            child1.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.External);
-            child2.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.External);
+            Container.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ExternallyControlledLifetimeManager());
+            child1.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ExternallyControlledLifetimeManager());
+            child2.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ExternallyControlledLifetimeManager());
 
 
             // Act/Verify
@@ -148,7 +148,7 @@ namespace Registrations
             // Arrange
             var child1 = Container.CreateChildContainer();
 
-            child1.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.External);
+            child1.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ExternallyControlledLifetimeManager());
 
             // Act/Verify
             var result = Container.Resolve<IService>();

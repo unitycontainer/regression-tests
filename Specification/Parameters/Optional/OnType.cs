@@ -16,8 +16,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
-                    Resolve.Optional()));
+                new InjectionMethod(nameof(Service.Method), new OptionalParameter(typeof(object))));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -32,7 +31,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
+                new InjectionMethod(nameof(Service.Method),
                     Resolve.Optional<string>()));
 
             // Act
@@ -48,7 +47,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
+                new InjectionMethod(nameof(Service.Method),
                     Resolve.Optional<ICommand<int>>()));
 
             // Act
@@ -63,7 +62,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
+                new InjectionMethod(nameof(Service.Method),
                     Resolve.Parameter<string>()));
 
             // Act

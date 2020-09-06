@@ -48,7 +48,7 @@ namespace Public.API
         public void WithLifetime()
         {
             // Setup
-            Container.RegisterType<object>(TypeLifetime.PerContainer);
+            Container.RegisterType<object>(new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations
@@ -64,7 +64,7 @@ namespace Public.API
         public void NamedWithLifetime()
         {
             // Setup
-            Container.RegisterType<object>(Name, TypeLifetime.PerContainer);
+            Container.RegisterType<object>(Name, new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations
@@ -117,7 +117,7 @@ namespace Public.API
         public void MappedWithLifetime()
         {
             // Setup
-            Container.RegisterType<IService, Service>(TypeLifetime.PerContainer);
+            Container.RegisterType<IService, Service>(new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations
@@ -135,7 +135,7 @@ namespace Public.API
         public void MappedNamedWithLifetime()
         {
             // Setup
-            Container.RegisterType<IService, Service>(Name, TypeLifetime.PerContainer);
+            Container.RegisterType<IService, Service>(Name, new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations

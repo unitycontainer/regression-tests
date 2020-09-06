@@ -16,7 +16,7 @@ namespace Registrations
         public void IsNotNull()
         {
             // Arrange
-            Container.RegisterInstance(typeof(IService), null, Unresolvable.Create(), InstanceLifetime.Singleton);
+            Container.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ContainerControlledLifetimeManager());
             
             // Validate
             Assert.IsNotNull(Container.Resolve<IService>());
@@ -26,7 +26,7 @@ namespace Registrations
         public void IsNull()
         {
             // Arrange
-            Container.RegisterInstance(typeof(IService), null, null, InstanceLifetime.Singleton);
+            Container.RegisterInstance(typeof(IService), null, null, new ContainerControlledLifetimeManager());
 
             // Validate
             Assert.IsNull(Container.Resolve<IService>());
@@ -36,7 +36,7 @@ namespace Registrations
         [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
         public void ThrowsOnNullNull()
         {
-            Container.RegisterInstance(null, null, null, InstanceLifetime.Singleton);
+            Container.RegisterInstance(null, null, null, new ContainerControlledLifetimeManager());
         }
 
         [TestMethod]
@@ -133,13 +133,13 @@ namespace Registrations
         {
             // Arrange
             var value = new object();
-            Container.RegisterInstance(typeof(object), null, value, InstanceLifetime.Singleton);
+            Container.RegisterInstance(typeof(object), null, value, new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
 
             // Validate
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(SingletonLifetimeManager));
+            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(ContainerControlledLifetimeManager));
         }
     }
 }

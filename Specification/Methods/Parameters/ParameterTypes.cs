@@ -36,7 +36,7 @@ namespace Specification
             // Setup
             Container
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>),
-                    Invoke.Method("ChainedExecute"));
+                    new InjectionMethod("ChainedExecute"));
 
             // Act
             var result = Container.Resolve<ICommand<Account>>();

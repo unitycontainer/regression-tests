@@ -1,7 +1,7 @@
-﻿#if NET45
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+#if NET45
 using Microsoft.Practices.Unity;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;
 #endif
 

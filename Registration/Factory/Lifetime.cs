@@ -12,7 +12,7 @@ namespace Registrations
         [TestMethod]
         public void Factory_Hierarchical()
         {
-            Container.RegisterFactory<IService>((c, t, n) => new Service(), FactoryLifetime.Hierarchical);
+            Container.RegisterFactory<IService>((c, t, n) => new Service(), new HierarchicalLifetimeManager());
 
             var service = Container.Resolve<IService>();
 
@@ -28,7 +28,7 @@ namespace Registrations
         [TestMethod]
         public void Factory_Singleton()
         {
-            Container.RegisterFactory<IService>((c, t, n) => new Service(), FactoryLifetime.Singleton);
+            Container.RegisterFactory<IService>((c, t, n) => new Service(), new ContainerControlledLifetimeManager());
 
             var service = Container.Resolve<IService>();
 

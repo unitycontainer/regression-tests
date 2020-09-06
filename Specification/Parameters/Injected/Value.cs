@@ -27,7 +27,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<OtherService>(
-                Invoke.Method(nameof(OtherService.Method)));
+                new InjectionMethod(nameof(OtherService.Method)));
 
             // Act
             var result = Container.Resolve<OtherService>();
@@ -44,7 +44,7 @@ namespace Specification
 
             // Arrange
             Container.RegisterType<OtherService>(
-                Invoke.Method(nameof(OtherService.Method),
+                new InjectionMethod(nameof(OtherService.Method),
                     Inject.Parameter(data)));
 
             // Act
@@ -60,7 +60,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<OtherService>(
-                Invoke.Method(nameof(OtherService.MethodOne), 
+                new InjectionMethod(nameof(OtherService.MethodOne), 
                     Inject.Parameter(1)));
 
             // Act
@@ -78,7 +78,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<OtherService>(
-                Invoke.Method(nameof(OtherService.MethodOne),
+                new InjectionMethod(nameof(OtherService.MethodOne),
                     Inject.Parameter("test")));
 
             // Act
@@ -96,7 +96,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<OtherService>(
-                Invoke.Method(nameof(OtherService.MethodTwo),
+                new InjectionMethod(nameof(OtherService.MethodTwo),
                     Inject.Parameter(1),
                     Inject.Parameter("test")));
 
@@ -117,7 +117,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<OtherService>(
-                Invoke.Method(nameof(OtherService.MethodTwo),
+                new InjectionMethod(nameof(OtherService.MethodTwo),
                     Inject.Parameter("test"),
                     Inject.Parameter(1)));
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Unity.Regression.Tests;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -48,7 +49,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<ObjectWithThreeProperties>(
-                new Unity.Injection.InjectionProperty(nameof(ObjectWithThreeProperties.Property), Name));
+                new InjectionProperty(nameof(ObjectWithThreeProperties.Property), Name));
 
             // Act
             var other = "other";
@@ -71,7 +72,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<ObjectWithNamedDependencyProperties>(
-                new Unity.Injection.InjectionProperty(nameof(ObjectWithNamedDependencyProperties.Property), Name));
+                new InjectionProperty(nameof(ObjectWithNamedDependencyProperties.Property), Name));
 
             // Act
             var other = "other";

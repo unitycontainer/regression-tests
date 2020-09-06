@@ -36,6 +36,11 @@
 	  <None Remove="Extending\**" />
       <ProjectReference Include="..\Container\src\Unity.Container.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Remove="Specification\Constructors\Validation\**" />
+	  <EmbeddedResource Remove="Specification\Constructors\Validation\**" />
+	  <None Remove="Specification\Constructors\Validation\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="MSTest.TestAdapter" Version="2.1.2">
@@ -95,7 +100,6 @@
 	<ItemGroup>
 		<Folder Include="Breaking Changes\" />
 		<Folder Include="Public.API\Compatibility\" />
-		<Folder Include="Specification\Constructors\Validation\" />
 	</ItemGroup>
 
 </Project>

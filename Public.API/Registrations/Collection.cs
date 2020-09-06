@@ -106,8 +106,8 @@ namespace Public.API
         [TestMethod]
         public void WhenRegistrationsAreRetrievedFromAContainer()
         {
-            Container.RegisterType<ILogger, MockLoggerWithCtor>(Invoke.Constructor("default"));
-            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", Invoke.Constructor("foo"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>(new InjectionConstructor("default"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", new InjectionConstructor("foo"));
 
             var registrations = Container.Registrations;
 
@@ -127,13 +127,13 @@ namespace Public.API
         [TestMethod]
         public void WhenRegistrationsAreRetrievedFromANestedContainer()
         {
-            Container.RegisterType<ILogger, MockLoggerWithCtor>(Invoke.Constructor("default"));
-            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", Invoke.Constructor("foo"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>(new InjectionConstructor("default"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", new InjectionConstructor("foo"));
 
             var child = Container.CreateChildContainer();
 
-            child.RegisterType<ISpecialLogger, SpecialLoggerWithCtor>(Invoke.Constructor("default"));
-            child.RegisterType<ISpecialLogger, SpecialLoggerWithCtor>("another", Invoke.Constructor("another"));
+            child.RegisterType<ISpecialLogger, SpecialLoggerWithCtor>(new InjectionConstructor("default"));
+            child.RegisterType<ISpecialLogger, SpecialLoggerWithCtor>("another", new InjectionConstructor("another"));
 
             var registrations = Container.Registrations;
 
@@ -145,8 +145,8 @@ namespace Public.API
         [TestMethod]
         public void WhenRegistrationsAreRetrievedFromAContainerByLifeTimeManager()
         {
-            Container.RegisterType<ILogger, MockLoggerWithCtor>(       TypeLifetime.PerResolve, Invoke.Constructor("default"));
-            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", TypeLifetime.PerResolve, Invoke.Constructor("foo"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>(new PerResolveLifetimeManager(), new InjectionConstructor("default"));
+            Container.RegisterType<ILogger, MockLoggerWithCtor>("foo", new PerResolveLifetimeManager(), new InjectionConstructor("foo"));
 
             var registrations = Container.Registrations;
 

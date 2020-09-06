@@ -21,7 +21,7 @@ namespace Specification
             Container.RegisterInstance("1", "1");
             Container.RegisterInstance("2", "2");
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
+                new InjectionMethod(nameof(Service.Method),
                     Resolve.Parameter<string>()));
 
             // Act
@@ -42,7 +42,7 @@ namespace Specification
             Container.RegisterInstance("1", "1");
             Container.RegisterInstance("2", "2");
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
+                new InjectionMethod(nameof(Service.Method),
                     Resolve.Parameter<int>()));
 
             // Act
@@ -63,7 +63,7 @@ namespace Specification
             Container.RegisterInstance("1", "1");
             Container.RegisterInstance("2", "2");
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
+                new InjectionMethod(nameof(Service.Method),
                     Resolve.Parameter<int>("1")));
 
             // Act
@@ -84,7 +84,7 @@ namespace Specification
             Container.RegisterInstance("1", "1");
             Container.RegisterInstance("2", "2");
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
+                new InjectionMethod(nameof(Service.Method),
                     Resolve.Parameter<string>()));
 
             // Act
@@ -105,7 +105,7 @@ namespace Specification
             Container.RegisterInstance("1", "1");
             Container.RegisterInstance("2", "2");
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method),
+                new InjectionMethod(nameof(Service.Method),
                     Resolve.Parameter<string>("1")));
 
             // Act

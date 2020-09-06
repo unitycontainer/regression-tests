@@ -16,7 +16,7 @@ namespace Registrations
         public void ResolveSignletonType_Directly_InRootContainer_THEN_InstanceIsCreatedInRootContainer_AND_SammeInstanceResolved_InAllChildContainers()
         {
             var rootContainer = Container;
-            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
 
             var rootContainerId = rootContainer.GetHashCode();
             var childContainer1 = rootContainer.CreateChildContainer();
@@ -38,7 +38,7 @@ namespace Registrations
         public void ResolveSingletonType_Directly_InChildContainer_THEN_InstanceIsCreatedInRootContainer_AND_SammeInstanceResolved_InAllChildContainers()
         {
             var rootContainer = Container;
-            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
 
             var rootContainerId = rootContainer.GetHashCode();
             var childContainer1 = rootContainer.CreateChildContainer();
@@ -63,8 +63,8 @@ namespace Registrations
         [TestMethod]
         public void ResolveSingletonType_AsDependency_InRootContainer_THEN_ConsumerInstance_AND_SignletonInstance_CreatedInRootContainer()
         {
-            Container.RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), TypeLifetime.Transient);
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), new TransientLifetimeManager());
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
 
             var rootContainerId = Container.GetHashCode();
             var consumerInstanceFromRootContainter = Container.Resolve<ISingletonConsumer>();
@@ -76,10 +76,10 @@ namespace Registrations
         [TestMethod]
         public void ResolveSingletonType_AsDependency_InChildContainer_THEN_ConsumerInstance_CreatedInChildContiner_AND_SignletonInstance_CreatedInRootContainer()
         {
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
 
             var childContainer1 = Container.CreateChildContainer()
-                                           .RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), TypeLifetime.Transient);
+                                           .RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), new TransientLifetimeManager());
 
             var childContainer2 = childContainer1.CreateChildContainer();
 
@@ -96,7 +96,7 @@ namespace Registrations
         [TestMethod]
         public void ResolveSingletonType_AsDependency_InChildContainer_THEN_ConsumerInstance_CreatedInChildContiner_AND_SignletonInstance_CreatedInRootContainer_Unregistered()
         {
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
 
             var childContainer1 = Container.CreateChildContainer();
             var childContainer2 = childContainer1.CreateChildContainer();
@@ -118,7 +118,7 @@ namespace Registrations
         {
             var rootContainer = Container;
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));
-            rootContainer.RegisterType(typeof(ISingletonServiceWithDependency), typeof(SingletonServiceWithDependency), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonServiceWithDependency), typeof(SingletonServiceWithDependency), new ContainerControlledLifetimeManager());
 
             var rootContainerId = rootContainer.GetHashCode();
 
@@ -132,7 +132,7 @@ namespace Registrations
         {
             var rootContainer = Container;
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));
-            rootContainer.RegisterType(typeof(ISingletonServiceWithDependency), typeof(SingletonServiceWithDependency), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonServiceWithDependency), typeof(SingletonServiceWithDependency), new ContainerControlledLifetimeManager());
 
             var rootContainerId = rootContainer.GetHashCode();
 
@@ -148,7 +148,7 @@ namespace Registrations
             var rootContainer = Container;
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));
             rootContainer.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
-            rootContainer.RegisterType(typeof(ISingletonServiceWithFactory), typeof(SingletonServiceWithFactory), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonServiceWithFactory), typeof(SingletonServiceWithFactory), new ContainerControlledLifetimeManager());
 
             var rootContainerId = rootContainer.GetHashCode();
 
@@ -165,7 +165,7 @@ namespace Registrations
             var rootContainer = Container;
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));
             rootContainer.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
-            rootContainer.RegisterType(typeof(ISingletonServiceWithFactory), typeof(SingletonServiceWithFactory), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonServiceWithFactory), typeof(SingletonServiceWithFactory), new ContainerControlledLifetimeManager());
 
             var rootContainerId = rootContainer.GetHashCode();
 
@@ -183,7 +183,7 @@ namespace Registrations
         public void DisposeRootContainer_WithSingleton_THEN_SingletonDisposed()
         {
             var rootContainer = Container;
-            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
 
             var instanceFromRootContainer = rootContainer.Resolve<ISingletonService>();
 
@@ -197,7 +197,7 @@ namespace Registrations
         {
             var rootContainer = Container;
 
-            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
 
             var childContainer = rootContainer.CreateChildContainer().CreateChildContainer();
             var instanceFromChildContainer = childContainer.Resolve<ISingletonService>();
@@ -206,13 +206,15 @@ namespace Registrations
             Assert.IsFalse(instanceFromChildContainer.IsDisposed, "instanceFromChildContainer should not be disposed when child container is disposed");
         }
 
+#if !NET45
+
         [TestMethod]
         public void DisposeChildContainer_WithTransientConsumer_THEN_SingletonConsumer_IsDisposed_AND_Singleton_NotDisposed()
         {
             var rootContainer = Container;
 
             rootContainer.RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), TypeLifetime.PerContainerTransient);
-            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
 
             var childContainer = rootContainer.CreateChildContainer().CreateChildContainer();
 
@@ -230,7 +232,7 @@ namespace Registrations
         {
             var rootContainer = Container;
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement), TypeLifetime.PerContainerTransient);
-            rootContainer.RegisterType(typeof(ISingletonServiceWithDependency), typeof(SingletonServiceWithDependency), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonServiceWithDependency), typeof(SingletonServiceWithDependency), new ContainerControlledLifetimeManager());
 
             var rootContainerId = rootContainer.GetHashCode();
 
@@ -243,13 +245,15 @@ namespace Registrations
             Assert.IsFalse(instanceFromChildContainer.IsDisposed, "instanceFromChildContainer should not be disposed when child container is disposed");
         }
 
+#endif
+
         [TestMethod]
         public void DisposeChildContainer_WithSingleton_WithFactoryDependency_THEN_Singleton_NotDisposed_AND_FactoryCreatesItemsInRootContainer()
         {
             var rootContainer = Container;
             rootContainer.RegisterType(typeof(ITestElement), typeof(TestElement));
             rootContainer.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
-            rootContainer.RegisterType(typeof(ISingletonServiceWithFactory), typeof(SingletonServiceWithFactory), TypeLifetime.Singleton);
+            rootContainer.RegisterType(typeof(ISingletonServiceWithFactory), typeof(SingletonServiceWithFactory), new ContainerControlledLifetimeManager());
 
             var rootContainerId = rootContainer.GetHashCode();
 

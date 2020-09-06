@@ -359,7 +359,9 @@ namespace Issues
 
         public class D1 : I1
         {
+#if !NET45
             [Dependency]
+#endif
             public I1 Field;
         }
 

@@ -14,7 +14,7 @@ namespace Registrations
         public void Singleton_Instance_Null()
         {
             // Arrange
-            Container.RegisterInstance(typeof(IService), null, null, InstanceLifetime.Singleton);
+            Container.RegisterInstance(typeof(IService), null, null, new ContainerControlledLifetimeManager());
 
             // Act
             var instance = Container.Resolve<IService>();
@@ -28,7 +28,7 @@ namespace Registrations
         public void Singleton_Factory_Null()
         {
             // Arrange
-            Container.RegisterFactory<IService>(c => null, FactoryLifetime.Singleton);
+            Container.RegisterFactory<IService>(c => null, new ContainerControlledLifetimeManager());
 
             // Act
             var instance = Container.Resolve<IService>();
@@ -42,7 +42,7 @@ namespace Registrations
         public void Singleton_ResolveInRootContainer()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -68,7 +68,7 @@ namespace Registrations
         public void Singleton_ResolveInChildContainer()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -94,7 +94,7 @@ namespace Registrations
         public void Singleton_AsFactoryInRootContainer()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -121,7 +121,7 @@ namespace Registrations
         public void Signleton_AsFactoryInChildContainer()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -148,7 +148,7 @@ namespace Registrations
         public void Signleton_AsFactory_WHEN_ItIsResolvedInRootContainer_AND_ChildContainerIsDisposed_THEN_ItWorksFromRootContainer()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -169,7 +169,7 @@ namespace Registrations
         public void Signleton_AsFactory_WHEN_ItIsResolvedInChildContainer_AND_ChildContainerIsDisposed_THEN_ItWorksFromRootContainer()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -189,7 +189,7 @@ namespace Registrations
         public void Singleton_Disposing_WHEN_ItIsResolvedInChildContainer_AND_ChildContainerIsDisposed_THEN_ItIs_NotDisposed()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -206,7 +206,7 @@ namespace Registrations
         public void Singleton_Disposing_WHEN_ItIsResolvedInChildContainer_AND_RootContainerIsDisposed_THEN_ItIs_Disposed()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -223,7 +223,7 @@ namespace Registrations
         public void Singleton_Disposing_WHEN_ItIsResolvedInRootContainer_AND_ChildContainerIsDisposed_THEN_ItIs_NotDisposed()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -241,7 +241,7 @@ namespace Registrations
         public void Singleton_Disposing_WHEN_ItIsResolvedInRootContainer_AND_RootContainerIsDisposed_THEN_ItIs_Disposed()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -259,7 +259,7 @@ namespace Registrations
         public void Singleton_CreatedDependenciesDisposing_WHEN_ItIsResolvedInRootContainer_AND_ChildContainerIsDisposed_THEN_ItDependencies_NotDisposed()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 
@@ -278,7 +278,7 @@ namespace Registrations
         public void Singleton_CreatedDependenciesDisposing_WHEN_ItIsResolvedInChildContainer_AND_ChildContainerIsDisposed_THEN_ItDependencies_NotDisposed()
         {
             // Arrange
-            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), TypeLifetime.Singleton);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
             Container.RegisterType(typeof(ITestElement), typeof(TestElement));
             Container.RegisterType(typeof(ITestElementFactory), typeof(TestElementFactory));
 

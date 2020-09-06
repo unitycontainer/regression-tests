@@ -11,13 +11,15 @@ namespace Specification
 {
     public partial class Parameters
     {
+
+#if !NET45
         [TestMethod]
         public void Resolved_ResolveCorrespondingType()
         {
             // Setup
             Container
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>),
-                    Invoke.Method("Execute", Resolve.Parameter()));
+                    new InjectionMethod("Execute", Resolve.Parameter()));
 
             // Act
             var result = Container.Resolve<ICommand<Account>>();
@@ -38,7 +40,7 @@ namespace Specification
             Container.RegisterInstance("2", "2");
             Container
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>),
-                    Invoke.Method("Execute", Resolve.Parameter("1")));
+                    new InjectionMethod("Execute", Resolve.Parameter("1")));
 
             // Act
             var result = Container.Resolve<ICommand<string>>();
@@ -48,7 +50,6 @@ namespace Specification
             Assert.AreEqual(result.Executed, Container.Resolve<string>("1"));
         }
 
-
         [TestMethod]
         public void Resolved_NamedImplicitOpenGeneric()
         {
@@ -56,7 +57,7 @@ namespace Specification
             Container
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "inner")
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>),
-                    Invoke.Method("ChainedExecute", Resolve.Parameter("inner")));
+                    new InjectionMethod("ChainedExecute", Resolve.Parameter("inner")));
 
             // Act
             var result = Container.Resolve<ICommand<Account>>();
@@ -65,6 +66,7 @@ namespace Specification
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result.Chained, typeof(ICommand<Account>));
         }
+#endif
 
         [TestMethod]
         public void Resolved_NamedExplicitOpenGeneric()
@@ -73,7 +75,7 @@ namespace Specification
             Container
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "inner")
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>),
-                    Invoke.Method("ChainedExecute", Resolve.Parameter(typeof(ICommand<>), "inner")));
+                    new InjectionMethod("ChainedExecute", Resolve.Parameter(typeof(ICommand<>), "inner")));
 
             // Act
             var result = Container.Resolve<ICommand<Account>>();
@@ -89,8 +91,8 @@ namespace Specification
             // Setup
             Container
                 .RegisterType(typeof(ICommand<>), typeof(LoggingCommand<>),
-                    Invoke.Constructor(Resolve.Parameter(typeof(ICommand<>), "concrete")),
-                    Invoke.Method("ChainedExecute", Resolve.Parameter(typeof(ICommand<>), "inner")))
+                    new InjectionConstructor(Resolve.Parameter(typeof(ICommand<>), "concrete")),
+                    new InjectionMethod("ChainedExecute", Resolve.Parameter(typeof(ICommand<>), "inner")))
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "concrete")
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "inner");
 

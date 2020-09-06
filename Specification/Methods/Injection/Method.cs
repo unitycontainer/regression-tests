@@ -15,7 +15,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType<LegalInjectionMethod>(
-                Invoke.Method(nameof(LegalInjectionMethod.InjectMe)));
+                new InjectionMethod(nameof(LegalInjectionMethod.InjectMe)));
 
             // Act
             LegalInjectionMethod result = Container.Resolve<LegalInjectionMethod>();
@@ -29,7 +29,7 @@ namespace Specification
         public void Injection_MethodWithOutParameter()
         {
             // Act
-            Container.RegisterType<OutParams>(Invoke.Method(nameof(OutParams.InjectMe), 12));
+            Container.RegisterType<OutParams>(new InjectionMethod(nameof(OutParams.InjectMe), 12));
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<RefParams>(
-                    Invoke.Method(nameof(RefParams.InjectMe), 15));
+                    new InjectionMethod(nameof(RefParams.InjectMe), 15));
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType<InheritedClass>(
-                Invoke.Method(nameof(InheritedClass.InjectMe)));
+                new InjectionMethod(nameof(InheritedClass.InjectMe)));
 
             // Act
             var result = Container.Resolve<InheritedClass>();
@@ -61,7 +61,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
-                Invoke.Method(nameof(GuineaPig.Inject1)));
+                new InjectionMethod(nameof(GuineaPig.Inject1)));
 
             // Act
             GuineaPig pig = Container.Resolve<GuineaPig>();
@@ -75,7 +75,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
-                Invoke.Method(nameof(GuineaPig.Inject2), "Hello"));
+                new InjectionMethod(nameof(GuineaPig.Inject2), "Hello"));
 
             // Act
             GuineaPig pig = Container.Resolve<GuineaPig>();
@@ -89,7 +89,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType(typeof(GuineaPig),
-                Invoke.Method(nameof(GuineaPig.Inject3), 17));
+                new InjectionMethod(nameof(GuineaPig.Inject3), 17));
 
             // Act
             GuineaPig pig = Container.Resolve<GuineaPig>();
@@ -104,8 +104,8 @@ namespace Specification
         {
             // Setup
             Container.RegisterType<GuineaPig>(
-                    Invoke.Method(nameof(GuineaPig.Inject3), 37),
-                    Invoke.Method(nameof(GuineaPig.Inject2), "Hi there"));
+                    new InjectionMethod(nameof(GuineaPig.Inject3), 37),
+                    new InjectionMethod(nameof(GuineaPig.Inject2), "Hi there"));
 
             // Act
             GuineaPig pig = Container.Resolve<GuineaPig>();
@@ -132,7 +132,7 @@ namespace Specification
         {
             // Verify
             Container.RegisterType<GuineaPig>(
-                Invoke.Method(nameof(GuineaPig.ShouldntBeCalled)));
+                new InjectionMethod(nameof(GuineaPig.ShouldntBeCalled)));
         }
     }
 }

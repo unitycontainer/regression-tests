@@ -44,7 +44,7 @@ namespace Specification
             Container.RegisterInstance("1", "1");
             Container.RegisterInstance("2", "2");
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.Method)));
+                new InjectionMethod(nameof(Service.Method)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -60,7 +60,7 @@ namespace Specification
             // Setup
             Container
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>),
-                    Invoke.Method("Execute"));
+                    new InjectionMethod("Execute"));
 
             // Act
             var result = Container.Resolve<ICommand<Account>>();

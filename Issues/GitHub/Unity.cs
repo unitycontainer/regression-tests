@@ -63,7 +63,7 @@ namespace Issues
         [TestMethod]
         public void Unity_165()
         {
-            Container.RegisterFactory<ILogger>(c => new MockLogger(), FactoryLifetime.Hierarchical);
+            Container.RegisterFactory<ILogger>(c => new MockLogger(), new HierarchicalLifetimeManager());
 
             Assert.AreSame(Container.Resolve<ILogger>(), Container.Resolve<ILogger>());
             Assert.AreNotSame(Container.Resolve<ILogger>(), Container.CreateChildContainer().Resolve<ILogger>());

@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Unity.Regression.Tests;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -17,10 +18,10 @@ namespace Specification
             // Arrange
             var resolver = new ValidatingResolverFactory(1);
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.NoAttributeParameter)));
+                new InjectionMethod(nameof(Service.NoAttributeParameter)));
 
             // Act
-            var result = Container.Resolve<Service>(Override.Parameter(typeof(object), resolver));
+            var result = Container.Resolve<Service>(Override.Parameter(typeof(object), "value", resolver));
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -37,10 +38,10 @@ namespace Specification
             // Arrange
             var resolver = new ValidatingResolverFactory(1);
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.DependencyAttribute)));
+                new InjectionMethod(nameof(Service.DependencyAttribute)));
 
             // Act
-            var result = Container.Resolve<Service>(Override.Parameter(typeof(object), resolver));
+            var result = Container.Resolve<Service>(Override.Parameter(typeof(object), "value", resolver));
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -57,10 +58,10 @@ namespace Specification
             var value = "value";
             var resolver = new ValidatingResolverFactory(value);
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.NamedDependencyAttribute)));
+                new InjectionMethod(nameof(Service.NamedDependencyAttribute)));
 
             // Act
-            var result = Container.Resolve<Service>(Override.Parameter(typeof(string), resolver));
+            var result = Container.Resolve<Service>(Override.Parameter(typeof(string), "value", resolver));
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -79,10 +80,10 @@ namespace Specification
             var value = "value";
             var resolver = new ValidatingResolverFactory(value);
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.NamedDependencyAttribute)));
+                new InjectionMethod(nameof(Service.NamedDependencyAttribute)));
 
             // Act
-            var result = Container.Resolve<Service>(Override.Parameter<string>(resolver));
+            var result = Container.Resolve<Service>(Override.Parameter<string>("value", resolver));
 
             // Assert
             Assert.IsNotNull(result.Value);

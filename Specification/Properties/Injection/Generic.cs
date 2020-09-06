@@ -16,7 +16,7 @@ namespace Specification
             // Setup
             Container
                 .RegisterType(typeof(ICommand<>), typeof(LoggingCommand<>),
-                    Invoke.Constructor(),
+                        new InjectionConstructor(),
                     Inject.Property("Inner", Resolve.Parameter(typeof(ICommand<>), "inner")))
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "inner");
             
@@ -34,7 +34,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType(typeof(ICommand<>), typeof(LoggingCommand<>),
-                         Invoke.Constructor(Resolve.Parameter(typeof(ICommand<>), "concrete")))
+                         new InjectionConstructor(Resolve.Parameter(typeof(ICommand<>), "concrete")))
                      .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "concrete");
 
             // Act
@@ -52,7 +52,7 @@ namespace Specification
         {
             // Setup
             Container.RegisterType(typeof(ICommand<>), typeof(LoggingCommand<>), 
-                        Invoke.Constructor(Resolve.Parameter(typeof(ICommand<>), "concrete")))
+                        new InjectionConstructor(Resolve.Parameter(typeof(ICommand<>), "concrete")))
                      .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "concrete");
 
             // Act
@@ -71,7 +71,7 @@ namespace Specification
             // Setup
             Container
                 .RegisterType(typeof(ICommand<>), typeof(LoggingCommand<>), 
-                    Invoke.Constructor(Resolve.Parameter(typeof(ICommand<>), "concrete")))
+                    new InjectionConstructor(Resolve.Parameter(typeof(ICommand<>), "concrete")))
                 .RegisterType(typeof(ICommand<>), typeof(ConcreteCommand<>), "concrete");
 
             // Act

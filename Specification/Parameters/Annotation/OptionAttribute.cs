@@ -14,7 +14,7 @@ namespace Specification
         public void Annotation_OptionalDependencyAttribute()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.OptionalDependencyAttribute)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalDependencyAttribute)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -28,7 +28,7 @@ namespace Specification
         public void Annotation_OptionalNamedDependencyAttribute()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.OptionalNamedDependencyAttribute)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalNamedDependencyAttribute)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -43,7 +43,7 @@ namespace Specification
         public void Annotation_OptionalDependencyAttributeMissing()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.OptionalDependencyAttributeMissing)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalDependencyAttributeMissing)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -57,7 +57,7 @@ namespace Specification
         public void Annotation_OptionalNamedDependencyAttributeMissing()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.OptionalNamedDependencyAttributeMissing)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalNamedDependencyAttributeMissing)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -71,7 +71,7 @@ namespace Specification
         public void Annotation_OptionalDependencyAttributeWithDefaultInt()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.OptionalDependencyAttributeWithDefaultInt)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalDependencyAttributeWithDefaultInt)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -85,7 +85,7 @@ namespace Specification
         public void Annotation_OptionalNamedDependencyAttributeWithDefaultInt()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.OptionalNamedDependencyAttributeWithDefaultInt)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalNamedDependencyAttributeWithDefaultInt)));
 
             // Act
             var result = Container.Resolve<Service>();

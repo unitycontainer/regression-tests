@@ -12,53 +12,6 @@ namespace Specification
     {
         #region Test Data
 
-        public class ValidatingResolverFactory : IResolverFactory<Type>
-        {
-            private object _value;
-
-            public ValidatingResolverFactory(object value)
-            {
-                _value = value;
-            }
-
-            public Type Type { get; private set; }
-            public string Name { get; private set; }
-
-            public ResolveDelegate<TContext> GetResolver<TContext>(Type info)
-                where TContext : IResolveContext
-            {
-                return (ref TContext context) =>
-                {
-                    Type = context.Type;
-                    Name = context.Name;
-
-                    return _value;
-                };
-            }
-        }
-
-        public class ValidatingResolver : IResolve
-        {
-            private object _value;
-
-            public ValidatingResolver(object value)
-            {
-                _value = value;
-            }
-
-            public object Resolve<TContext>(ref TContext context) where TContext : IResolveContext
-            {
-                Type = context.Type;
-                Name = context.Name;
-
-                return _value;
-            }
-
-            public Type Type { get; private set; }
-
-            public string Name { get; private set; }
-        }
-
         public class ObjectWithHiddenProperties
         {
             private string PrivateProperty { get; set; }
@@ -434,7 +387,9 @@ namespace Specification
 
         public class D1 : I1
         {
+#if !NET45
             [Dependency]
+#endif
             public I1 Field;
         }
 

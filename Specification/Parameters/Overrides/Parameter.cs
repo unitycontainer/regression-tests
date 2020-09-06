@@ -35,7 +35,7 @@ namespace Specification
             // Setup
             const int configuredValue = 15; // Just need a number, value has no significance.
             const int expectedValue = 42; // Just need a number, value has no significance.
-            Container.RegisterType<SimpleTestObject>(Invoke.Constructor(configuredValue));
+            Container.RegisterType<SimpleTestObject>(new InjectionConstructor(configuredValue));
 
             // Act
             var result = Container.Resolve<SimpleTestObject>(Override.Parameter("x", expectedValue));
@@ -50,7 +50,7 @@ namespace Specification
             // Setup
             const int configuredValue = 15; // Just need a number, value has no significance.
             const int overrideValue = 42; // Just need a number, value has no significance.
-            Container.RegisterType<SimpleTestObject>(Invoke.Constructor(configuredValue));
+            Container.RegisterType<SimpleTestObject>(new InjectionConstructor(configuredValue));
 
             // Act
             Container.Resolve<SimpleTestObject>(Override.Parameter("x", overrideValue)
@@ -115,10 +115,10 @@ namespace Specification
             var noOverride = "default";
             var parOverride = "custom-via-parameteroverride";
 
-            Container.RegisterType<TestType>(Invoke.Constructor(noOverride));
+            Container.RegisterType<TestType>(new InjectionConstructor(noOverride));
             // Act
             var defaultValue = Container.Resolve<TestType>().ToString();
-            var parValue = Container.Resolve<TestType>(Override.Parameter<string>(parOverride))
+            var parValue = Container.Resolve<TestType>(Override.Parameter<string>("dependency", parOverride))
                                     .ToString();
             // Verify
             Assert.AreSame(noOverride, defaultValue);

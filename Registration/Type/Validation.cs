@@ -20,20 +20,20 @@ namespace Registrations
         {
             get
             {
-                yield return new object[] { typeof(IService), typeof(Service),  null, null,                      typeof(TransientLifetimeManager) };
-       // TODO: yield return new object[] { typeof(Service),  typeof(IService), null, null,                      typeof(TransientLifetimeManager) };
-                yield return new object[] { typeof(object),   typeof(object),   null, null,                      typeof(TransientLifetimeManager) };
-                yield return new object[] { null,             typeof(object),   null, null,                      typeof(TransientLifetimeManager) };
-                yield return new object[] { typeof(object),   null,             null, null,                      typeof(TransientLifetimeManager) };
-                yield return new object[] { typeof(object),   typeof(object),   Name, null,                      typeof(TransientLifetimeManager) };
-                yield return new object[] { null,             typeof(object),   Name, null,                      typeof(TransientLifetimeManager) };
-                yield return new object[] { typeof(object),   null,             Name, null,                      typeof(TransientLifetimeManager) };
-                yield return new object[] { typeof(object),   typeof(object),   null, TypeLifetime.PerContainer, typeof(ContainerControlledLifetimeManager) };
-                yield return new object[] { null,             typeof(object),   null, TypeLifetime.PerContainer, typeof(ContainerControlledLifetimeManager) };
-                yield return new object[] { typeof(object),   null,             null, TypeLifetime.PerContainer, typeof(ContainerControlledLifetimeManager) };
-                yield return new object[] { typeof(object),   typeof(object),   Name, TypeLifetime.PerContainer, typeof(ContainerControlledLifetimeManager) };
-                yield return new object[] { null,             typeof(object),   Name, TypeLifetime.PerContainer, typeof(ContainerControlledLifetimeManager) };
-                yield return new object[] { typeof(object),   null,             Name, TypeLifetime.PerContainer, typeof(ContainerControlledLifetimeManager) };
+                yield return new object[] { typeof(IService), typeof(Service),  null, null,                                     typeof(TransientLifetimeManager) };
+       // TODO: yield return new object[] { typeof(Service),  typeof(IService), null, null,                                     typeof(TransientLifetimeManager) };
+                yield return new object[] { typeof(object),   typeof(object),   null, null,                                     typeof(TransientLifetimeManager) };
+                yield return new object[] { null,             typeof(object),   null, null,                                     typeof(TransientLifetimeManager) };
+                yield return new object[] { typeof(object),   null,             null, null,                                     typeof(TransientLifetimeManager) };
+                yield return new object[] { typeof(object),   typeof(object),   Name, null,                                     typeof(TransientLifetimeManager) };
+                yield return new object[] { null,             typeof(object),   Name, null,                                     typeof(TransientLifetimeManager) };
+                yield return new object[] { typeof(object),   null,             Name, null,                                     typeof(TransientLifetimeManager) };
+                yield return new object[] { typeof(object),   typeof(object),   null, new ContainerControlledLifetimeManager(), typeof(ContainerControlledLifetimeManager) };
+                yield return new object[] { null,             typeof(object),   null, new ContainerControlledLifetimeManager(), typeof(ContainerControlledLifetimeManager) };
+                yield return new object[] { typeof(object),   null,             null, new ContainerControlledLifetimeManager(), typeof(ContainerControlledLifetimeManager) };
+                yield return new object[] { typeof(object),   typeof(object),   Name, new ContainerControlledLifetimeManager(), typeof(ContainerControlledLifetimeManager) };
+                yield return new object[] { null,             typeof(object),   Name, new ContainerControlledLifetimeManager(), typeof(ContainerControlledLifetimeManager) };
+                yield return new object[] { typeof(object),   null,             Name, new ContainerControlledLifetimeManager(), typeof(ContainerControlledLifetimeManager) };
             }
         }
 
@@ -41,17 +41,21 @@ namespace Registrations
         {
             get
             {
-                yield return new object[] { typeof(ArgumentException), null, null, null, null,                      null };
-                yield return new object[] { typeof(ArgumentException), null, null, Name, null,                      null };
-                yield return new object[] { typeof(ArgumentException), null, null, null, TypeLifetime.PerContainer, null };
-                yield return new object[] { typeof(ArgumentException), null, null, Name, TypeLifetime.PerContainer, null };
+                yield return new object[] { typeof(ArgumentException), null, null, null, null,                                     null };
+                yield return new object[] { typeof(ArgumentException), null, null, Name, null,                                     null };
+                yield return new object[] { typeof(ArgumentException), null, null, null, new ContainerControlledLifetimeManager(), null };
+                yield return new object[] { typeof(ArgumentException), null, null, Name, new ContainerControlledLifetimeManager(), null };
             }
         }
 
 
         [DataTestMethod]
         [DynamicData(nameof(ArgumetTestData))]
+#if NET45
+        public void ArgumentValidation(Type typeFrom, Type typeTo, string name, LifetimeManager lifetimeManager, Type manager)
+#else
         public void ArgumentValidation(Type typeFrom, Type typeTo, string name, ITypeLifetimeManager lifetimeManager, Type manager)
+#endif
         {
             // Act
             Container.RegisterType(typeFrom, typeTo, name, lifetimeManager);
@@ -66,7 +70,11 @@ namespace Registrations
 
         [DataTestMethod]
         [DynamicData(nameof(ArgumetTestDataFailing))]
+#if NET45
+        public void ArgumentValidationFailing(Type exception, Type typeFrom, Type typeTo, string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
+#else
         public void ArgumentValidationFailing(Type exception, Type typeFrom, Type typeTo, string name, ITypeLifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
+#endif
         {
             try
             {

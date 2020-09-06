@@ -59,7 +59,11 @@ namespace Registrations
             child.Dispose();
             child = null;
 
+#if NET45
+            GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
+#else
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
+#endif
             Assert.IsFalse(wr.IsAlive);
         }
 

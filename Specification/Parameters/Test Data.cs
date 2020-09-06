@@ -1,5 +1,6 @@
 ﻿using System;
 #if NET45
+using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -131,57 +132,6 @@ namespace Specification
         public struct Customer
         {
         }
-
-        #endregion
-        #region Test Data
-
-        public class ValidatingResolver : IResolve
-        {
-            private object _value;
-
-            public ValidatingResolver(object value)
-            {
-                _value = value;
-            }
-
-            public object Resolve<TContext>(ref TContext context) where TContext : IResolveContext
-            {
-                Type = context.Type;
-                Name = context.Name;
-
-                return _value;
-            }
-
-            public Type Type { get; private set; }
-
-            public string Name { get; private set; }
-        }
-
-        public class ValidatingResolverFactory : IResolverFactory<Type>
-        {
-            private object _value;
-
-            public ValidatingResolverFactory(object value)
-            {
-                _value = value;
-            }
-
-            public Type Type { get; private set; }
-            public string Name { get; private set; }
-
-            public ResolveDelegate<TContext> GetResolver<TContext>(Type info)
-                where TContext : IResolveContext
-            {
-                return (ref TContext context) =>
-                {
-                    Type = context.Type;
-                    Name = context.Name;
-
-                    return _value;
-                };
-            }
-        }
-
         public class OtherService
         {
             #region Properties
@@ -465,7 +415,9 @@ namespace Specification
 
         public class D1 : I1
         {
+#if !NET45
             [Dependency]
+#endif
             public I1 Field;
         }
 

@@ -24,7 +24,7 @@ namespace Specification
             Container.RegisterInstance(Name, Name);
             Container.RegisterInstance(Other, Other);
             Container.RegisterType<ObjectWithProperty>(
-                    Invoke.Constructor(),
+                    new InjectionConstructor(),
                     Resolve.Property(nameof(ObjectWithProperty.MyProperty)))
                 .RegisterType<ISomething, Something1>()
                 .RegisterType<ISomething, Something2>(Name)

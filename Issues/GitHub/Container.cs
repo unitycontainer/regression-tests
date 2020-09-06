@@ -1,8 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -25,14 +21,12 @@ namespace Issues
             var parOverride = "custom-via-parameteroverride";
             var depOverride = "custom-via-dependencyoverride";
 
-            Container.RegisterType<Foo>(Invoke.Constructor(noOverride));
+            Container.RegisterType<Foo>(new InjectionConstructor(noOverride));
             // Act
             var defaultValue = Container.Resolve<Foo>().ToString();
-            var depValue = Container.Resolve<Foo>(Override.Dependency<string>(depOverride))
+            var depValue = Container.Resolve<Foo>(Override.Dependency<string>(depOverride)).ToString();
+            var parValue = Container.Resolve<Foo>(Override.Parameter<string>("dependency", parOverride))
                                        .ToString();
-            var parValue = Container.Resolve<Foo>(Override.Parameter<string>(parOverride))
-                                       .ToString();
-
             // Verify
             Assert.AreSame(noOverride, defaultValue);
             Assert.AreSame(parOverride, parValue);
@@ -86,7 +80,7 @@ namespace Issues
 
             // Setup
             Container.RegisterType<IProctRepository, ProctRepository>("DEBUG");
-            Container.RegisterType<IProctRepository, ProctRepository>("PROD", Invoke.Constructor(config));
+            Container.RegisterType<IProctRepository, ProctRepository>("PROD", new InjectionConstructor(config));
 
             // Act
             var ur = Container.Resolve<ProctRepository>();

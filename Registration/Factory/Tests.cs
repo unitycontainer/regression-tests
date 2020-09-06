@@ -57,13 +57,13 @@ namespace Registrations
         public void CanSetLifetime()
         {
             // Arrange
-            Container.RegisterFactory(typeof(object), null, (c, t, n) => null, FactoryLifetime.Singleton);
+            Container.RegisterFactory(typeof(object), null, (c, t, n) => null, new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
 
             // Validate
-            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(SingletonLifetimeManager));
+            Assert.IsInstanceOfType(registration.LifetimeManager, typeof(ContainerControlledLifetimeManager));
         }
 
         [TestMethod]

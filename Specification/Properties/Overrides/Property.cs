@@ -46,7 +46,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<ObjectWithThreeProperties>(
-                new Unity.Injection.InjectionProperty(nameof(ObjectWithThreeProperties.Property), Name));
+                new InjectionProperty(nameof(ObjectWithThreeProperties.Property), Name));
 
             // Act
             var other = "other";

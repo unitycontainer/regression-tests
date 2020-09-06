@@ -14,7 +14,7 @@ namespace Registrations
         [TestMethod]
         public void PerThread_Type_SameThread()
         {
-            Container.RegisterType<IService, Service>(TypeLifetime.PerThread);
+            Container.RegisterType<IService, Service>(new PerThreadLifetimeManager());
 
             var a = Container.Resolve<IService>();
             var b = Container.Resolve<IService>();
@@ -25,7 +25,7 @@ namespace Registrations
         [TestMethod]
         public void PerThread_Type_DifferentThreads()
         {
-            Container.RegisterType<IService, Service>(TypeLifetime.PerThread);
+            Container.RegisterType<IService, Service>(new PerThreadLifetimeManager());
 
             Thread t1 = new Thread(new ParameterizedThreadStart(ThreadProcedure));
             Thread t2 = new Thread(new ParameterizedThreadStart(ThreadProcedure));
@@ -46,7 +46,7 @@ namespace Registrations
         [TestMethod]
         public void PerThread_Factory_SameThread()
         {
-            Container.RegisterFactory<IService>((c, t, n) => new Service(), FactoryLifetime.PerThread);
+            Container.RegisterFactory<IService>((c, t, n) => new Service(), new PerThreadLifetimeManager());
 
             var a = Container.Resolve<IService>();
             var b = Container.Resolve<IService>();
@@ -57,7 +57,7 @@ namespace Registrations
         [TestMethod]
         public void PerThread_Factory_DifferentThreads()
         {
-            Container.RegisterFactory<IService>((c, t, n) => new Service(), FactoryLifetime.PerThread);
+            Container.RegisterFactory<IService>((c, t, n) => new Service(), new PerThreadLifetimeManager());
 
             Thread t1 = new Thread(new ParameterizedThreadStart(ThreadProcedure));
             Thread t2 = new Thread(new ParameterizedThreadStart(ThreadProcedure));

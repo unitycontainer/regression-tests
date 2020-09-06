@@ -10,14 +10,15 @@ namespace Specification
 {
     public partial class Methods_Diagnostic
     {
-
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void AnonymousTypeForGenericFails()
         {
             // Act
             Container.RegisterType(typeof(GenericService<,,>),
-                Invoke.Method("Method", Resolve.Parameter()));
+                new InjectionMethod("Method", Resolve.Parameter()));
         }
+#endif
     }
 }

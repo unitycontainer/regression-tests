@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Unity.Regression.Tests;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
@@ -15,7 +16,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.NamedDependencyAttribute)));
+                new InjectionMethod(nameof(Service.NamedDependencyAttribute)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -33,7 +34,7 @@ namespace Specification
 
             // Arrange
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.NamedDependencyAttribute), Inject.Parameter(typeof(string), injected)));
+                new InjectionMethod(nameof(Service.NamedDependencyAttribute), Inject.Parameter(typeof(string), injected)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -52,7 +53,7 @@ namespace Specification
 
             // Arrange
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.NamedDependencyAttribute), 
+                new InjectionMethod(nameof(Service.NamedDependencyAttribute), 
                     Inject.Parameter(typeof(string), resolver)));
 
             // Act
@@ -66,6 +67,7 @@ namespace Specification
             Assert.AreEqual(Name, resolver.Name);
         }
 
+#if !NET45
         [TestMethod]
         public void Injected_NamedDependencyByFactory()
         {
@@ -74,7 +76,7 @@ namespace Specification
 
             // Arrange
             Container.RegisterType<Service>(
-                Invoke.Method(nameof(Service.NamedDependencyAttribute), 
+                new InjectionMethod(nameof(Service.NamedDependencyAttribute), 
                     Inject.Parameter(typeof(string), resolver)));
 
             // Act
@@ -87,5 +89,6 @@ namespace Specification
             Assert.AreEqual(typeof(string), resolver.Type);
             Assert.AreEqual(Name, resolver.Name);
         }
+#endif
     }
 }

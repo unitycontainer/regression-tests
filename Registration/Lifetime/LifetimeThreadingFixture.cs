@@ -79,7 +79,7 @@ namespace Registrations
         [TestMethod]
         public void SameInstanceFromMultipleThreadsPerContainer()
         {
-            Container.RegisterFactory<IService>((c, t, n) => new Service(), FactoryLifetime.PerContainer);
+            Container.RegisterFactory<IService>((c, t, n) => new Service(), new ContainerControlledLifetimeManager());
 
             object result1 = null;
             object result2 = null;
@@ -110,8 +110,8 @@ namespace Registrations
         [TestMethod]
         public void SameInstanceFromMultipleThreadsPerContainerGeneric()
         {
-            Container.RegisterFactory<IService>((c, t, n) => new Service(), FactoryLifetime.PerContainer)
-                     .RegisterType(typeof(IFoo<>), typeof(Foo<>), TypeLifetime.PerContainer);
+            Container.RegisterFactory<IService>((c, t, n) => new Service(), new ContainerControlledLifetimeManager())
+                     .RegisterType(typeof(IFoo<>), typeof(Foo<>), new ContainerControlledLifetimeManager());
 
             object result1 = null;
             object result2 = null;
@@ -151,7 +151,7 @@ namespace Registrations
                 Interlocked.Increment(ref count);
                 return !fail ? new Service() : throw new InvalidOperationException();
             };
-            Container.RegisterFactory<IService>(factory, FactoryLifetime.PerContainer);
+            Container.RegisterFactory<IService>(factory, new ContainerControlledLifetimeManager());
 
             object result1 = null;
             object result2 = null;

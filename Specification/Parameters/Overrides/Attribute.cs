@@ -15,7 +15,7 @@ namespace Specification
         public void Overrides_DependencyAttribute()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.DependencyAttribute)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttribute)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -29,7 +29,7 @@ namespace Specification
         public void Overrides_NamedDependencyAttribute()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.NamedDependencyAttribute)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NamedDependencyAttribute)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -44,7 +44,7 @@ namespace Specification
         public void Overrides_DependencyAttributeWithDefaultInt()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.DependencyAttributeWithDefaultInt)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttributeWithDefaultInt)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -58,7 +58,7 @@ namespace Specification
         public void Overrides_NamedDependencyAttributeWithDefaultInt()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.NamedDependencyAttributeWithDefaultInt)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NamedDependencyAttributeWithDefaultInt)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -72,7 +72,7 @@ namespace Specification
         public void Overrides_DependencyAttributeWithDefaultNullUnresolved()
         {
             // Arrange
-            Container.RegisterType<Service>(Invoke.Method(nameof(Service.DependencyAttributeWithDefaultNullUnresolved)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttributeWithDefaultNullUnresolved)));
 
             // Act
             var result = Container.Resolve<Service>();

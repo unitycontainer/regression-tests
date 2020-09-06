@@ -16,7 +16,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<OpenGenericInjectionMethod>(
-                Invoke.Method(nameof(OpenGenericInjectionMethod.InjectMe)));
+                new InjectionMethod(nameof(OpenGenericInjectionMethod.InjectMe)));
         }
 
         [TestMethod]
@@ -25,7 +25,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<TypeWithMethodWithInvalidParameter>(
-                Invoke.Method(nameof(TypeWithMethodWithInvalidParameter.MethodWithRefParameter)));
+                new InjectionMethod(nameof(TypeWithMethodWithInvalidParameter.MethodWithRefParameter)));
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<TypeWithMethodWithInvalidParameter>(
-                Invoke.Method(nameof(TypeWithMethodWithInvalidParameter.MethodWithOutParameter)));
+                new InjectionMethod(nameof(TypeWithMethodWithInvalidParameter.MethodWithOutParameter)));
         }
 
     }

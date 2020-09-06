@@ -14,14 +14,14 @@ namespace Registrations
         public void ContainerCanBeConfiguredForPerBuildSingleton()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
-                     .RegisterType<IView, View>(TypeLifetime.PerResolve);
+                     .RegisterType<IView, View>(new PerResolveLifetimeManager());
         }
 
         [TestMethod]
         public void ViewIsReusedAcrossGraph()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
-                     .RegisterType<IView, View>(TypeLifetime.PerResolve);
+                     .RegisterType<IView, View>(new PerResolveLifetimeManager());
 
             var view = Container.Resolve<IView>();
 
@@ -33,7 +33,7 @@ namespace Registrations
         public void ViewsAreDifferentInDifferentResolveCalls()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
-                     .RegisterType<IView, View>(TypeLifetime.PerResolve);
+                     .RegisterType<IView, View>(new PerResolveLifetimeManager());
 
             var view1 = Container.Resolve<IView>();
             var view2 = Container.Resolve<IView>();
@@ -44,7 +44,7 @@ namespace Registrations
         [TestMethod]
         public void PerResolveLifetimeIsHonoredWhenUsingFactory()
         {
-            Container.RegisterFactory<SomeService>(c => new SomeService(), FactoryLifetime.PerResolve);
+            Container.RegisterFactory<SomeService>(c => new SomeService(), new PerResolveLifetimeManager());
 
             var rootService = Container.Resolve<AService>();
             Assert.AreSame(rootService.SomeService, rootService.OtherService.SomeService);
@@ -54,14 +54,14 @@ namespace Registrations
         public void PerResolveCanBeConfigured()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
-                     .RegisterType<IView, View>(TypeLifetime.PerResolve);
+                     .RegisterType<IView, View>(new PerResolveLifetimeManager());
         }
 
         [TestMethod]
         public void PerResolveViewIsReusedAcrossGraph()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
-                     .RegisterType<IView, View>(TypeLifetime.PerResolve);
+                     .RegisterType<IView, View>(new PerResolveLifetimeManager());
 
             var view = Container.Resolve<IView>();
 
@@ -73,7 +73,7 @@ namespace Registrations
         public void PerResolveViewsAreDifferentInDifferentResolveCalls()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
-                     .RegisterType<IView, View>(TypeLifetime.PerResolve);
+                     .RegisterType<IView, View>(new PerResolveLifetimeManager());
 
             var view1 = Container.Resolve<IView>();
             var view2 = Container.Resolve<IView>();
@@ -85,7 +85,7 @@ namespace Registrations
         public void PerResolveFromMultipleThreads()
         {
             Container.RegisterType<IPresenter, MockPresenter>()
-                     .RegisterType<IView, View>(TypeLifetime.PerResolve);
+                     .RegisterType<IView, View>(new PerResolveLifetimeManager());
 
             object result1 = null;
             object result2 = null;

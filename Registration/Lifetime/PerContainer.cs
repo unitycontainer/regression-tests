@@ -13,7 +13,7 @@ namespace Registrations
         public void PerContainer_Instance_Null()
         {
             // Arrange
-            Container.RegisterInstance(typeof(IService), null, null, InstanceLifetime.PerContainer);
+            Container.RegisterInstance(typeof(IService), null, null, new ContainerControlledLifetimeManager());
 
             // Act
             var instance = Container.Resolve<IService>();
@@ -27,7 +27,7 @@ namespace Registrations
         public void PerContainer_Factory_Null()
         {
             // Arrange
-            Container.RegisterFactory<IService>(c => null, FactoryLifetime.Singleton);
+            Container.RegisterFactory<IService>(c => null, new ContainerControlledLifetimeManager());
 
             // Act
             var instance = Container.Resolve<IService>();

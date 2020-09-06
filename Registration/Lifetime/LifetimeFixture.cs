@@ -17,8 +17,8 @@ namespace Registrations
         [TestMethod]
         public void CheckSetSingletonDoneTwice()
         {
-            Container.RegisterType<Service>(TypeLifetime.PerContainer)
-                     .RegisterType<Service>("hello", TypeLifetime.PerContainer);
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager())
+                     .RegisterType<Service>("hello", new ContainerControlledLifetimeManager());
 
             var obj = Container.Resolve<Service>();
             var obj1 = Container.Resolve<Service>("hello");
@@ -29,7 +29,7 @@ namespace Registrations
         [TestMethod]
         public void CheckSingletonWithDependencies()
         {
-            Container.RegisterType<ObjectWithOneDependency>(TypeLifetime.PerContainer);
+            Container.RegisterType<ObjectWithOneDependency>(new ContainerControlledLifetimeManager());
 
             var result1 = Container.Resolve<ObjectWithOneDependency>();
             var result2 = Container.Resolve<ObjectWithOneDependency>();
@@ -44,7 +44,7 @@ namespace Registrations
         [TestMethod]
         public void CheckSingletonAsDependencies()
         {
-            Container.RegisterType<ObjectWithOneDependency>(TypeLifetime.PerContainer);
+            Container.RegisterType<ObjectWithOneDependency>(new ContainerControlledLifetimeManager());
 
             var result1 = Container.Resolve<ObjectWithTwoConstructorDependencies>();
             var result2 = Container.Resolve<ObjectWithTwoConstructorDependencies>();
@@ -81,7 +81,7 @@ namespace Registrations
         [TestMethod]
         public void SetLifetimeTwiceWithLifetimeHandle()
         {
-            Container.RegisterType<Service>(TypeLifetime.PerContainer)
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager())
               .RegisterType<Service>("hello", new HierarchicalLifetimeManager());
             var obj = Container.Resolve<Service>();
             var obj1 = Container.Resolve<Service>("hello");
@@ -109,7 +109,7 @@ namespace Registrations
         [TestMethod]
         public void SetLifetimeGetTwice()
         {
-            Container.RegisterType<Service>(TypeLifetime.PerContainer);
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager());
             var obj = Container.Resolve<Service>();
             var obj1 = Container.Resolve<Service>("hello");
          
@@ -127,8 +127,8 @@ namespace Registrations
 
             Container.RegisterInstance(aInstance);
             Container.RegisterInstance("hello", aInstance);
-            Container.RegisterType<Service>(TypeLifetime.PerContainer);
-            Container.RegisterType<Service>("hello1", TypeLifetime.PerContainer);
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<Service>("hello1", new ContainerControlledLifetimeManager());
 
             var obj = Container.Resolve<Service>();
             var obj1 = Container.Resolve<Service>("hello1");
@@ -166,7 +166,7 @@ namespace Registrations
         public void SetLifetimeNoNameRegisterInstanceDiffNames()
         {
             var aInstance = new Service();
-            Container.RegisterType<Service>(TypeLifetime.PerContainer)
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager())
                 .RegisterInstance<Service>(aInstance)
                 .RegisterInstance<Service>("hello", aInstance)
                 .RegisterInstance<Service>("hi", aInstance, new ExternallyControlledLifetimeManager());
@@ -188,7 +188,7 @@ namespace Registrations
         public void SetSingletonWithNameRegisterInstanceDiffNames()
         {
             var aInstance = new Service();
-            Container.RegisterType<Service>("set", TypeLifetime.PerContainer)
+            Container.RegisterType<Service>("set", new ContainerControlledLifetimeManager())
                 .RegisterInstance<Service>(aInstance)
                 .RegisterInstance<Service>("hello", aInstance)
                 .RegisterInstance<Service>("hi", aInstance, new ExternallyControlledLifetimeManager());
@@ -211,7 +211,7 @@ namespace Registrations
         public void SetLifetimeWithNameRegisterInstanceDiffNames()
         {
             var aInstance = new Service();
-            Container.RegisterType<Service>("set", TypeLifetime.PerContainer)
+            Container.RegisterType<Service>("set", new ContainerControlledLifetimeManager())
                 .RegisterInstance<Service>(aInstance)
                 .RegisterInstance<Service>("hello", aInstance)
                 .RegisterInstance<Service>("hi", aInstance, new ExternallyControlledLifetimeManager());
@@ -236,7 +236,7 @@ namespace Registrations
         {
             var aInstance = new Service();
             var bInstance = new OtherService();
-            Container.RegisterType<Service>(TypeLifetime.PerContainer)
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager())
                 .RegisterInstance<Service>(aInstance)
                 .RegisterInstance<Service>("hello", aInstance)
                 .RegisterInstance<OtherService>("hi", bInstance)
@@ -260,7 +260,7 @@ namespace Registrations
         public void SetSingletonByNameRegisterInstanceOnit()
         {
             var aInstance = new Service();
-            Container.RegisterType<Service>("SetA", TypeLifetime.PerContainer)
+            Container.RegisterType<Service>("SetA", new ContainerControlledLifetimeManager())
                 .RegisterInstance<Service>(aInstance)
                 .RegisterInstance<Service>("hello", aInstance);
 
@@ -278,8 +278,8 @@ namespace Registrations
         [TestMethod]
         public void TestSetLifetime()
         {
-            Container.RegisterType<Service>(TypeLifetime.PerContainer)
-               .RegisterType<Service>("hello", TypeLifetime.PerContainer);
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager())
+               .RegisterType<Service>("hello", new ContainerControlledLifetimeManager());
 
             var obj = Container.Resolve<Service>();
             var obj1 = Container.Resolve<Service>("hello");
@@ -296,8 +296,8 @@ namespace Registrations
         {
             var aInstance = new Service();
 
-            Container.RegisterType((Type)null, typeof(Service), null, TypeLifetime.PerContainer, null);
-            Container.RegisterType((Type)null, typeof(Service), "SetA", TypeLifetime.PerContainer, null);
+            Container.RegisterType((Type)null, typeof(Service), null, new ContainerControlledLifetimeManager(), null);
+            Container.RegisterType((Type)null, typeof(Service), "SetA", new ContainerControlledLifetimeManager(), null);
             Container.RegisterInstance(aInstance);
             Container.RegisterInstance("hello", aInstance);
             Container.RegisterInstance("hello", aInstance, new ExternallyControlledLifetimeManager());
@@ -320,8 +320,8 @@ namespace Registrations
             //register type UnityTestClass
             var child = Container.CreateChildContainer();
 
-            Container.RegisterType<Service>(TypeLifetime.PerContainer);
-                child.RegisterType<Service>(TypeLifetime.PerContainer);
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager());
+                child.RegisterType<Service>(new ContainerControlledLifetimeManager());
 
             var mytestparent = Container.Resolve<Service>();
             var mytestchild = child.Resolve<Service>();
@@ -336,7 +336,7 @@ namespace Registrations
         [TestMethod]
         public void UseContainerControlledLifetime()
         {
-            Container.RegisterType<Service>(TypeLifetime.PerContainer);
+            Container.RegisterType<Service>(new ContainerControlledLifetimeManager());
 
             var parentinstance = Container.Resolve<Service>();
             var hash = parentinstance.GetHashCode();
@@ -350,8 +350,8 @@ namespace Registrations
         [TestMethod]
         public void TestStringEmpty()
         {
-            Container.RegisterType<Service>(null, TypeLifetime.PerContainer);
-            Container.RegisterType<Service>(string.Empty, TypeLifetime.PerContainer);
+            Container.RegisterType<Service>(null, new ContainerControlledLifetimeManager());
+            Container.RegisterType<Service>(string.Empty, new ContainerControlledLifetimeManager());
 
             Service a = Container.Resolve<Service>();
             Service c = Container.Resolve<Service>((string)null);

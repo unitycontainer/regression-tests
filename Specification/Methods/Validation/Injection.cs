@@ -15,7 +15,7 @@ namespace Specification
         public void NoReuse()
         {
             // Arrange
-            var method = Invoke.Method(nameof(InjectedType.NormalMethod));
+            var method = new InjectionMethod(nameof(InjectedType.NormalMethod));
 
             // Act
             Container.RegisterType<InjectedType>("1", method)
@@ -28,7 +28,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<InjectedType>(
-                Invoke.Method("PrivateMethod"));
+                new InjectionMethod("PrivateMethod"));
         }
 
         [TestMethod]
@@ -37,7 +37,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<InjectedType>(
-                Invoke.Method("ProtectedMethod"));
+                new InjectionMethod("ProtectedMethod"));
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<InjectedType>(
-                Invoke.Method(nameof(InjectedType.StaticMethod)));
+                new InjectionMethod(nameof(InjectedType.StaticMethod)));
         }
 
         [TestMethod]
@@ -55,7 +55,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<InjectedType>(
-                Invoke.Method(nameof(InjectedType.OpenGenericMethod)));
+                new InjectionMethod(nameof(InjectedType.OpenGenericMethod)));
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<InjectedType>(
-                Invoke.Method(nameof(InjectedType.OutParamMethod)));
+                new InjectionMethod(nameof(InjectedType.OutParamMethod)));
         }
 
         [TestMethod]
@@ -73,7 +73,7 @@ namespace Specification
         {
             // Act
             Container.RegisterType<InjectedType>(
-                Invoke.Method(nameof(InjectedType.RefParamMethod)));
+                new InjectionMethod(nameof(InjectedType.RefParamMethod)));
         }
     }
 }
