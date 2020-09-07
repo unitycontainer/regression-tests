@@ -12,7 +12,7 @@ namespace Specification
     public partial class Parameters
     {
         [TestMethod]
-        public void Annotation_Dependency()
+        public void Annotation_Dependency_v5()
         {
             // Arrange
             Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttribute)));
@@ -41,7 +41,7 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Annotation_NamedDependency_Legacy()
+        public void Annotation_NamedDependency_WithTypes()
         {
             // Arrange
             Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NamedDependencyAttribute), typeof(string)));
