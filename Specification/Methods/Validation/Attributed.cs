@@ -10,6 +10,8 @@ namespace Specification
 {
     public partial class Methods_Diagnostic
     {
+
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public void AttributeOnStatic()
@@ -24,6 +26,8 @@ namespace Specification
         {
             // Act
             var result = Container.Resolve<AttributePrivateType>();
+
+            Assert.IsTrue(result.Executed);
         }
 
         [TestMethod]
@@ -33,6 +37,7 @@ namespace Specification
             // Act
             var result = Container.Resolve<AttributeProtectedType>();
         }
+#endif
 
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]

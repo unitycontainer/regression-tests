@@ -73,8 +73,10 @@ namespace Specification
 
         public class AttributePrivateType
         {
+            public bool Executed = false;
+
             [InjectionMethod]
-            private void Method() { }
+            private void Method() { Executed = true; }
         }
 
 

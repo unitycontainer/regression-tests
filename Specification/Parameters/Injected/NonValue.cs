@@ -4,6 +4,7 @@ using Unity.Regression.Tests;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
+using Unity.Injection;
 using Unity;
 #endif
 

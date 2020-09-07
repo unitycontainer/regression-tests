@@ -4,6 +4,7 @@ using System;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 using Unity.Resolution;
 #endif
 

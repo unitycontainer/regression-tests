@@ -5,6 +5,7 @@ using System;
 #if NET45
 using Microsoft.Practices.Unity;
 #else
+using Unity.Resolution;
 using Unity.Injection;
 using Unity.Lifetime;
 using Unity;

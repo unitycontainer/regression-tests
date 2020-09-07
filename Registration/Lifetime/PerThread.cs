@@ -5,6 +5,7 @@ using System.Threading;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Lifetime;
 #endif
 
 namespace Registrations

@@ -11,6 +11,7 @@ namespace Specification
 {
     public partial class Parameters_Diagnostic
     {
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public void Cyclic_ParameterToInterface()
@@ -36,5 +37,6 @@ namespace Specification
                 Override.Dependency<I0>(
                     Resolve.Dependency<I1>()));
         }
+#endif
     }
 }

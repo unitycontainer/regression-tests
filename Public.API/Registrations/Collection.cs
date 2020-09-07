@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 using Unity.Lifetime;
 #endif
 

@@ -4,14 +4,16 @@ using System;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 #endif
 
 namespace Specification
 {
     public partial class Parameters
     {
+#if !NET45
         [TestMethod]
-        public void Annotation_DependencyAttribute()
+        public void Annotation_Dependency()
         {
             // Arrange
             Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttribute)));
@@ -23,9 +25,25 @@ namespace Specification
             Assert.AreEqual(result.Called, 2);
             Assert.IsInstanceOfType(result.Value, typeof(object));
         }
+#endif
 
         [TestMethod]
-        public void Annotation_NamedDependencyAttribute()
+        public void Annotation_Dependency_Legacy()
+        {
+            // Arrange
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttribute), typeof(object)));
+
+            // Act
+            var result = Container.Resolve<Service>();
+
+            // Assert
+            Assert.AreEqual(result.Called, 2);
+            Assert.IsInstanceOfType(result.Value, typeof(object));
+        }
+
+#if !NET45
+        [TestMethod]
+        public void Annotation_NamedDependency()
         {
             // Arrange
             Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NamedDependencyAttribute)));
@@ -40,7 +58,22 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Annotation_DependencyAttributeWithDefaultInt()
+        public void Annotation_NamedDependency_Legacy()
+        {
+            // Arrange
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NamedDependencyAttribute), typeof(string)));
+
+            // Act
+            var result = Container.Resolve<Service>();
+
+            // Assert
+            Assert.AreEqual(result.Called, 3);
+            Assert.IsInstanceOfType(result.Value, typeof(string));
+            Assert.AreEqual(result.Value, Name);
+        }
+
+        [TestMethod]
+        public void Annotation_WithDefaultInt()
         {
             // Arrange
             Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttributeWithDefaultInt)));
@@ -54,7 +87,21 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Annotation_NamedDependencyAttributeWithDefaultInt()
+        public void Annotation_WithDefaultInt_Legacy()
+        {
+            // Arrange
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttributeWithDefaultInt), typeof(int)));
+
+            // Act
+            var result = Container.Resolve<Service>();
+
+            // Assert
+            Assert.AreEqual(result.Called, 10);
+            Assert.AreEqual(result.Value, Service.DefaultInt);
+        }
+
+        [TestMethod]
+        public void Annotation_NamedWithDefaultInt()
         {
             // Arrange
             Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NamedDependencyAttributeWithDefaultInt)));
@@ -67,8 +114,38 @@ namespace Specification
             Assert.AreEqual(result.Value, Service.DefaultInt);
         }
 
+
         [TestMethod]
-        public void Annotation_DependencyAttributeWithDefaultNullUnresolved()
+        public void Annotation_NamedWithDefaultInt_Legacy()
+        {
+            // Arrange
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NamedDependencyAttributeWithDefaultInt), typeof(int)));
+
+            // Act
+            var result = Container.Resolve<Service>();
+
+            // Assert
+            Assert.AreEqual(result.Called, 11);
+            Assert.AreEqual(result.Value, Service.DefaultInt);
+        }
+
+        [TestMethod]
+        public void Annotation_WithDefaultNullUnresolved()
+        {
+            // Arrange
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttributeWithDefaultNullUnresolved), typeof(IDisposable)));
+
+            // Act
+            var result = Container.Resolve<Service>();
+
+            // Assert
+            Assert.AreEqual(result.Called, 16);
+            Assert.IsNull(result.Value);
+        }
+
+
+        [TestMethod]
+        public void Annotation_WithDefaultNullUnresolved_Legacy()
         {
             // Arrange
             Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttributeWithDefaultNullUnresolved)));
@@ -80,6 +157,6 @@ namespace Specification
             Assert.AreEqual(result.Called, 16);
             Assert.IsNull(result.Value);
         }
-
+#endif
     }
 }

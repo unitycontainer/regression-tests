@@ -10,6 +10,7 @@ namespace Specification
 {
     public partial class Methods_Diagnostic
     {
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public void Cyclic_MethodToInterface()
@@ -20,5 +21,6 @@ namespace Specification
             // Act
             Container.Resolve<F1>();
         }
+#endif
     }
 }

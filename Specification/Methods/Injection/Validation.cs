@@ -10,6 +10,7 @@ namespace Specification
 {
     public partial class Methods_Diagnostic
     {
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public override void Injection_MultipleMethods() => base.Injection_MultipleMethods();
@@ -29,5 +30,6 @@ namespace Specification
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public override void Injection_StaticMethod() => base.Injection_StaticMethod();
+#endif
     }
 }

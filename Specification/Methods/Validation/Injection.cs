@@ -4,24 +4,14 @@ using System;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 #endif
 
 namespace Specification
 {
     public partial class Methods_Diagnostic
     {
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void NoReuse()
-        {
-            // Arrange
-            var method = new InjectionMethod(nameof(InjectedType.NormalMethod));
-
-            // Act
-            Container.RegisterType<InjectedType>("1", method)
-                     .RegisterType<InjectedType>("2", method);
-        }
-
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void InjectPrivateMethod()
@@ -39,6 +29,7 @@ namespace Specification
             Container.RegisterType<InjectedType>(
                 new InjectionMethod("ProtectedMethod"));
         }
+#endif
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]

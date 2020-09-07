@@ -4,6 +4,7 @@ using System;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 #endif
 
 namespace Specification
@@ -29,6 +30,7 @@ namespace Specification
 
     public partial class Methods_Diagnostic
     {
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public void ChainedExecuteMethodBaseline()
@@ -44,5 +46,6 @@ namespace Specification
             // Verify
             Assert.Fail();
         }
+#endif
     }
 }

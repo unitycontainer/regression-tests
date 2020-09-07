@@ -23,6 +23,7 @@
 
 	<PropertyGroup Condition="!Exists('$(UnityContainer)') AND !Exists('$(UnityLegacy)') ">
 		<TargetFrameworks>net47;net46;net45</TargetFrameworks>
+		<!--<TargetFrameworks>net46;net45</TargetFrameworks>-->
 	</PropertyGroup>
 
 	<!-- Temporary exclusions -->
