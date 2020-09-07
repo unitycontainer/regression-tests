@@ -12,10 +12,10 @@ namespace Specification
     public partial class Parameters
     {
         [TestMethod]
-        public void Injected_InjectedAttributedBaseline()
+        public void Injected_Baseline()
         {
             // Act
-            var result = Container.Resolve<OtherService>();
+            var result = Container.Resolve<InjectedType>();
 
             // Assert
             Assert.IsNull(result.ValueOne);
@@ -24,14 +24,14 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Injected_InjectedAttributedMethod()
+        public void Injected_WithAttribute()
         {
             // Arrange
-            Container.RegisterType<OtherService>(
-                new InjectionMethod(nameof(OtherService.Method)));
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.Method), typeof(object)));
 
             // Act
-            var result = Container.Resolve<OtherService>();
+            var result = Container.Resolve<InjectedType>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -39,17 +39,16 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Injected_InjectedAttributedMethodWithValue()
+        public void Injected_WithObject()
         {
             var data = "value";
 
             // Arrange
-            Container.RegisterType<OtherService>(
-                new InjectionMethod(nameof(OtherService.Method),
-                    Inject.Parameter(data)));
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.Method), new InjectionParameter(data)));
 
             // Act
-            var result = Container.Resolve<OtherService>();
+            var result = Container.Resolve<InjectedType>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -57,15 +56,14 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Injected_WithInjectedInt()
+        public void Injected_WithInt()
         {
             // Arrange
-            Container.RegisterType<OtherService>(
-                new InjectionMethod(nameof(OtherService.MethodOne), 
-                    Inject.Parameter(1)));
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.MethodOne), new InjectionParameter(1)));
 
             // Act
-            var result = Container.Resolve<OtherService>();
+            var result = Container.Resolve<InjectedType>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -75,15 +73,14 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Injected_WithInjectedString()
+        public void Injected_WithString()
         {
             // Arrange
-            Container.RegisterType<OtherService>(
-                new InjectionMethod(nameof(OtherService.MethodOne),
-                    Inject.Parameter("test")));
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.MethodOne), new InjectionParameter("test")));
 
             // Act
-            var result = Container.Resolve<OtherService>();
+            var result = Container.Resolve<InjectedType>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -93,16 +90,15 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Injected_WithInjectedIntString()
+        public void Injected_WithIntAndString()
         {
             // Arrange
-            Container.RegisterType<OtherService>(
-                new InjectionMethod(nameof(OtherService.MethodTwo),
-                    Inject.Parameter(1),
-                    Inject.Parameter("test")));
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.MethodTwo), new InjectionParameter(1),
+                                                                    new InjectionParameter("test")));
 
             // Act
-            var result = Container.Resolve<OtherService>();
+            var result = Container.Resolve<InjectedType>();
 
             // Assert
             Assert.IsNotNull(result.Value);
@@ -114,16 +110,14 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Injected_WithInjectedStringInt()
+        public void Injected_WithStringAndInt()
         {
             // Arrange
-            Container.RegisterType<OtherService>(
-                new InjectionMethod(nameof(OtherService.MethodTwo),
-                    Inject.Parameter("test"),
-                    Inject.Parameter(1)));
-
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.MethodTwo), new InjectionParameter("test"),
+                                                                    new InjectionParameter(1)));
             // Act
-            var result = Container.Resolve<OtherService>();
+            var result = Container.Resolve<InjectedType>();
 
             // Assert
             Assert.IsNotNull(result.Value);

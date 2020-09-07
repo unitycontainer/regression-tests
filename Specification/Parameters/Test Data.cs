@@ -38,7 +38,6 @@ namespace Specification
             }
         }
 
-        // Our generic interface 
         public interface ICommand<T>
         {
             T Executed { get; }
@@ -50,7 +49,6 @@ namespace Specification
             void ChainedExecute(ICommand<T> inner);
         }
 
-        // An implementation of ICommand that executes them.
         public class ConcreteCommand<T> : ICommand<T>
         {
             public T Executed { get; private set; }
@@ -68,7 +66,6 @@ namespace Specification
             }
         }
 
-        // And a decorator implementation that wraps an Inner ICommand<>
         public class LoggingCommand<T> : ICommand<T>
         {
             private ICommand<T> inner;
@@ -115,24 +112,11 @@ namespace Specification
             }
         }
 
-
-        // A couple of sample objects we're stuffing into our commands
-        public class User
-        {
-            public void DoSomething(string message)
-            {
-            }
-        }
-
         public class Account
         {
         }
 
-        // InjectionParameterValue type used for testing nesting
-        public struct Customer
-        {
-        }
-        public class OtherService
+        public class InjectedType
         {
             #region Properties
 
@@ -405,6 +389,7 @@ namespace Specification
         public interface I0 { }
 
         public interface I1 : I0 { }
+
         public interface I2 : I0 { }
 
         public class B1 : I1 { public B1(I1 i1) { } }
@@ -413,27 +398,8 @@ namespace Specification
 
         public class C2 : I2 { public C2(I1 i1) { } }
 
-        public class D1 : I1
-        {
-#if !NET45
-            [Dependency]
-#endif
-            public I1 Field;
-        }
-
-        public class E1 : I1
-        {
-            [Dependency]
-            public I1 Property { get; set; }
-        }
-
-        public class F1 : I1
-        {
-            [InjectionMethod]
-            public void Method(I1 i1) { }
-        }
-
         public class G0 : I0 { }
+
         public class G1 : I1 { public G1(I0 i0) { } }
 
         #endregion

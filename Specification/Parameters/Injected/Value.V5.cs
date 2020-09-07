@@ -11,21 +11,20 @@ namespace Specification
 {
     public partial class Parameters
     {
+
         [TestMethod]
-        public void Injected_Method_v5()
+        public void Injected_WithAttribute_v5()
         {
             // Arrange
-            Container.RegisterType<Service>(
-                new InjectionMethod(nameof(Service.Method)));
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.Method)));
 
             // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<InjectedType>();
 
             // Assert
-            Assert.IsNotNull(result.ValueOne);
-            Assert.IsInstanceOfType(result.ValueOne, typeof(object));
+            Assert.IsNotNull(result.Value);
+            Assert.IsInstanceOfType(result.Value, typeof(object));
         }
-
-
     }
 }
