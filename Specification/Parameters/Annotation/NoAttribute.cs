@@ -11,11 +11,12 @@ namespace Specification
 {
     public partial class Parameters
     {
+#if !NET45
         [TestMethod]
-        public void Annotation_NoAttribute()
+        public void Annotation_Baseline()
         {
             // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeParameter)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeParameter), typeof(object)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -24,61 +25,20 @@ namespace Specification
             Assert.AreEqual(result.Called, 1);
             Assert.IsInstanceOfType(result.Value, typeof(object));
         }
+#endif
 
         [TestMethod]
-        public void Annotation_NoAttributeWithDefault()
+        public void Annotation_Baseline_Legacy()
         {
             // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeWithDefault)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeParameter), typeof(object)));
 
             // Act
             var result = Container.Resolve<Service>();
 
             // Assert
-            Assert.AreEqual(result.Called, 8);
-            Assert.AreNotEqual(result.Value, Service.DefaultString);
-        }
-
-        [TestMethod]
-        public void Annotation_NoAttributeWithDefaultInt()
-        {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeWithDefaultInt)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 9);
-            Assert.AreEqual(result.Value, Service.DefaultInt);
-        }
-
-        [TestMethod]
-        public void Annotation_NoAttributeWithDefaultUnresolved()
-        {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeWithDefaultUnresolved)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 14);
-            Assert.AreEqual((long)result.Value, 100);
-        }
-
-        [TestMethod]
-        public void Annotation_NoAttributeWithDisposableUnresolved()
-        {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.WithDefaultDisposableUnresolved)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 15);
-            Assert.IsNull(result.Value);
+            Assert.AreEqual(result.Called, 1);
+            Assert.IsInstanceOfType(result.Value, typeof(object));
         }
     }
 }

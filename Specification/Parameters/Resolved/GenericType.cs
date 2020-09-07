@@ -51,7 +51,7 @@ namespace Specification
             Assert.IsNotNull(result);
             Assert.AreEqual(result.Called, 2);
             Assert.IsInstanceOfType(result.Value, typeof(string));
-            Assert.AreEqual(result.Value, "other");
+            Assert.AreEqual(result.Value, "unnamed");
         }
 
         [TestMethod]

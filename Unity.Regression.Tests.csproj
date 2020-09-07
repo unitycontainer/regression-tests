@@ -22,8 +22,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="!Exists('$(UnityContainer)') AND !Exists('$(UnityLegacy)') ">
-		<TargetFrameworks>net47;net46;net45</TargetFrameworks>
-		<!--<TargetFrameworks>net46;net45</TargetFrameworks>-->
+		<!--<TargetFrameworks>net47;net46;net45</TargetFrameworks>-->
+		<TargetFrameworks>net46;net45</TargetFrameworks>
 	</PropertyGroup>
 
 	<!-- Temporary exclusions -->
@@ -73,7 +73,9 @@
 		<Compile Remove="Resolution\Overrides\Field.cs" />
 		<Compile Remove="Resolution\Overrides\Dependency.V5.cs" />
 		<Compile Remove="Resolution\Enumerable\**" />
-		<Compile Remove="Specification\Parameters\Annotation\Attribute.V5.cs" />
+		<Compile Remove="Specification\Parameters\Injected\NonValue.V5.cs" />
+		<Compile Remove="Specification\Parameters\Annotation\Annotated.V5.cs" />
+		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.cs" />
 		<Compile Remove="Specification\Constructors\Parameters\WithDefault.v5.cs" />
  	    <Compile Remove="Specification\Fields\**" />
 		<Compile Remove="Specification\Variants\**" />
@@ -96,6 +98,7 @@
 
 	<ItemGroup>
 		<Folder Include="Public.API\Compatibility\" />
+		<Folder Include="Specification\Parameters\Defaults\" />
 	</ItemGroup>
 
 </Project>
