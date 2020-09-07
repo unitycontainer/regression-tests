@@ -65,7 +65,7 @@
 		<Compile Remove="Public.API\Compatibility\Compatibility.V4.cs" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net45' OR '$(TargetFramework)' == 'net451'">
 		<Compile Remove="Issues\GitHub\**" />
 		<Compile Remove="Resolution\Lazy\Enumerable.cs" />
 		<Compile Remove="Resolution\Array\BuiltInTypesResolution.V5.cs" />

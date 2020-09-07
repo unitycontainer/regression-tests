@@ -47,7 +47,7 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Injected_NamedDependencyByResolver()
+        public void Injected_ByResolver()
         {
             var injected = "injected";
             var resolver = new ValidatingResolver(injected);
