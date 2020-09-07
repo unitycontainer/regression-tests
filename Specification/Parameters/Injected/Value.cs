@@ -43,6 +43,27 @@ namespace Specification
             Assert.AreSame(result.Value, data);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Injected_WithNull()
+        {
+            // Act
+            _ = new InjectionParameter(null);
+        }
+
+        [TestMethod]
+        public void Injected_WithNull_ByType()
+        {
+            // Arrange
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.Method), new InjectionParameter(typeof(object), null)));
+
+            // Act
+            var result = Container.Resolve<InjectedType>();
+
+            // Assert
+            Assert.IsNull(result.Value);
+        }
 
         [TestMethod]
         public void Injected_WithObject_ByType()

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using Unity.Regression.Tests;
 #if NET45
 using Microsoft.Practices.Unity;
@@ -30,8 +29,6 @@ namespace Specification
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Value);
             Assert.AreEqual(injected, result.Value);
-            Assert.AreEqual(typeof(string), resolver.Type);
-            Assert.AreEqual(Name, resolver.Name);
         }
 
         [TestMethod]
@@ -52,8 +49,6 @@ namespace Specification
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Value);
             Assert.AreEqual(injected, result.Value);
-            Assert.AreEqual(typeof(string), resolver.Type);
-            Assert.AreEqual(Name, resolver.Name);
         }
 
         [TestMethod]
@@ -74,8 +69,6 @@ namespace Specification
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Value);
             Assert.AreEqual(injected, result.Value);
-            Assert.AreEqual(typeof(string), resolver.Type);
-            Assert.AreEqual(Name, resolver.Name);
         }
     }
 }
