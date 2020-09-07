@@ -75,6 +75,7 @@
 		<Compile Remove="Resolution\Enumerable\**" />
 		<Compile Remove="Specification\Parameters\Injected\Value.V5.cs" />
 		<Compile Remove="Specification\Parameters\Injected\NonValue.V5.cs" />
+		<Compile Remove="Specification\Parameters\Injected\Value.V6.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Annotated.V5.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Annotated.V6.cs" />
 		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.cs" />
@@ -88,8 +89,9 @@
 	<!-- Not supported by v5 -->
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net461'">
-		<Compile Remove="Specification\Parameters\Annotation\Annotated.V6.cs" />
+		<Compile Remove="Specification\Parameters\Injected\Value.V6.cs" />
 		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.V6.cs" />
+		<Compile Remove="Specification\Parameters\Annotation\Annotated.V6.cs" />
 	</ItemGroup>
 
 

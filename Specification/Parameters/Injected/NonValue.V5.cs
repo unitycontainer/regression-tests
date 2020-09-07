@@ -13,6 +13,50 @@ namespace Specification
     public partial class Parameters
     {
         [TestMethod]
+        public void Injected_ByResolver()
+        {
+            var injected = "injected";
+            var resolver = new ValidatingResolver(injected);
+
+            // Arrange
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.Method),
+                    new InjectionParameter(resolver)));
+
+            // Act
+            var result = Container.Resolve<InjectedType>();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Value);
+            Assert.AreEqual(injected, result.Value);
+            Assert.AreEqual(typeof(string), resolver.Type);
+            Assert.AreEqual(Name, resolver.Name);
+        }
+
+        [TestMethod]
+        public void Injected_ByResolver_WithType()
+        {
+            var injected = "injected";
+            var resolver = new ValidatingResolver(injected);
+
+            // Arrange
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.Method),
+                    new InjectionParameter(typeof(string), resolver)));
+
+            // Act
+            var result = Container.Resolve<InjectedType>();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Value);
+            Assert.AreEqual(injected, result.Value);
+            Assert.AreEqual(typeof(string), resolver.Type);
+            Assert.AreEqual(Name, resolver.Name);
+        }
+
+        [TestMethod]
         public void Injected_NamedDependencyByFactory()
         {
             var injected = "injected";

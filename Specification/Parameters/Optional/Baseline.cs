@@ -40,7 +40,7 @@ namespace Specification
         {
             // Arrange
             Container.RegisterType<Service>(
-                new InjectionMethod(nameof(Service.Method)));
+                new InjectionMethod(nameof(Service.Method), typeof(object)));
 
             // Act
             var result = Container.Resolve<Service>();
