@@ -12,13 +12,14 @@ namespace Specification
     public partial class Parameters
     {
         protected const string Name = "name";
+        protected const string Unnamed = "unnamed";
         protected IUnityContainer Container;
 
         [TestInitialize]
         public virtual void TestInitialize()
         {
             Container = new UnityContainer();
-            Container.RegisterInstance("unnamed");
+            Container.RegisterInstance(Unnamed);
             Container.RegisterInstance(Name, Name);
         }
     }

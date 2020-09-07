@@ -16,7 +16,7 @@ namespace Specification
         public void Annotation_Baseline()
         {
             // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeParameter), typeof(object)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeParameter)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -28,7 +28,7 @@ namespace Specification
 #endif
 
         [TestMethod]
-        public void Annotation_Baseline_Legacy()
+        public void Annotation_Baseline_WithTypes()
         {
             // Arrange
             Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NoAttributeParameter), typeof(object)));
