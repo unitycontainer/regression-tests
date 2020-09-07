@@ -75,13 +75,24 @@
 		<Compile Remove="Resolution\Enumerable\**" />
 		<Compile Remove="Specification\Parameters\Injected\NonValue.V5.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Annotated.V5.cs" />
+		<Compile Remove="Specification\Parameters\Annotation\Annotated.V6.cs" />
 		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.cs" />
+		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.V6.cs" />
 		<Compile Remove="Specification\Constructors\Parameters\WithDefault.v5.cs" />
  	    <Compile Remove="Specification\Fields\**" />
 		<Compile Remove="Specification\Variants\**" />
 		<Compile Remove="Specification\Constructors\Validation\**" />
 	</ItemGroup>
-	
+
+	<!-- Not supported by v5 -->
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net461'">
+		<Compile Remove="Specification\Parameters\Annotation\Annotated.V6.cs" />
+		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.V6.cs" />
+	</ItemGroup>
+
+
+
 	<!--Relese Buid-->
 
 	<ItemGroup Condition=" '$(Configuration)' == 'Release'">
@@ -98,7 +109,6 @@
 
 	<ItemGroup>
 		<Folder Include="Public.API\Compatibility\" />
-		<Folder Include="Specification\Parameters\Defaults\" />
 	</ItemGroup>
 
 </Project>

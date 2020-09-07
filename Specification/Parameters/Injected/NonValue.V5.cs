@@ -12,7 +12,6 @@ namespace Specification
 {
     public partial class Parameters
     {
-        [Ignore]
         [TestMethod]
         public void Injected_NamedDependencyByFactory()
         {
