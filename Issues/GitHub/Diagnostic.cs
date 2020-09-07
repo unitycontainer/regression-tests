@@ -52,7 +52,7 @@ namespace Issues
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         // https://github.com/unitycontainer/container/issues/122
-        public void GitHub_Container_122()
+        public void Issue_Container_122()
         {
             Container.RegisterType<I1, C1>();
             Container.RegisterType<I2, C2>();
@@ -64,7 +64,7 @@ namespace Issues
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         // https://github.com/unitycontainer/container/issues/149
-        public void Issue_149()
+        public void Issue_Container_149()
         {
             Container.RegisterInstance("123");
             var instance = Container.Resolve<Test_Class>(new DependencyOverride<string>(new OptionalParameter<string>()));
@@ -74,7 +74,7 @@ namespace Issues
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         // https://github.com/unitycontainer/container/issues/149
-        public void Issue_149_Negative()
+        public void Issue_Container_149_Negative()
         {
             // BUG: StackOverflow happens here since 5.9.0
             var instance = Container.Resolve<Test_Class>(new DependencyOverride<string>(new OptionalParameter<string>()));
@@ -84,7 +84,7 @@ namespace Issues
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         // https://github.com/unitycontainer/container/issues/119
-        public void Issue_119()
+        public void Issue_Container_119()
         {
             // Setup
             Container.RegisterType<IInterface, Class1>();

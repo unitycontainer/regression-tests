@@ -15,7 +15,7 @@ namespace Issues
     {
         [TestMethod]
         // https://github.com/unitycontainer/abstractions/issues/96
-        public virtual void Abstractions_96()
+        public virtual void Issue_Abstractions_96()
         {
             // Act
             var ctor = new InjectionConstructor();
@@ -26,7 +26,7 @@ namespace Issues
 #if !NET45
         [TestMethod]
         // https://github.com/unitycontainer/abstractions/issues/83
-        public void Abstractions_83()
+        public void Issue_Abstractions_83()
         {
             // Arrange
             Container.RegisterInstance(Name);
@@ -51,7 +51,7 @@ namespace Issues
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         // https://github.com/unitycontainer/abstractions/issues/96
-        public override void Abstractions_96()
+        public override void Issue_Abstractions_96()
         {
             // Act
             var ctor = new InjectionConstructor();

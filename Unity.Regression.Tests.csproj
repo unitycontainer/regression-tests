@@ -33,14 +33,7 @@
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
 	  <Compile Remove="Extending\**" />
-	  <EmbeddedResource Remove="Extending\**" />
-	  <None Remove="Extending\**" />
       <ProjectReference Include="..\Container\src\Unity.Container.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Remove="Specification\Constructors\Validation\**" />
-	  <EmbeddedResource Remove="Specification\Constructors\Validation\**" />
-	  <None Remove="Specification\Constructors\Validation\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -73,15 +66,18 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+		<Compile Remove="Issues\GitHub\**" />
 		<Compile Remove="Resolution\Lazy\Enumerable.cs" />
 		<Compile Remove="Resolution\Array\BuiltInTypesResolution.V5.cs" />
 		<Compile Remove="Resolution\Generic\Enumerables.cs" />
 		<Compile Remove="Resolution\Overrides\Field.cs" />
 		<Compile Remove="Resolution\Overrides\Dependency.V5.cs" />
 		<Compile Remove="Resolution\Enumerable\**" />
+		<Compile Remove="Specification\Parameters\Annotation\Attribute.V5.cs" />
 		<Compile Remove="Specification\Constructors\Parameters\WithDefault.v5.cs" />
  	    <Compile Remove="Specification\Fields\**" />
 		<Compile Remove="Specification\Variants\**" />
+		<Compile Remove="Specification\Constructors\Validation\**" />
 	</ItemGroup>
 	
 	<!--Relese Buid-->

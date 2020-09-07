@@ -37,7 +37,7 @@ namespace Issues
 
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/136
-        public void Container_136()
+        public void Issue_Container_136()
         {
             // Setup
             Container.RegisterType<IAnimal, Cat>();
@@ -57,7 +57,7 @@ namespace Issues
 
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/136
-        public void Container_136_Ctor()
+        public void Issue_Container_136_Ctor()
         {
             // Setup
             Container.RegisterType<IAnimal, Cat>();
@@ -77,7 +77,7 @@ namespace Issues
 #if !NET45
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/129
-        public void Container_129()
+        public void Issue_Container_129()
         {
             var config = "production.sqlite";
 
@@ -98,7 +98,7 @@ namespace Issues
 
         [TestMethod]
         // https://github.com/unitycontainer/container/issues/67
-        public void Container_67()
+        public void Issue_Container_67()
         {
             Container.RegisterType<ILogger, MockLogger>(new TransientLifetimeManager());
 

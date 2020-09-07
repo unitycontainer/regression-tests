@@ -30,26 +30,6 @@ namespace Issues
         }
 
         [TestMethod]
-        public void unitycontainer_microsoft_dependency_injection_14()
-        {
-            var c1 = Container.CreateChildContainer();
-            var c2 = Container.CreateChildContainer();
-
-            c1.RegisterType(typeof(IList<>), typeof(List<>), new ContainerControlledLifetimeManager(),
-                                                             new InjectionConstructor());
-            var t1 = c1.Resolve<IList<int>>();
-            Assert.IsNotNull(t1);
-
-            c2.RegisterType(typeof(IList<>), typeof(List<>), new ContainerControlledLifetimeManager(),
-                                                             new InjectionConstructor());
-            var t2 = c2.Resolve<IList<int>>();
-            Assert.IsNotNull(t2);
-
-            Assert.AreNotSame(t2, t1);
-
-        }
-
-        [TestMethod]
         public void Unity_177()
         {
             Container.RegisterType<OtherService>(new ContainerControlledLifetimeManager());
@@ -182,20 +162,5 @@ namespace Issues
         }
 
 #endif
-
-        // Test types 
-        public interface ITestClass
-        { }
-
-        public class TestClass : ITestClass
-        {
-            public TestClass()
-            { }
-
-            [InjectionConstructor]
-            public TestClass(TestClass _) //1
-            {
-            }
-        }
     }
 }

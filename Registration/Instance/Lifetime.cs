@@ -11,44 +11,6 @@ namespace Registrations
     public partial class RegisterInstance
     {
         [TestMethod]
-        public void SingletonAtRoot()
-        {
-            // Arrange
-            var service = Unresolvable.Create();
-
-            var child1 = Container.CreateChildContainer();
-            var child2 = child1.CreateChildContainer();
-
-            Container.RegisterInstance(typeof(IService), null, service, new ContainerControlledLifetimeManager());
-
-
-            // Act/Verify
-
-            Assert.AreSame(service, Container.Resolve<IService>());
-            Assert.AreSame(service, child1.Resolve<IService>());
-            Assert.AreSame(service, child2.Resolve<IService>());
-        }
-
-        [TestMethod]
-        public void SingletonAtChild()
-        {
-            // Arrange
-            var service = Unresolvable.Create();
-
-            var child1 = Container.CreateChildContainer();
-            var child2 = child1.CreateChildContainer();
-
-            child1.RegisterInstance(typeof(IService), null, service, new ContainerControlledLifetimeManager());
-
-
-            // Act/Verify
-
-            Assert.AreSame(service, Container.Resolve<IService>());
-            Assert.AreSame(service, child1.Resolve<IService>());
-            Assert.AreSame(service, child2.Resolve<IService>());
-        }
-
-        [TestMethod]
         public void PerContainerAtRoot()
         {
             // Arrange

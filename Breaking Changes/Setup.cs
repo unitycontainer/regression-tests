@@ -79,7 +79,7 @@ namespace Breaking.Changes
         }
     }
 
-#if NET46
+#if NET46 || NET461
     public class ContainerRegistrationComparer : IEqualityComparer<IContainerRegistration>
     {
         public bool Equals(IContainerRegistration x, IContainerRegistration y)
