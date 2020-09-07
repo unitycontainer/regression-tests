@@ -73,6 +73,7 @@
 		<Compile Remove="Resolution\Overrides\Field.cs" />
 		<Compile Remove="Resolution\Overrides\Dependency.V5.cs" />
 		<Compile Remove="Resolution\Enumerable\**" />
+		<Compile Remove="Specification\Parameters\Injected\Value.V5.cs" />
 		<Compile Remove="Specification\Parameters\Injected\NonValue.V5.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Annotated.V5.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Annotated.V6.cs" />

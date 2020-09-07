@@ -14,18 +14,6 @@ namespace Specification
         [TestMethod]
         public void Injected_Baseline()
         {
-            // Act
-            var result = Container.Resolve<InjectedType>();
-
-            // Assert
-            Assert.IsNull(result.ValueOne);
-            Assert.IsNotNull(result.Value);
-            Assert.IsInstanceOfType(result.Value, typeof(object));
-        }
-
-        [TestMethod]
-        public void Injected_WithAttribute()
-        {
             // Arrange
             Container.RegisterType<InjectedType>(
                 new InjectionMethod(nameof(InjectedType.Method), typeof(object)));
@@ -55,6 +43,24 @@ namespace Specification
             Assert.AreSame(result.Value, data);
         }
 
+
+        [TestMethod]
+        public void Injected_WithObject_ByType()
+        {
+            var data = "value";
+
+            // Arrange
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.Method), new InjectionParameter(typeof(object), data)));
+
+            // Act
+            var result = Container.Resolve<InjectedType>();
+
+            // Assert
+            Assert.IsNotNull(result.Value);
+            Assert.AreSame(result.Value, data);
+        }
+
         [TestMethod]
         public void Injected_WithInt()
         {
@@ -66,8 +72,6 @@ namespace Specification
             var result = Container.Resolve<InjectedType>();
 
             // Assert
-            Assert.IsNotNull(result.Value);
-            Assert.IsInstanceOfType(result.Value, typeof(object));
             Assert.IsNotNull(result.ValueOne);
             Assert.IsInstanceOfType(result.ValueOne, typeof(int));
         }
@@ -83,8 +87,6 @@ namespace Specification
             var result = Container.Resolve<InjectedType>();
 
             // Assert
-            Assert.IsNotNull(result.Value);
-            Assert.IsInstanceOfType(result.Value, typeof(object));
             Assert.IsNotNull(result.ValueOne);
             Assert.IsInstanceOfType(result.ValueOne, typeof(string));
         }
@@ -101,8 +103,6 @@ namespace Specification
             var result = Container.Resolve<InjectedType>();
 
             // Assert
-            Assert.IsNotNull(result.Value);
-            Assert.IsInstanceOfType(result.Value, typeof(object));
             Assert.IsNotNull(result.ValueOne);
             Assert.IsInstanceOfType(result.ValueOne, typeof(int));
             Assert.IsNotNull(result.ValueTwo);
@@ -120,8 +120,6 @@ namespace Specification
             var result = Container.Resolve<InjectedType>();
 
             // Assert
-            Assert.IsNotNull(result.Value);
-            Assert.IsInstanceOfType(result.Value, typeof(object));
             Assert.IsNotNull(result.ValueOne);
             Assert.IsInstanceOfType(result.ValueOne, typeof(string));
             Assert.IsNotNull(result.ValueTwo);

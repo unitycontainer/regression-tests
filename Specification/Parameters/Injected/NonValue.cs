@@ -13,29 +13,13 @@ namespace Specification
     public partial class Parameters
     {
         [TestMethod]
-        public void Injected_NamedDependencyBaseline()
-        {
-            // Arrange
-            Container.RegisterType<Service>(
-                new InjectionMethod(nameof(Service.NamedDependencyAttribute)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Value);
-            Assert.AreEqual(Name, result.Value);
-        }
-
-        [TestMethod]
         public void Injected_NamedDependencyInjected()
         {
             var injected = "injected";
 
             // Arrange
-            Container.RegisterType<Service>(
-                new InjectionMethod(nameof(Service.NamedDependencyAttribute), Inject.Parameter(typeof(string), injected)));
+            Container.RegisterType<InjectedType>(
+                new InjectionMethod(nameof(InjectedType.Method), new  InjectionParameter(typeof(string), injected)));
 
             // Act
             var result = Container.Resolve<Service>();
