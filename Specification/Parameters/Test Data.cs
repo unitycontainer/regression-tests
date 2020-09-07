@@ -139,6 +139,11 @@ namespace Specification
                 ValueOne = value;
             }
 
+            public void MethodOne(string value)
+            {
+                ValueTwo = value;
+            }
+
             public void MethodTwo(object one, object two)
             {
                 ValueOne = one;

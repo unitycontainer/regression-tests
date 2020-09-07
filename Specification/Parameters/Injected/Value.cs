@@ -77,17 +77,18 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Injected_WithString()
+        public void Injected_WithStringAsObject()
         {
             // Arrange
             Container.RegisterType<InjectedType>(
-                new InjectionMethod(nameof(InjectedType.MethodOne), new InjectionParameter("test")));
+                new InjectionMethod(nameof(InjectedType.MethodOne), new InjectionParameter(typeof(object), Name)));
 
             // Act
             var result = Container.Resolve<InjectedType>();
 
             // Assert
             Assert.IsNotNull(result.ValueOne);
+            Assert.IsNull(result.ValueTwo);
             Assert.IsInstanceOfType(result.ValueOne, typeof(string));
         }
 

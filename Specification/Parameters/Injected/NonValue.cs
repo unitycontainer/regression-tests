@@ -22,7 +22,7 @@ namespace Specification
                 new InjectionMethod(nameof(InjectedType.Method), new  InjectionParameter(typeof(string), injected)));
 
             // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<InjectedType>();
 
             // Assert
             Assert.IsNotNull(result);
