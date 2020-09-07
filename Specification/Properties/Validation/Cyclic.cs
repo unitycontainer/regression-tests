@@ -11,6 +11,7 @@ namespace Specification
 {
     public partial class Properties_Diagnostic
     {
+#if !NET45
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public void Cyclic_PropertyToInterface()
@@ -35,5 +36,6 @@ namespace Specification
                 Override.Dependency<I0>(
                     Resolve.Dependency<I1>()));
         }
+#endif
     }
 }

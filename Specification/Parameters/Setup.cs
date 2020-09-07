@@ -18,7 +18,7 @@ namespace Specification
         public virtual void TestInitialize()
         {
             Container = new UnityContainer();
-            Container.RegisterInstance("other");
+            Container.RegisterInstance("unnamed");
             Container.RegisterInstance(Name, Name);
         }
     }
