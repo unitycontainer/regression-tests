@@ -76,6 +76,7 @@
 		<Compile Remove="Specification\Parameters\Injected\Value.V5.cs" />
 		<Compile Remove="Specification\Parameters\Injected\NonValue.V6.cs" />
 		<Compile Remove="Specification\Parameters\Injected\Value.V6.cs" />
+		<Compile Remove="Specification\Parameters\Annotation\Optional.V5.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Required.V5.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Required.V6.cs" />
 		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.cs" />

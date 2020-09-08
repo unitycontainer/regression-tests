@@ -407,6 +407,27 @@ namespace Specification
 
         public class G1 : I1 { public G1(I0 i0) { } }
 
+        public class ObjectWithOptionalConstructorParameter
+        {
+            private IService someInterface;
+
+            public IService SomeInterface { get { return someInterface; } }
+
+            public ObjectWithOptionalConstructorParameter([OptionalDependency] IService someInterface)
+            {
+                this.someInterface = someInterface;
+            }
+        }
+
+        public class ObjectWithNamedOptionalConstructorParameter
+            : ObjectWithOptionalConstructorParameter
+        {
+            public ObjectWithNamedOptionalConstructorParameter([OptionalDependency(Name)] IService someInterface)
+                : base(someInterface)
+            {
+            }
+        }
+
         #endregion
     }
 }

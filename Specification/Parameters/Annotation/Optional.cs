@@ -12,10 +12,10 @@ namespace Specification
     public partial class Parameters
     {
         [TestMethod]
-        public void Annotation_OptionalDependencyAttribute()
+        public void Annotation_Optional()
         {
             // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalDependencyAttribute)));
+            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalDependencyAttribute), typeof(object)));
 
             // Act
             var result = Container.Resolve<Service>();
@@ -26,74 +26,45 @@ namespace Specification
         }
 
         [TestMethod]
-        public void Annotation_OptionalNamedDependencyAttribute()
+        public void Annotation_OptionalDependencyParameterIsResolvedIfRegisteredInContainer()
         {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalNamedDependencyAttribute)));
+            IService expectedSomeInterface = new Service1();
+            Container.RegisterInstance<IService>(expectedSomeInterface);
 
-            // Act
-            var result = Container.Resolve<Service>();
+            var result = Container.Resolve<ObjectWithOptionalConstructorParameter>();
 
-            // Assert
-            Assert.AreEqual(result.Called, 5);
-            Assert.IsInstanceOfType(result.Value, typeof(string));
-            Assert.AreEqual(result.Value, Name);
+            Assert.AreSame(expectedSomeInterface, result.SomeInterface);
         }
 
         [TestMethod]
-        public void Annotation_OptionalDependencyAttributeMissing()
+        public void Annotation_OptionalDependencyParameterIsMissing()
         {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalDependencyAttributeMissing)));
+            var result = Container.Resolve<ObjectWithOptionalConstructorParameter>();
 
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 6);
-            Assert.IsNull(result.Value);
+            Assert.IsNull(result.SomeInterface);
         }
 
         [TestMethod]
-        public void Annotation_OptionalNamedDependencyAttributeMissing()
+        public void Annotation_OptionalDependencyParameterIsResolvedByName()
         {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalNamedDependencyAttributeMissing)));
+            IService namedSomeInterface = new Service1();
+            IService defaultSomeInterface = new Service2();
 
-            // Act
-            var result = Container.Resolve<Service>();
+            Container
+                .RegisterInstance<IService>(defaultSomeInterface)
+                .RegisterInstance<IService>(Name, namedSomeInterface);
 
-            // Assert
-            Assert.AreEqual(result.Called, 7);
-            Assert.IsNull(result.Value);
+            var result = Container.Resolve<ObjectWithNamedOptionalConstructorParameter>();
+
+            Assert.AreSame(namedSomeInterface, result.SomeInterface);
         }
 
         [TestMethod]
-        public void Annotation_OptionalDependencyAttributeWithDefaultInt()
+        public void Annotation_OptionalNamedMissing()
         {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalDependencyAttributeWithDefaultInt)));
+            var result = Container.Resolve<ObjectWithNamedOptionalConstructorParameter>();
 
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 12);
-            Assert.AreEqual(result.Value, Service.DefaultInt);
-        }
-
-        [TestMethod]
-        public void Annotation_OptionalNamedDependencyAttributeWithDefaultInt()
-        {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalNamedDependencyAttributeWithDefaultInt)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 13);
-            Assert.AreEqual(result.Value, Service.DefaultInt);
+            Assert.IsNull(result.SomeInterface);
         }
     }
 }
