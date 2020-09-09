@@ -27,12 +27,9 @@ namespace Specification
         public virtual void Registered_Required_Dependency(string name, object expected)
         {
             // Arrange
+            RegisterTypes();
             var type = TargetType(name);
-            Container.RegisterInstance(Name, NamedInt)
-                     .RegisterInstance(RegisteredInt)
-                     .RegisterInstance(Registeredtring)
-                     .RegisterInstance(Singleton)
-                     .RegisterInstance(Name, NamedSingleton);
+
             // Act
             var instance = Container.Resolve(type) as PatternBase;
 
@@ -61,10 +58,9 @@ namespace Specification
         public virtual void Registered_Required_WithDefault(string name, object registered, object @default)
         {
             // Arrange
+            RegisterTypes();
             var type = TargetType(name);
-            Container.RegisterInstance(RegisteredInt)
-                     .RegisterInstance(Registeredtring)
-                     .RegisterInstance(Singleton);
+
             // Act
             var instance = Container.Resolve(type) as PatternBase;
 

@@ -12,7 +12,7 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Properties : VerificationPattern
     {
-        protected override InjectionMember GetInjectionMember(object argument) => new InjectionProperty("Property", argument);
+        protected override InjectionMember GetInjectedMember(object argument) => new InjectionProperty("Property", argument);
 
 
         #region Test Data

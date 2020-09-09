@@ -12,7 +12,7 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Fields : VerificationPattern
     {
-        protected override InjectionMember GetInjectionMember(object argument) => new InjectionField("Field", argument);
+        protected override InjectionMember GetInjectedMember(object argument) => new InjectionField("Field", argument);
 
 
         #region Test Data

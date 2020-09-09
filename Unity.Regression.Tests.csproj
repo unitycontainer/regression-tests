@@ -97,18 +97,18 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net461'">
-		<Compile Remove="Specification\Parameters\Injected\Value.V6.cs" />
-		<Compile Remove="Specification\Parameters\Injected\NonValue.V6.cs" />
-		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.V6.cs" />
-		<Compile Remove="Specification\Parameters\Annotation\Optional.V6.cs" />
-		<Compile Remove="Specification\Parameters\Annotation\Required.V6.cs" />
+		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Injected\Value.V6.cs" />
+		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Injected\NonValue.V6.cs" />
+		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Defaults\WithDefaults.V6.cs" />
+		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Annotation\Optional.V6.cs" />
+		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Annotation\Required.V6.cs" />
 	</ItemGroup>
 
 
 
 	<!--Relese Buid-->
 
-	<ItemGroup Condition=" '$(Configuration)' == 'Release'">
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
 		<Compile Remove="Breaking Changes\**" />
 	</ItemGroup>
 

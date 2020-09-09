@@ -16,13 +16,16 @@ namespace Specification
 
         protected const int NamedInt = 123;
         protected const int DefaultInt = 345;
-        protected const int RegisteredInt = 678;
+        protected const int InjectedInt = 678;
+        protected const int RegisteredInt = 890;
         protected const string Name = "name";
         protected const string NamedString = "named";
         protected const string DefaultString = "default";
-        protected const string Registeredtring = "registered";
-        public static Unresolvable Singleton = Unresolvable.Create();
-        public static Unresolvable NamedSingleton = Unresolvable.Create();
+        protected const string InjectedString = "injected";
+        protected const string RegisteredString = "registered";
+        public static Unresolvable Singleton = Unresolvable.Create("singleton");
+        public static Unresolvable NamedSingleton = Unresolvable.Create("named");
+        public static Unresolvable InjectedSingleton = Unresolvable.Create("injected");
 
         protected IUnityContainer Container;
 
@@ -37,7 +40,16 @@ namespace Specification
 
         protected Type TargetType(string name) => Type.GetType($"{GetType().FullName}+{name}");
 
-        protected abstract InjectionMember GetInjectionMember(object argument);
+        protected virtual void RegisterTypes()
+        {
+            Container.RegisterInstance(RegisteredInt)
+                     .RegisterInstance(RegisteredString)
+                     .RegisterInstance(Singleton)
+                     .RegisterInstance(Name, NamedInt)
+                     .RegisterInstance(Name, NamedSingleton);
+        }
+
+        protected abstract InjectionMember GetInjectedMember(object argument);
 
         #endregion
     }

@@ -10,8 +10,6 @@ namespace Specification
 {
     public abstract partial class VerificationPattern
     {
-        #region Member with No default value
-
         [DataTestMethod]
         [DynamicData(nameof(NoDefault_Data))]
         [ExpectedException(typeof(ResolutionFailedException))]
@@ -29,10 +27,8 @@ namespace Specification
         public virtual void Registered_Implicit_Dependency(string name, object expected)
         {
             // Arrange
+            RegisterTypes();
             var type = TargetType(name);
-            Container.RegisterInstance(RegisteredInt)
-                     .RegisterInstance(Registeredtring)
-                     .RegisterInstance(Singleton);
             // Act
             var instance = Container.Resolve(type) as PatternBase;
 
@@ -41,10 +37,6 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
-        #endregion
-
-
-        #region Member with default value
 
         [DataTestMethod]
         [DynamicData(nameof(WithDefault_Data))]
@@ -66,10 +58,9 @@ namespace Specification
         public virtual void Registered_Implicit_WithDefault(string name, object registered, object @default)
         {
             // Arrange
+            RegisterTypes();
             var type = TargetType(name);
-            Container.RegisterInstance(RegisteredInt)
-                     .RegisterInstance(Registeredtring)
-                     .RegisterInstance(Singleton);
+
             // Act
             var instance = Container.Resolve(type) as PatternBase;
 
@@ -77,7 +68,5 @@ namespace Specification
             Assert.IsNotNull(instance);
             Assert.AreEqual(registered, instance.Value);
         }
-
-        #endregion
     }
 }

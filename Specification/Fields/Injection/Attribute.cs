@@ -11,19 +11,6 @@ namespace Specification
     public partial class Fields
     {
         [TestMethod]
-        public void Injection_Attributes()
-        {
-            // Act
-            var result = Container.Resolve<ObjectWithAttributes>();
-
-            // Verify
-            Assert.IsNotNull(result);
-            Assert.IsNotNull(result.Dependency);
-            Assert.AreEqual(result.Dependency, Name1);
-            Assert.IsNull(result.Optional);
-        }
-
-        [TestMethod]
         public void Injection_ValueOverAttribute()
         {
             // Setup
