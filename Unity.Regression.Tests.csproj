@@ -61,6 +61,8 @@
 	<!-- Not supported by v4 -->
 
 	<ItemGroup Condition="'$(TargetFramework)' != 'net45'">
+		<Compile Remove="Specification\Fields\Pattern\Disabled.V4.cs" />
+		<Compile Remove="Specification\Properties\Pattern\Disabled.V4.cs" />
 		<Compile Remove="Breaking Changes\BreakingChanges.v4.cs" />
 		<Compile Remove="Public.API\Compatibility\Compatibility.V4.cs" />
 	</ItemGroup>
@@ -77,6 +79,7 @@
 		<Compile Remove="Specification\Parameters\Injected\NonValue.V6.cs" />
 		<Compile Remove="Specification\Parameters\Injected\Value.V6.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Optional.V5.cs" />
+		<Compile Remove="Specification\Parameters\Annotation\Optional.V6.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Required.V5.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Required.V6.cs" />
 		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.cs" />
@@ -88,11 +91,16 @@
 	</ItemGroup>
 
 	<!-- Not supported by v5 -->
+	<ItemGroup Condition="'$(TargetFramework)' != 'net46' AND '$(TargetFramework)' != 'net461'">
+		<Compile Remove="Specification\Fields\Pattern\Disabled.V5.cs" />
+		<Compile Remove="Specification\Properties\Pattern\Disabled.V5.cs" />
+	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net461'">
 		<Compile Remove="Specification\Parameters\Injected\Value.V6.cs" />
 		<Compile Remove="Specification\Parameters\Injected\NonValue.V6.cs" />
 		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.V6.cs" />
+		<Compile Remove="Specification\Parameters\Annotation\Optional.V6.cs" />
 		<Compile Remove="Specification\Parameters\Annotation\Required.V6.cs" />
 	</ItemGroup>
 

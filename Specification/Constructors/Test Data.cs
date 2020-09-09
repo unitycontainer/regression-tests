@@ -165,16 +165,6 @@ namespace Specification
             public IUnityContainer Container { get; set; }
         }
 
-        public class WithDefaultCtor
-        {
-            public WithDefaultCtor()
-            {
-                Data = this;
-            }
-
-            public object Data { get; }
-        }
-
         public interface IService
         {
         }

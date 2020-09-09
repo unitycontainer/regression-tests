@@ -11,41 +11,6 @@ namespace Specification
     public partial class Fields
     {
         [TestMethod]
-        public void Annotation_Baseline()
-        {
-            // Act
-            var result = Container.Resolve<NoAttributeType>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 1);
-            Assert.IsNull(result.Value);
-        }
-
-        [TestMethod]
-        public void Annotation_Dependency()
-        {
-            // Act
-            var result = Container.Resolve<DependencyAttributeType>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 2);
-            Assert.IsInstanceOfType(result.Value, typeof(object));
-        }
-
-        [TestMethod]
-        public void Annotation_NamedDependency()
-        {
-            // Act
-            var result = Container.Resolve<NamedDependencyAttributeType>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 3);
-            Assert.IsInstanceOfType(result.Value, typeof(string));
-            Assert.AreEqual(result.Value, Name);
-        }
-
-
-        [TestMethod]
         public virtual void Annotation_DependencyOnPrivate()
         {
             // Act

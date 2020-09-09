@@ -139,34 +139,5 @@ namespace Specification
             Assert.AreEqual(result.Called, 13);
             Assert.AreEqual(result.Value, Service.DefaultInt);
         }
-
-
-        [TestMethod]
-        public void Annotation_Optional_WithDefaultInt()
-        {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalDependencyAttributeWithDefaultInt), typeof(int)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 12);
-            Assert.AreEqual(result.Value, Service.DefaultInt);
-        }
-
-        [TestMethod]
-        public void Annotation_OptionalNamed_WithDefaultInt()
-        {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.OptionalNamedDependencyAttributeWithDefaultInt), typeof(int)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 13);
-            Assert.AreEqual(result.Value, Service.DefaultInt);
-        }
     }
 }
