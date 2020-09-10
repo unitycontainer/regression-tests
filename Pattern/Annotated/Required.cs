@@ -120,7 +120,7 @@ namespace Specification
 
         #region Required with defaults
 
-#if !V4
+#if !V4 && !NET461
         /// <summary>
         /// This test resolves type with default values and annotated for mandatory
         /// injection from empty container.

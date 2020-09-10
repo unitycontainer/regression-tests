@@ -56,7 +56,7 @@ namespace Specification
             _ = Container.Resolve(type);
         }
 
-#if !V4
+#if !V4 && !NET461
         /// <summary>
         /// This test resolves POCO type with default values from empty container.
         /// </summary>
@@ -117,8 +117,8 @@ namespace Specification
             }
         }
 
-
-#if !V4
+         
+#if !V4 && !NET461
         /// <summary>
         /// Testing resolving implicitly injected optional dependencies from empty container.
         /// </summary>

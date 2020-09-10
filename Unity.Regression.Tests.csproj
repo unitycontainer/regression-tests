@@ -93,7 +93,6 @@
 		<Compile Remove="Specification\Parameters\Annotation\Required.V6.cs" />
 		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.cs" />
 		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.V6.cs" />
-		<Compile Remove="Specification\Constructors\Parameters\WithDefault.v5.cs" />
  	    <Compile Remove="Specification\Fields\**" />
 		<Compile Remove="Specification\Variants\**" />
 		<Compile Remove="Specification\Constructors\Validation\**" />

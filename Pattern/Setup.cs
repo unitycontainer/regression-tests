@@ -19,6 +19,7 @@ namespace Specification
         protected const int InjectedInt = 678;
         protected const int RegisteredInt = 890;
         protected const string Name = "name";
+        protected const string Null = "null";
         protected const string NamedString = "named";
         protected const string DefaultString = "default";
         protected const string InjectedString = "injected";
@@ -45,6 +46,9 @@ namespace Specification
             Container.RegisterInstance(RegisteredInt)
                      .RegisterInstance(RegisteredString)
                      .RegisterInstance(Singleton)
+                     .RegisterInstance(typeof(string),       Null, (object)null)
+                     .RegisterInstance(typeof(Unresolvable), Null, (object)null)
+                     .RegisterInstance(typeof(TestStruct), new TestStruct(55, "struct"))
                      .RegisterInstance(Name, NamedInt)
                      .RegisterInstance(Name, NamedSingleton);
         }

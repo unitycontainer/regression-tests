@@ -76,17 +76,17 @@ namespace Specification
         ///     
         /// var result = container.Resolve(typeof(PocoType));
         /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
+        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
         /// <param name="expected">Expected injected dependency value</param>
         [DataTestMethod]
         [DynamicData(nameof(NoDefault_Data))]
-        public virtual void Registered_Implicit(string name, object expected)
+        public virtual void Registered_Implicit(string target, string name, object expected)
         {
             // Arrange
             RegisterTypes();
-            var type = TargetType(name);
+            var type = TargetType(target);
             // Act
-            var instance = Container.Resolve(type) as PatternBase;
+            var instance = Container.Resolve(type, name) as PatternBase;
 
             // Validate
             Assert.IsNotNull(instance);
@@ -98,10 +98,15 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "NoDefault_Value",   RegisteredInt };
-                yield return new object[] { "NoDefault_Class",   Singleton };
-                yield return new object[] { "WithDefault_Value", RegisteredInt };
-                yield return new object[] { "WithDefault_Class", RegisteredString };
+                yield return new object[] { "NoDefault_Value",   null, RegisteredInt    };
+                yield return new object[] { "NoDefault_Class",   null, Singleton        };
+                yield return new object[] { "WithDefault_Value", null, RegisteredInt    };
+                yield return new object[] { "WithDefault_Class", null, RegisteredString };
+                // Resolved contract does not change dependencies
+                yield return new object[] { "NoDefault_Value",   Name, RegisteredInt    };
+                yield return new object[] { "NoDefault_Class",   Name, Singleton        };
+                yield return new object[] { "NoDefault_Class",   Null, Singleton        };
+                yield return new object[] { "WithDefault_Class", Null, RegisteredString };
             }
         }
 

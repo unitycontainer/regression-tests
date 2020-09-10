@@ -6,6 +6,24 @@ namespace Specification
 
     public abstract partial class VerificationPattern
     {
+        public struct TestStruct
+        {
+            public int Integer;
+            public object Instance;
+
+            public TestStruct(int value, object instance)
+            {
+                Integer = value;
+                Instance = instance;
+            }
+        }
+
+        public ref struct TestRefStruct
+        {
+            public int Integer;
+            public object Object;
+        }
+
         public abstract class PatternBase
         {
             public virtual object Value { get; protected set; }

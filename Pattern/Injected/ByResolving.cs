@@ -65,7 +65,7 @@ namespace Specification
         }
 
 
-#if !V4
+#if !V4 && !NET461 
         /// <summary>
         /// This test resolves POCO type with default values from empty container.
         /// </summary>
