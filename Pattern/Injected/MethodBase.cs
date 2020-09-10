@@ -36,7 +36,7 @@ namespace Specification
         ///      
         /// var result = container.Resolve(typeof(PocoType));
         /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
+        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
         /// <param name="dependency"><see cref="Type"/> of dependency</param>
         [DataTestMethod]
         [DataRow("NoDefault_Value",                 typeof(int))]
@@ -46,10 +46,10 @@ namespace Specification
         [DataRow("Required_Dependency_Value_Named", typeof(int))]
         [DataRow("Required_Dependency_Class_Named", typeof(Unresolvable))]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Unregistered_Injected_ByType(string name, Type dependency)
+        public virtual void Unregistered_Injected_ByType(string target, Type dependency)
         {
             // Arrange
-            var type = TargetType(name);
+            var type = TargetType(target);
             Container.RegisterType(type, GetInjectionMethodBase(dependency));
 
             // Act
@@ -101,7 +101,6 @@ namespace Specification
             Assert.IsNotNull(instance);
             Assert.AreEqual(expected, instance.Value);
         }
-#endif
 
 
         // Test Data
@@ -118,7 +117,6 @@ namespace Specification
         }
 
          
-#if !V4 && !NET461
         /// <summary>
         /// Testing resolving implicitly injected optional dependencies from empty container.
         /// </summary>
@@ -160,7 +158,6 @@ namespace Specification
             Assert.IsNotNull(instance);
             Assert.AreEqual(expected, instance.Value);
         }
-#endif
 
         // Test data
         public static IEnumerable<object[]> Optional_Injected_ByType_Data
@@ -176,6 +173,7 @@ namespace Specification
 
             }
         }
+#endif
 
         /// <summary>
         /// Testing resolving implicit dependencies from fully initialized container.
@@ -208,8 +206,8 @@ namespace Specification
         /// <param name="dependency"><see cref="Type"/> of dependency</param>
         /// <param name="expected">Value registered with the container</param>
         [DataTestMethod]
-        [DynamicData(nameof(Optional_Injected_Implicitly_Data))]
-        public virtual void Registered_Injected_ByType(string name, Type dependency, object expected)
+        [DynamicData(nameof(Injected_MethodBase_ByType_Data))]
+        public virtual void Registered_Injected_MethodBase_ByType(string name, Type dependency, object expected)
         {
             // Arrange
             var type = TargetType(name);
@@ -225,7 +223,7 @@ namespace Specification
         }
 
         // Test data
-        public static IEnumerable<object[]> Optional_Injected_Implicitly_Data
+        public static IEnumerable<object[]> Injected_MethodBase_ByType_Data
         {
             get
             {

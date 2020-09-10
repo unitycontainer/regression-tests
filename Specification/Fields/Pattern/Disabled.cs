@@ -18,7 +18,7 @@ namespace Specification.Pattern
 
         public override void Registered_Implicit(string target, string name, object expected) { }
 
-        public override void Registered_Injected_ByType(string name, Type dependency, object expected) { }
+        public override void Registered_Injected_MethodBase_ByType(string name, Type dependency, object expected) { }
 
         
         public override void Unregistered_Implicit(string name) { }

@@ -350,63 +350,7 @@ namespace Specification
         {
         }
 
-        public class TypeNoParameters
-        {
-            [InjectionMethod]
-            public void InjectedMethod()
-            {
-                Count += 1;
-            }
-
-            public int Count { get; set; }
-        }
-
-        public class TypeWithParameter
-        {
-            [InjectionMethod]
-            public void InjectedMethod(string data)
-            {
-                Data = data;
-            }
-
-            public string Data { get; set; }
-        }
-
-        public class TypeWithRefParameter
-        {
-            [InjectionMethod]
-            public void InjectedMethod(ref string data)
-            {
-                Data = data;
-            }
-
-            public string Data { get; set; }
-        }
-
-        public class TypeWithOutParameter
-        {
-            [InjectionMethod]
-            public void InjectedMethod(out string data)
-            {
-                data = null;
-            }
-        }
-
         public class B1 : I1 { public B1(I1 i1) { } }
-
-        public class D1 : I1
-        {
-#if !NET45
-            [Dependency]
-#endif
-            public I1 Field;
-        }
-
-        public class E1 : I1
-        {
-            [Dependency]
-            public I1 Property { get; set; }
-        }
 
         public class F1 : I1
         {
@@ -414,7 +358,6 @@ namespace Specification
             public void Method(I1 i1) { }
         }
 
-        public class G0 : I0 { }
         public class G1 : I1 { public G1(I0 i0) { } }
         #endregion
     }

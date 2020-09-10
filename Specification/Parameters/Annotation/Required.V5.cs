@@ -12,35 +12,6 @@ namespace Specification
     public partial class Parameters
     {
         [TestMethod]
-        public void Annotation_Dependency_v5()
-        {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.DependencyAttribute)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 2);
-            Assert.IsInstanceOfType(result.Value, typeof(object));
-        }
-
-        [TestMethod]
-        public void Annotation_NamedDependency()
-        {
-            // Arrange
-            Container.RegisterType<Service>(new InjectionMethod(nameof(Service.NamedDependencyAttribute)));
-
-            // Act
-            var result = Container.Resolve<Service>();
-
-            // Assert
-            Assert.AreEqual(result.Called, 3);
-            Assert.IsInstanceOfType(result.Value, typeof(string));
-            Assert.AreEqual(result.Value, Name);
-        }
-
-        [TestMethod]
         public void Annotation_NamedDependency_WithTypes()
         {
             // Arrange

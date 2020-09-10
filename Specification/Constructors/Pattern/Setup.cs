@@ -21,6 +21,9 @@ namespace Specification.Pattern
         protected override InjectionMember GetResolvedMember(Type argument, string name) 
             => new InjectionConstructor(new ResolvedParameter(argument, name));
 
+        protected override InjectionMember GetInjectionMember(Type type)
+            => new InjectionConstructor(type);
+
         protected override InjectionMember GetInjectionMember(object argument) 
             => new InjectionConstructor(new InjectionParameter(argument));
     }

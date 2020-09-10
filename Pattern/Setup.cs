@@ -55,6 +55,8 @@ namespace Specification
                      .RegisterInstance(Name, NamedSingleton);
         }
 
+        protected abstract InjectionMember GetInjectionMember(Type type);
+
         protected abstract InjectionMember GetInjectionMethodBase(object argument);
 
         protected abstract InjectionMember GetResolvedMember(Type argument);

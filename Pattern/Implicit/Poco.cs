@@ -14,8 +14,12 @@ namespace Specification
         #region POCO
 
         /// <summary>
-        /// This test resolves regular POCO type from empty container.
+        /// Tests resolves type from empty container.
         /// </summary>
+        /// <remarks>
+        /// The type has unresolvable dependencies so, unless these are registered
+        /// the type can not be resolved.
+        /// </remarks>
         /// <example>
         /// 
         /// public class PocoType 
@@ -37,15 +41,15 @@ namespace Specification
         ///      .Resolve(typeof(PocoType));
         ///      
         /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
+        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
         [DataTestMethod]
         [DataRow("NoDefault_Value")]
         [DataRow("NoDefault_Class")]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Unregistered_Implicit(string name)
+        public virtual void Unregistered_Implicit(string target)
         {
             // Arrange
-            var type = TargetType(name);
+            var type = TargetType(target);
 
             // Act
             _ = Container.Resolve(type);
@@ -79,12 +83,13 @@ namespace Specification
         /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
         /// <param name="expected">Expected injected dependency value</param>
         [DataTestMethod]
-        [DynamicData(nameof(NoDefault_Data))]
+        [DynamicData(nameof(Registered_Implicit_Data))]
         public virtual void Registered_Implicit(string target, string name, object expected)
         {
             // Arrange
             RegisterTypes();
             var type = TargetType(target);
+
             // Act
             var instance = Container.Resolve(type, name) as PatternBase;
 
@@ -94,7 +99,7 @@ namespace Specification
         }
 
         // Test Data
-        public static IEnumerable<object[]> NoDefault_Data
+        public static IEnumerable<object[]> Registered_Implicit_Data
         {
             get
             {
@@ -140,14 +145,14 @@ namespace Specification
         ///      .Resolve(typeof(PocoTypeWithDefault));
         ///      
         /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
+        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
         /// <param name="expected">Expected default value</param>
         [DataTestMethod]
-        [DynamicData(nameof(WithDefault_Data))]
-        public virtual void Unregistered_Implicit_WithDefault(string name, object _, object expected)
+        [DynamicData(nameof(Implicit_WithDefault_Data))]
+        public virtual void Unregistered_Implicit_WithDefault(string target, object _, object expected)
         {
             // Arrange
-            var type = TargetType(name);
+            var type = TargetType(target);
 
             // Act
             var instance = Container.Resolve(type) as PatternBase;
@@ -159,7 +164,7 @@ namespace Specification
 #endif
 
         // Test Data
-        public static IEnumerable<object[]> WithDefault_Data
+        public static IEnumerable<object[]> Implicit_WithDefault_Data
         {
             get
             {

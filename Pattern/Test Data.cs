@@ -33,18 +33,6 @@ namespace Specification
 
         #region Baseline
 
-        public static IEnumerable<object[]> Injected_ByType_Data
-        {
-            get
-            {
-                yield return new object[] { "NoDefault_Value",                 typeof(int),          RegisteredInt   };
-                yield return new object[] { "NoDefault_Class",                 typeof(Unresolvable), Singleton       };
-                yield return new object[] { "WithDefault_Value",               typeof(int),          RegisteredInt   };
-                yield return new object[] { "WithDefault_Class",               typeof(string),       RegisteredString };
-            }
-        }
-
-
         public static IEnumerable<object[]> Required_Injected_ByType_Data
         {
             get

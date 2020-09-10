@@ -26,13 +26,6 @@
 		<TargetFrameworks>net46;net45</TargetFrameworks>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<DefineConstants Condition="'$(TargetFramework)' == 'net45' OR '$(TargetFramework)' == 'net451'">V4</DefineConstants>
-		<DefineConstants Condition="'$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net461'">V5</DefineConstants>
-		<DefineConstants Condition="'$(TargetFramework)' == 'net47' OR '$(TargetFramework)' == 'net471'">V6</DefineConstants>
-	</PropertyGroup>
-
-
 
 	<!-- Temporary exclusions -->
 
@@ -120,6 +113,15 @@
 		<Compile Remove="Breaking Changes\**" />
 	</ItemGroup>
 
+
+	<!-- Definitions -->
+
+	<PropertyGroup>
+		<DefineConstants Condition="$(TargetFramework.StartsWith('net45'))">V4</DefineConstants>
+		<DefineConstants Condition="$(TargetFramework.StartsWith('net46'))">V5</DefineConstants>
+		<DefineConstants Condition="$(TargetFramework.StartsWith('net47'))">V6</DefineConstants>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<ProjectReference Condition="'$(TargetFramework)' == 'net48'" Include="$(UnityContainer)" />
 		<PackageReference Condition="'$(TargetFramework)' == 'net47'" Include="Unity.Container" Version="6.0.*-*" />
@@ -131,5 +133,6 @@
 	<ItemGroup>
 		<Folder Include="Public.API\Compatibility\" />
 	</ItemGroup>
+
 
 </Project>
