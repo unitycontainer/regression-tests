@@ -108,6 +108,7 @@ namespace Specification
 
         #region POCO with defaults
 
+#if !V4
         /// <summary>
         /// This test resolves POCO type with default values from empty container.
         /// </summary>
@@ -148,6 +149,7 @@ namespace Specification
             Assert.IsNotNull(instance);
             Assert.AreEqual(expected, instance.Value);
         }
+#endif
 
 
         /// <summary>
@@ -202,7 +204,7 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "WithDefault_Value", RegisteredInt, DefaultInt };
+                yield return new object[] { "WithDefault_Value", RegisteredInt,    DefaultInt };
                 yield return new object[] { "WithDefault_Class", RegisteredString, DefaultString };
             }
         }

@@ -45,22 +45,14 @@ namespace Specification
         [DataTestMethod]
         [DataRow("NoDefault_Value",                 typeof(int))]
         [DataRow("NoDefault_Class",                 typeof(Unresolvable))]
-        [DataRow("WithDefault_Value",               typeof(int))]
-        [DataRow("WithDefault_Class",               typeof(string))]
-
         [DataRow("Required_Dependency_Value",       typeof(int))]
         [DataRow("Required_Dependency_Class",       typeof(Unresolvable))]
         [DataRow("Required_Dependency_Value_Named", typeof(int))]
         [DataRow("Required_Dependency_Class_Named", typeof(Unresolvable))]
-        [DataRow("Required_WithDefault_Value",      typeof(int))]
-        [DataRow("Required_WithDefault_Class",      typeof(string))]
-
         [DataRow("Optional_Dependency_Value",       typeof(int))]
         [DataRow("Optional_Dependency_Class",       typeof(Unresolvable))]
         [DataRow("Optional_Dependency_Value_Named", typeof(int))]
         [DataRow("Optional_Dependency_Class_Named", typeof(Unresolvable))]
-        [DataRow("Optional_WithDefault_Value",      typeof(int))]
-        [DataRow("Optional_WithDefault_Class",      typeof(string))]
         [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Unregistered_Injected_ByResolving(string name, Type dependency)
         {
@@ -71,6 +63,68 @@ namespace Specification
             // Act
             var result = Container.Resolve(type);
         }
+
+
+#if !V4
+        /// <summary>
+        /// This test resolves POCO type with default values from empty container.
+        /// </summary>
+        /// <example>
+        /// 
+        /// public class PocoTypeWithDefault
+        /// {
+        ///     public int Field = 555;
+        /// 
+        ///     public int Property { get; set; } = 444
+        /// 
+        ///     public PocoTypeWithDefault(int value = 111) { }
+        ///     
+        ///     public void Method(int value = 222) { }
+        /// }
+        /// 
+        /// /////////////////////////////////////
+        /// 
+        ///  var container = new UnityContainer()
+        ///      .RegisterType(typeof(PocoTypeWithDefault), 
+        ///                     new InjectionConstructor(typeof(int)),
+        ///                     new InjectionMethod("Method", typeof(int)));
+        ///      
+        /// var result = container.Resolve(typeof(PocoType));
+        ///      
+        /// </example>
+        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
+        /// <param name="dependency"><see cref="Type"/> of dependency</param>
+        /// <param name="expected">Expected default value</param>
+        [DataTestMethod]
+        [DynamicData(nameof(Injected_ByResolving_WithDefault_Data))]
+        public virtual void Unregistered_Injected_ByResolving_WithDefault(string name, Type dependency, object expected)
+        {
+            // Arrange
+            var type = TargetType(name);
+            Container.RegisterType(type, GetResolvedMember(dependency));
+
+            // Act
+            var instance = Container.Resolve(type) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
+        }
+#endif
+
+        // Test Data
+        public static IEnumerable<object[]> Injected_ByResolving_WithDefault_Data
+        {
+            get
+            {
+                yield return new object[] { "WithDefault_Value",          typeof(int),    DefaultInt };
+                yield return new object[] { "WithDefault_Class",          typeof(string), DefaultString };
+
+                yield return new object[] { "Required_WithDefault_Value", typeof(int),    DefaultInt };
+                yield return new object[] { "Required_WithDefault_Class", typeof(string), DefaultString };
+            }
+        }
+
 
         /// <summary>
         /// Tests injecting dependencies by required resolution from empty container.

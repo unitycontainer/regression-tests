@@ -110,9 +110,9 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "Optional_Dependency_Value", RegisteredInt, 0 };
-                yield return new object[] { "Optional_Dependency_Class", Singleton, null };
+                yield return new object[] { "Optional_Dependency_Class",       Singleton, null };
 #if !V4
+                yield return new object[] { "Optional_Dependency_Value",       RegisteredInt, 0 };
                 yield return new object[] { "Optional_Dependency_Value_Named", NamedInt, 0 };
                 yield return new object[] { "Optional_Dependency_Class_Named", NamedSingleton, null };
 #endif
@@ -124,6 +124,7 @@ namespace Specification
 
         #region With Defaults
 
+#if !V4
         /// <summary>
         /// This test resolves type with default values and annotated for optional
         /// injection from empty container.
@@ -166,6 +167,7 @@ namespace Specification
             Assert.IsNotNull(instance);
             Assert.AreEqual(expected, instance.Value);
         }
+#endif
 
         /// <summary>
         /// This test resolves type with default values and annotated for optional
@@ -219,7 +221,9 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "Optional_WithDefault_Value", RegisteredInt, DefaultInt };
+#if !V4
+                yield return new object[] { "Optional_WithDefault_Value", RegisteredInt,    DefaultInt };
+#endif
                 yield return new object[] { "Optional_WithDefault_Class", RegisteredString, DefaultString };
             }
         }

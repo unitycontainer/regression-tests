@@ -120,6 +120,7 @@ namespace Specification
 
         #region Required with defaults
 
+#if !V4
         /// <summary>
         /// This test resolves type with default values and annotated for mandatory
         /// injection from empty container.
@@ -162,6 +163,7 @@ namespace Specification
             Assert.IsNotNull(instance);
             Assert.AreEqual(expected, instance.Value);
         }
+#endif
 
         /// <summary>
         /// This test resolves type with default values and annotated for mandatory
