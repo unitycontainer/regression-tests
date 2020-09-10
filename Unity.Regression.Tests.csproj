@@ -26,11 +26,20 @@
 		<TargetFrameworks>net46;net45</TargetFrameworks>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<DefineConstants Condition="'$(TargetFramework)' == 'net45' OR '$(TargetFramework)' == 'net451'">V4</DefineConstants>
+		<DefineConstants Condition="'$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net461'">V5</DefineConstants>
+		<DefineConstants Condition="'$(TargetFramework)' == 'net47' OR '$(TargetFramework)' == 'net471'">V6</DefineConstants>
+	</PropertyGroup>
+
+
+
 	<!-- Temporary exclusions -->
 
 	<PropertyGroup Condition="Exists('$(UnityContainer)') AND Exists('..\Container\package.sln')">
 		<TargetFramework>net461</TargetFramework>
 	</PropertyGroup>
+
 	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
 	  <Compile Remove="Extending\**" />
       <ProjectReference Include="..\Container\src\Unity.Container.csproj" />

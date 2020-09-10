@@ -23,9 +23,9 @@ namespace Specification
         protected const string DefaultString = "default";
         protected const string InjectedString = "injected";
         protected const string RegisteredString = "registered";
-        public static Unresolvable Singleton = Unresolvable.Create("singleton");
-        public static Unresolvable NamedSingleton = Unresolvable.Create("named");
-        public static Unresolvable InjectedSingleton = Unresolvable.Create("injected");
+        public readonly static Unresolvable Singleton = Unresolvable.Create("singleton");
+        public readonly static Unresolvable NamedSingleton = Unresolvable.Create("named");
+        public readonly static Unresolvable InjectedSingleton = SubUnresolvable.Create("injected");
 
         protected IUnityContainer Container;
 
@@ -49,7 +49,9 @@ namespace Specification
                      .RegisterInstance(Name, NamedSingleton);
         }
 
-        protected abstract InjectionMember GetInjectedMember(object argument);
+        protected abstract InjectionMember GetInjectionMethodBase(object argument);
+
+        protected abstract InjectionMember GetInjectionMember(object argument);
 
         #endregion
     }

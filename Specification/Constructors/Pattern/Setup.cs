@@ -11,7 +11,9 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Constructors : VerificationPattern
     {
-        protected override InjectionMember GetInjectedMember(object argument) => new InjectionConstructor(argument);
+        protected override InjectionMember GetInjectionMethodBase(object argument) => new InjectionConstructor(argument);
+
+        protected override InjectionMember GetInjectionMember(object argument) => new InjectionConstructor(new InjectionParameter(argument));
 
 
         #region Test Data

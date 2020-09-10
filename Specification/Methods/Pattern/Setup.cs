@@ -11,7 +11,9 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Methods : VerificationPattern
     {
-        protected override InjectionMember GetInjectedMember(object argument) => new InjectionMethod("Method", argument);
+        protected override InjectionMember GetInjectionMethodBase(object argument) => new InjectionMethod("Method", argument);
+
+        protected override InjectionMember GetInjectionMember(object argument) => new InjectionMethod("Method", new InjectionParameter(argument));
 
 
         #region Test Data
