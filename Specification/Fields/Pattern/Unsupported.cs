@@ -35,5 +35,9 @@ namespace Specification.Pattern
 
         public override void Unregistered_Injected_ByResolving_WithDefault(string name, Type dependency, object expected) { }
 #endif
+
+#if !V6
+        public override void Unregistered_Optional_Injected_ByName(string target, object expected) { }
+#endif
     }
 }
