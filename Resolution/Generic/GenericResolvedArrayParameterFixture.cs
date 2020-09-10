@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -82,7 +82,7 @@ namespace Resolution
         }
 
         [TestMethod]
-#if NET45
+#if V4
         [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
 #else
         [ExpectedException(typeof(InvalidOperationException))]

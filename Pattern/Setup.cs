@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -50,6 +50,10 @@ namespace Specification
         }
 
         protected abstract InjectionMember GetInjectionMethodBase(object argument);
+
+        protected abstract InjectionMember GetResolvedMember(Type argument);
+
+        protected abstract InjectionMember GetResolvedMember(Type argument, string name);
 
         protected abstract InjectionMember GetInjectionMember(object argument);
 

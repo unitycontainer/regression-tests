@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;

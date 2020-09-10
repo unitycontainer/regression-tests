@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -37,7 +37,7 @@ namespace Specification
     public partial class Properties_Diagnostic : Properties
     {
         [TestInitialize]
-#if NET45
+#if V4
         public override void TestInitialize() => base.TestInitialize();
 #else
         public override void TestInitialize()

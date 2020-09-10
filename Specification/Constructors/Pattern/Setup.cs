@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-#if NET45
+using System;
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -11,9 +12,17 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Constructors : VerificationPattern
     {
-        protected override InjectionMember GetInjectionMethodBase(object argument) => new InjectionConstructor(argument);
+        protected override InjectionMember GetInjectionMethodBase(object argument) 
+            => new InjectionConstructor(argument);
 
-        protected override InjectionMember GetInjectionMember(object argument) => new InjectionConstructor(new InjectionParameter(argument));
+        protected override InjectionMember GetResolvedMember(Type argument) 
+            => new InjectionConstructor(new ResolvedParameter(argument));
+
+        protected override InjectionMember GetResolvedMember(Type argument, string name) 
+            => new InjectionConstructor(new ResolvedParameter(argument, name));
+
+        protected override InjectionMember GetInjectionMember(object argument) 
+            => new InjectionConstructor(new InjectionParameter(argument));
 
 
         #region Test Data

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -51,7 +51,7 @@ namespace Registrations
 
         [DataTestMethod]
         [DynamicData(nameof(ArgumetTestData))]
-#if NET45
+#if V4
         public void ArgumentValidation(Type typeFrom, Type typeTo, string name, LifetimeManager lifetimeManager, Type manager)
 #else
         public void ArgumentValidation(Type typeFrom, Type typeTo, string name, ITypeLifetimeManager lifetimeManager, Type manager)
@@ -70,7 +70,7 @@ namespace Registrations
 
         [DataTestMethod]
         [DynamicData(nameof(ArgumetTestDataFailing))]
-#if NET45
+#if V4
         public void ArgumentValidationFailing(Type exception, Type typeFrom, Type typeTo, string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)
 #else
         public void ArgumentValidationFailing(Type exception, Type typeFrom, Type typeTo, string name, ITypeLifetimeManager lifetimeManager, params InjectionMember[] injectionMembers)

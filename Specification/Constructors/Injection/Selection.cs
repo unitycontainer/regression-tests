@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;

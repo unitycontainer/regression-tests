@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -388,7 +388,7 @@ namespace Issues
     public partial class GitHub_Diagnostic : GitHub
     {
         [TestInitialize]
-#if NET45
+#if V4
         public override void TestInitialize() => Container = new UnityContainer();
 #else
         public override void TestInitialize() => Container = new UnityContainer()

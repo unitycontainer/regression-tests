@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -12,9 +12,17 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Properties : VerificationPattern
     {
-        protected override InjectionMember GetInjectionMethodBase(object argument) => throw new NotSupportedException();
+        protected override InjectionMember GetInjectionMethodBase(object argument) 
+            => throw new NotSupportedException();
 
-        protected override InjectionMember GetInjectionMember(object argument) => new InjectionProperty("Property", argument);
+        protected override InjectionMember GetResolvedMember(Type argument) 
+            => new InjectionProperty("Property", new ResolvedParameter(argument));
+
+        protected override InjectionMember GetResolvedMember(Type argument, string name) 
+            => new InjectionProperty("Property", new ResolvedParameter(argument, name));
+
+        protected override InjectionMember GetInjectionMember(object argument) 
+            => new InjectionProperty("Property", argument);
 
 
         #region Test Data

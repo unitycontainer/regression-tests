@@ -1,5 +1,5 @@
 ﻿using System;
-#if NET45
+#if V4
 using Microsoft.Practices.ObjectBuilder2;
 #else
 using Unity;
@@ -9,7 +9,7 @@ using Unity.Resolution;
 namespace Unity.Regression.Tests
 {
     public class ValidatingResolver
-#if NET45
+#if V4
             : IDependencyResolverPolicy
 #else
             : IResolve
@@ -23,7 +23,7 @@ namespace Unity.Regression.Tests
             _value = value;
         }
 
-#if NET45
+#if V4
 
         public object Resolve(IBuilderContext context)
         {

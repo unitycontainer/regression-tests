@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -17,7 +17,7 @@ namespace Specification
         /// constructor is invalid, we are not calling it
         /// </summary>
         [TestMethod]
-#if NET45
+#if V4
         [ExpectedException(typeof(ResolutionFailedException))]
 #endif
         public void BuildUp_AmbuguousConstructor()
@@ -38,7 +38,7 @@ namespace Specification
         /// constructor is invalid, we are not calling it
         /// </summary>
         [TestMethod]
-#if NET45
+#if V4
         [ExpectedException(typeof(ResolutionFailedException))]
 #endif
         public void BuildUp_AmbuguousAnnotations()

@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;

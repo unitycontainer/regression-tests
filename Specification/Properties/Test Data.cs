@@ -1,5 +1,5 @@
 ﻿using System;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;

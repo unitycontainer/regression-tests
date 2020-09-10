@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -13,8 +13,7 @@ namespace Specification
     public abstract partial class VerificationPattern
     {
         /// <summary>
-        /// This test uses <see cref="InjectionMember"/> to configure and resolve 
-        /// dependencies from empty container.
+        /// Testing resolving implicitly injected dependencies from empty container.
         /// </summary>
         /// <example>
         /// 
@@ -62,20 +61,19 @@ namespace Specification
         }
 
         /// <summary>
-        /// This test uses <see cref="InjectionMember"/> to configure and resolve 
-        /// dependencies from empty container.
+        /// Testing resolving implicitly injected optional dependencies from empty container.
         /// </summary>
         /// <example>
         /// 
         /// public class PocoType 
         /// {
-        ///     public int Field;
+        ///     [OptionalDependency] public int Field;
         /// 
-        ///     public int Property { get; set; }
+        ///     [OptionalDependency] public int Property { get; set; }
         /// 
-        ///     public PocoType(int value) { }
+        ///     public PocoType([OptionalDependency] int value = xxx) { }
         ///     
-        ///     public void Method(int value) { }
+        ///     public void Method([OptionalDependency] int value) { }
         /// }
         /// 
         /// /////////////////////////////////////
@@ -105,6 +103,8 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
+
+        // Test data
         public static IEnumerable<object[]> Optional_Injected_ByType_Data
         {
             get
@@ -113,23 +113,51 @@ namespace Specification
                 yield return new object[] { "Optional_Dependency_Class",       typeof(Unresolvable), null };
                 yield return new object[] { "Optional_Dependency_Value_Named", typeof(int),          0 };
                 yield return new object[] { "Optional_Dependency_Class_Named", typeof(Unresolvable), null };
+#if V6 && DEBUG
                 yield return new object[] { "Optional_WithDefault_Value",      typeof(int),          DefaultInt };
                 yield return new object[] { "Optional_WithDefault_Class",      typeof(string),       DefaultString };
+#endif
             }
         }
 
-
-
+        /// <summary>
+        /// Testing resolving implicit dependencies from fully initialized container.
+        /// </summary>
+        /// <example>
+        /// 
+        /// public class PocoType 
+        /// {
+        ///     [Dependency]
+        ///     public int Field;
+        /// 
+        ///     [xxxDependency]
+        ///     public int Property { get; set; }
+        /// 
+        ///     public PocoType([OptionalDependency] int value) { }
+        ///     
+        ///     public void Method(int value) { }
+        /// }
+        /// 
+        /// /////////////////////////////////////
+        /// 
+        ///  var container = new UnityContainer()
+        ///      .RegisterInstance(111);
+        ///      .RegisterType(typeof(PocoType), new InjectionConstructor(typeof(int)),
+        ///                                      new InjectionMethod("Method", typeof(int)));
+        ///      
+        /// var result = container.Resolve(typeof(PocoType));
+        /// </example>
+        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
+        /// <param name="dependency"><see cref="Type"/> of dependency</param>
+        /// <param name="expected">Value registered with the container</param>
         [DataTestMethod]
-        [DynamicData(nameof(Injected_ByType_Data))]
-        [DynamicData(nameof(Required_Injected_ByType_Data))]
-        [DynamicData(nameof(Implicitly_Resolved_Registered_Optional_Data))]
-        public virtual void Registered_Implicitly_Injected(string name, object data, object expected)
+        [DynamicData(nameof(Optional_Injected_Implicitly_Data))]
+        public virtual void Registered_Injected_ByType(string name, Type dependency, object expected)
         {
             // Arrange
+            var type = TargetType(name);
             RegisterTypes();
-            var type = TargetType(name);
-            Container.RegisterType(type, GetInjectionMethodBase(data));
+            Container.RegisterType(type, GetInjectionMethodBase(dependency));
 
             // Act
             var instance = Container.Resolve(type) as PatternBase;
@@ -139,53 +167,28 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
-
-
-        [DataTestMethod]
-        [DynamicData(nameof(Injected_Data))]
-        public virtual void Unregistered_Injected_Dependency(string name, object data, object expected)
+        // Test data
+        public static IEnumerable<object[]> Optional_Injected_Implicitly_Data
         {
-            // Arrange
-            var type = TargetType(name);
-            Container.RegisterType(type, GetInjectionMethodBase(data));
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
+            get
+            {
+                yield return new object[] { "NoDefault_Value",                 typeof(int),          RegisteredInt    };
+                yield return new object[] { "NoDefault_Class",                 typeof(Unresolvable), Singleton        };
+                yield return new object[] { "WithDefault_Value",               typeof(int),          RegisteredInt    };
+                yield return new object[] { "WithDefault_Class",               typeof(string),       RegisteredString };
 
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
+                yield return new object[] { "Required_Dependency_Value",       typeof(int),          RegisteredInt    };
+                yield return new object[] { "Required_Dependency_Class",       typeof(Unresolvable), Singleton        };
+                yield return new object[] { "Required_Dependency_Value_Named", typeof(int),          NamedInt         };
+                yield return new object[] { "Required_Dependency_Class_Named", typeof(Unresolvable), NamedSingleton   };
 
-        [DataTestMethod]
-        [DynamicData(nameof(Injected_Data))]
-        public virtual void Registered_Overriden_ByInjected(string name, object data, object expected)
-        {
-            // Arrange
-            RegisterTypes();
-            var type = TargetType(name);
-            Container.RegisterType(type, GetInjectionMethodBase(data));
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-
-
-        [DataTestMethod]
-        [DynamicData(nameof(Injected_WithDefault_Data))]
-        public virtual void Unregistered_Default_Overriden_ByInjected(string name, object data, object expected)
-        {
-            // Arrange
-            var type = TargetType(name);
-            Container.RegisterType(type, GetInjectionMethodBase(data));
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
+                yield return new object[] { "Optional_Dependency_Value",       typeof(int),          RegisteredInt    };
+                yield return new object[] { "Optional_Dependency_Class",       typeof(Unresolvable), Singleton        };
+                yield return new object[] { "Optional_Dependency_Value_Named", typeof(int),          NamedInt         };
+                yield return new object[] { "Optional_Dependency_Class_Named", typeof(Unresolvable), NamedSingleton   };
+                yield return new object[] { "Optional_WithDefault_Value",      typeof(int),          RegisteredInt    };
+                yield return new object[] { "Optional_WithDefault_Class",      typeof(string),       RegisteredString };
+            }
         }
     }
 }

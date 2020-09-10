@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -35,7 +35,7 @@ namespace Resolution
         }
 
         [TestMethod]
-#if NET45
+#if V4
         [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
 #else
         [ExpectedException(typeof(ResolutionFailedException))]
@@ -233,7 +233,7 @@ namespace Resolution
         }
 
         [TestMethod]
-#if NET45
+#if V4
         [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
 #else
         [ExpectedException(typeof(InvalidOperationException))]

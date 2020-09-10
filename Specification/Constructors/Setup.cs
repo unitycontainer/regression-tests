@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-#if NET45
+#if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
@@ -26,7 +26,7 @@ namespace Specification
     public partial class Constructors_Diagnostic : Constructors
     {
         [TestInitialize]
-#if NET45
+#if V4
         public override void TestInitialize() => base.TestInitialize();
 #else
         public override void TestInitialize()
