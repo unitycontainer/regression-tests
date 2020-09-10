@@ -46,25 +46,9 @@ namespace Specification
         [DynamicData(nameof(Injected_ByType_Data))]
         public virtual void Registered_Injected_ByType(string target, Type dependency, object expected)
         {
-            // Arrange
             var type = TargetType(target);
-            RegisterTypes();
-            Container.RegisterType(type, GetInjectionMember(dependency));
 
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-
-        [DataTestMethod]
-        [DynamicData(nameof(Injected_ByType_Data))]
-        public virtual void Registered_Injected_ByType_Object(string target, object dependency, object expected)
-        {
             // Arrange
-            var type = TargetType(target);
             RegisterTypes();
             Container.RegisterType(type, GetInjectionMember(dependency));
 

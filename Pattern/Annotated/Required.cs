@@ -92,9 +92,10 @@ namespace Specification
         [DynamicData(nameof(Registered_Required_Data))]
         public void Registered_Required(string name, object expected)
         {
+            var type = TargetType(name);
+
             // Arrange
             RegisterTypes();
-            var type = TargetType(name);
 
             // Act
             var instance = Container.Resolve(type) as PatternBase;
@@ -156,6 +157,7 @@ namespace Specification
         {
             // Arrange
             var type = TargetType(name);
+
             // Act
             var instance = Container.Resolve(type) as PatternBase;
 
@@ -201,9 +203,10 @@ namespace Specification
         [DynamicData(nameof(Required_WithDefault_Data))]
         public void Registered_Required_WithDefault(string name, object expected, object _)
         {
+            var type = TargetType(name);
+
             // Arrange
             RegisterTypes();
-            var type = TargetType(name);
 
             // Act
             var instance = Container.Resolve(type) as PatternBase;

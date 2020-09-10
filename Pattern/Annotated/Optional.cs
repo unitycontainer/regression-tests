@@ -14,8 +14,7 @@ namespace Specification
         #region Optional
 
         /// <summary>
-        /// This test resolves type annotated for optional injection from empty container.
-        /// The test covers named as well as anonymous dependencies
+        /// Test optional injection from empty container.
         /// </summary>
         /// <example>
         /// 
@@ -58,8 +57,7 @@ namespace Specification
         }
 
         /// <summary>
-        /// This test resolves type annotated for optional injection from fully initialized container.
-        /// The test covers named as well as anonymous dependencies
+        /// Test optional injection from fully initialized container.
         /// </summary>
         /// <example>
         /// 
@@ -94,9 +92,11 @@ namespace Specification
         [DynamicData(nameof(Optional_Data))]
         public virtual void Registered_Optional(string name, object expected, object _)
         {
+            var type = TargetType(name);
+
             // Arrange
             RegisterTypes();
-            var type = TargetType(name);
+
             // Act
             var instance = Container.Resolve(type) as PatternBase;
 
@@ -126,8 +126,7 @@ namespace Specification
 
 #if !V4
         /// <summary>
-        /// This test resolves type with default values and annotated for optional
-        /// injection from empty container.
+        /// Test type with default values annotated for optional injection resolved from empty container.
         /// </summary>
         /// <example>
         /// 
@@ -160,6 +159,7 @@ namespace Specification
         {
             // Arrange
             var type = TargetType(name);
+
             // Act
             var instance = Container.Resolve(type) as PatternBase;
 
@@ -205,9 +205,10 @@ namespace Specification
         [DynamicData(nameof(Optional_WithDefault_Data))]
         public virtual void Registered_Optional_WithDefault(string name, object expected, object _)
         {
+            var type = TargetType(name);
+
             // Arrange
             RegisterTypes();
-            var type = TargetType(name);
 
             // Act
             var instance = Container.Resolve(type) as PatternBase;

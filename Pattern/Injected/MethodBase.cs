@@ -48,8 +48,9 @@ namespace Specification
         [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Unregistered_Injected_ByType(string target, Type dependency)
         {
-            // Arrange
             var type = TargetType(target);
+
+            // Arrange
             Container.RegisterType(type, GetInjectionMethodBase(dependency));
 
             // Act
@@ -90,8 +91,9 @@ namespace Specification
         [DynamicData(nameof(Injected_ByType_WithDefault_Data))]
         public virtual void Unregistered_Injected_ByType_WithDefault(string name, Type dependency, object expected)
         {
-            // Arrange
             var type = TargetType(name);
+
+            // Arrange
             Container.RegisterType(type, GetInjectionMethodBase(dependency));
 
             // Act
@@ -147,8 +149,9 @@ namespace Specification
         [DynamicData(nameof(Optional_Injected_ByType_Data))]
         public virtual void Unregistered_Optional_Injected_ByType(string name, Type dependency, object expected)
         {
-            // Arrange
             var type = TargetType(name);
+
+            // Arrange
             Container.RegisterType(type, GetInjectionMethodBase(dependency));
 
             // Act
@@ -209,8 +212,9 @@ namespace Specification
         [DynamicData(nameof(Injected_MethodBase_ByType_Data))]
         public virtual void Registered_Injected_MethodBase_ByType(string name, Type dependency, object expected)
         {
-            // Arrange
             var type = TargetType(name);
+
+            // Arrange
             RegisterTypes();
             Container.RegisterType(type, GetInjectionMethodBase(dependency));
 

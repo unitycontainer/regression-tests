@@ -13,7 +13,7 @@ namespace Specification
     public abstract partial class VerificationPattern
     {
         /// <summary>
-        /// This test uses <see cref="InjectionMember"/> to configure and resolve 
+        /// Test use of <see cref="InjectionMember"/> to configure and resolve 
         /// dependencies from empty container.
         /// </summary>
         /// <example>
@@ -56,8 +56,9 @@ namespace Specification
         [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Unregistered_Injected_ByResolving(string name, Type dependency)
         {
-            // Arrange
             var type = TargetType(name);
+
+            // Arrange
             Container.RegisterType(type, GetResolvedMember(dependency));
 
             // Act
@@ -99,8 +100,9 @@ namespace Specification
         [DynamicData(nameof(Injected_ByResolving_WithDefault_Data))]
         public virtual void Unregistered_Injected_ByResolving_WithDefault(string name, Type dependency, object expected)
         {
-            // Arrange
             var type = TargetType(name);
+
+            // Arrange
             Container.RegisterType(type, GetResolvedMember(dependency));
 
             // Act
@@ -110,7 +112,6 @@ namespace Specification
             Assert.IsNotNull(instance);
             Assert.AreEqual(expected, instance.Value);
         }
-#endif
 
         // Test Data
         public static IEnumerable<object[]> Injected_ByResolving_WithDefault_Data
@@ -124,6 +125,7 @@ namespace Specification
                 yield return new object[] { "Required_WithDefault_Class", typeof(string), DefaultString };
             }
         }
+#endif
 
 
         /// <summary>
@@ -153,21 +155,22 @@ namespace Specification
         ///      
         /// var result = container.Resolve(typeof(PocoType));
         /// </example>
-        /// <param name="typeName">Name of the <see cref="Type"/> to resolve</param>
+        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
         /// <param name="type"><see cref="Type"/> of dependency</param>
         /// <param name="name">Name of the contract</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
         [DynamicData(nameof(Injected_ByResolving_Data))]
-        public virtual void Registered_Injected_ByResolving(string typeName, Type type, string name, object expected)
+        public virtual void Registered_Injected_ByResolving(string target, Type dependency, string name, object expected)
         {
+            var type = TargetType(target);
+
             // Arrange
             RegisterTypes();
-            var target = TargetType(typeName);
-            Container.RegisterType(target, GetResolvedMember(type, name));
+            Container.RegisterType(type, GetResolvedMember(dependency, name));
 
             // Act
-            var instance = Container.Resolve(target) as PatternBase;
+            var instance = Container.Resolve(type) as PatternBase;
 
             // Validate
             Assert.IsNotNull(instance);

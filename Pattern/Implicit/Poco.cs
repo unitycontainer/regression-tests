@@ -86,9 +86,10 @@ namespace Specification
         [DynamicData(nameof(Registered_Implicit_Data))]
         public virtual void Registered_Implicit(string target, string name, object expected)
         {
+            var type = TargetType(target);
+
             // Arrange
             RegisterTypes();
-            var type = TargetType(target);
 
             // Act
             var instance = Container.Resolve(type, name) as PatternBase;

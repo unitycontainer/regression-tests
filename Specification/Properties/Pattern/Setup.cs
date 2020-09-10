@@ -12,6 +12,9 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Properties : VerificationPattern
     {
+        protected override InjectionMember GetMemberByName()
+            => new InjectionProperty("Property");
+
         protected override InjectionMember GetInjectionMethodBase(object argument) 
             => throw new NotSupportedException();
 
@@ -20,9 +23,6 @@ namespace Specification.Pattern
 
         protected override InjectionMember GetResolvedMember(Type argument, string name) 
             => new InjectionProperty("Property", new ResolvedParameter(argument, name));
-
-        protected override InjectionMember GetInjectionMember(Type type)
-            => new InjectionProperty("Property", type);
 
         protected override InjectionMember GetInjectionMember(object argument) 
             => new InjectionProperty("Property", argument);

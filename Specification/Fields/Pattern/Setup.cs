@@ -12,6 +12,9 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Fields : VerificationPattern
     {
+        protected override InjectionMember GetMemberByName()
+            => new InjectionField("Field");
+
         protected override InjectionMember GetInjectionMethodBase(object argument) 
             => throw new NotSupportedException();
 
@@ -20,9 +23,6 @@ namespace Specification.Pattern
 
         protected override InjectionMember GetResolvedMember(Type argument, string name) 
             => new InjectionField("Field", new ResolvedParameter(argument, name));
-
-        protected override InjectionMember GetInjectionMember(Type type)
-            => new InjectionField("Field", type);
 
         protected override InjectionMember GetInjectionMember(object argument) 
             => new InjectionField("Field", argument);

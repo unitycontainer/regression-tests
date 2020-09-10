@@ -12,6 +12,9 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Constructors : VerificationPattern
     {
+        protected override InjectionMember GetMemberByName()
+            => null;
+
         protected override InjectionMember GetInjectionMethodBase(object argument) 
             => new InjectionConstructor(argument);
 
@@ -21,10 +24,7 @@ namespace Specification.Pattern
         protected override InjectionMember GetResolvedMember(Type argument, string name) 
             => new InjectionConstructor(new ResolvedParameter(argument, name));
 
-        protected override InjectionMember GetInjectionMember(Type type)
-            => new InjectionConstructor(type);
-
         protected override InjectionMember GetInjectionMember(object argument) 
-            => new InjectionConstructor(new InjectionParameter(argument));
+            => new InjectionConstructor(argument);
     }
 }

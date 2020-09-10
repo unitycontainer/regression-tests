@@ -32,19 +32,28 @@ namespace Specification
         /// </example>
         /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
         [DataTestMethod]
-        [DataRow("NoDefault_Ref")]
-        [DataRow("NoDefault_Out")]
-        [DataRow("NoDefault_RefStruct")] // TODO: Requires instance for validation
+        [DataRow("Required_Dependency_Ref")]
+        [DataRow("Required_Dependency_Out")]
+        [DataRow("Required_Dependency_RefStruct")]
+#if !V5 
+        [DataRow("Optional_Dependency_Ref")]
+        [DataRow("Optional_Dependency_Out")]
+        [DataRow("Optional_Dependency_RefStruct")]
+#endif
         [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Unsupported_Implicit_Parameter(string name)
+        public virtual void Unsupported_Parameter(string name)
         {
+            var type = TargetType(name);
+
             // Arrange
             RegisterTypes();
 
-            var type = TargetType(name);
-
             // Act
-            _ = Container.Resolve(type);
+            //_ = Container.Resolve(type);
+            var instance = Container.Resolve(type) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
         }
     }
 }
