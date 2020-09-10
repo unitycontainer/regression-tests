@@ -179,13 +179,16 @@ namespace Specification
 
                 yield return new object[] { "Required_Dependency_Value",       typeof(int),          RegisteredInt    };
                 yield return new object[] { "Required_Dependency_Class",       typeof(Unresolvable), Singleton        };
+#if !V4
                 yield return new object[] { "Required_Dependency_Value_Named", typeof(int),          NamedInt         };
                 yield return new object[] { "Required_Dependency_Class_Named", typeof(Unresolvable), NamedSingleton   };
-
+#endif
                 yield return new object[] { "Optional_Dependency_Value",       typeof(int),          RegisteredInt    };
                 yield return new object[] { "Optional_Dependency_Class",       typeof(Unresolvable), Singleton        };
+#if !V4
                 yield return new object[] { "Optional_Dependency_Value_Named", typeof(int),          NamedInt         };
                 yield return new object[] { "Optional_Dependency_Class_Named", typeof(Unresolvable), NamedSingleton   };
+#endif
                 yield return new object[] { "Optional_WithDefault_Value",      typeof(int),          RegisteredInt    };
                 yield return new object[] { "Optional_WithDefault_Class",      typeof(string),       RegisteredString };
             }

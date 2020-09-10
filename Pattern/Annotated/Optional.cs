@@ -110,10 +110,12 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "Optional_Dependency_Value",       RegisteredInt, 0 };
-                yield return new object[] { "Optional_Dependency_Class",       Singleton, null };
+                yield return new object[] { "Optional_Dependency_Value", RegisteredInt, 0 };
+                yield return new object[] { "Optional_Dependency_Class", Singleton, null };
+#if !V4
                 yield return new object[] { "Optional_Dependency_Value_Named", NamedInt, 0 };
                 yield return new object[] { "Optional_Dependency_Class_Named", NamedSingleton, null };
+#endif
             }
         }
 

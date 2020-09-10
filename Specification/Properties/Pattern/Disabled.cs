@@ -1,7 +1,7 @@
-﻿#if V4
+﻿using System;
+#if V4
 using Microsoft.Practices.Unity;
 #else
-using System;
 using Unity;
 using Unity.Injection;
 #endif
