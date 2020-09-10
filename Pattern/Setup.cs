@@ -46,9 +46,11 @@ namespace Specification
             Container.RegisterInstance(RegisteredInt)
                      .RegisterInstance(RegisteredString)
                      .RegisterInstance(Singleton)
+                     .RegisterInstance(typeof(TestStruct), new TestStruct(55, "struct"))
+#if !V4
                      .RegisterInstance(typeof(string),       Null, (object)null)
                      .RegisterInstance(typeof(Unresolvable), Null, (object)null)
-                     .RegisterInstance(typeof(TestStruct), new TestStruct(55, "struct"))
+#endif
                      .RegisterInstance(Name, NamedInt)
                      .RegisterInstance(Name, NamedSingleton);
         }

@@ -33,11 +33,11 @@ namespace Specification
         /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
         [DataTestMethod]
         [DataRow("Required_Dependency_Ref")]
-        [DataRow("Optional_Dependency_Ref")]
         [DataRow("Required_Dependency_Out")]
-        [DataRow("Optional_Dependency_Out")]
-#if !V4
         [DataRow("Required_Dependency_RefStruct")]
+#if !V5 
+        [DataRow("Optional_Dependency_Ref")]
+        [DataRow("Optional_Dependency_Out")]
         [DataRow("Optional_Dependency_RefStruct")]
 #endif
         [ExpectedException(typeof(ResolutionFailedException))]
