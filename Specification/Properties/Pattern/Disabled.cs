@@ -15,13 +15,9 @@ namespace Specification.Pattern
         
         public override void Registered_Injected_ByType(string name, Type dependency, object expected) { }
 
-        public override void Registered_Implicit_WithDefault(string name, object registered, object @default) { }
-
-
         public override void Unregistered_Implicit(string name) { }
 
         public override void Unregistered_Injected_ByType(string name, Type dependency) { }
-
 #if !V4
         public override void Unregistered_Required_WithDefault(string name, object registered, object @default) { }
 
