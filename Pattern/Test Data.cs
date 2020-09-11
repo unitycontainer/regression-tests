@@ -31,66 +31,6 @@ namespace Specification
         }
 
 
-        #region Baseline
-
-        public static IEnumerable<object[]> Required_Injected_ByType_Data
-        {
-            get
-            {
-                yield return new object[] { "Required_Dependency_Value",       typeof(int),          RegisteredInt    };
-                yield return new object[] { "Required_Dependency_Class",       typeof(Unresolvable), Singleton        };
-                yield return new object[] { "Required_Dependency_Value_Named", typeof(int),          NamedInt         };
-                yield return new object[] { "Required_Dependency_Class_Named", typeof(Unresolvable), NamedSingleton   };
-                yield return new object[] { "Required_WithDefault_Value",      typeof(int),          RegisteredInt    };
-                yield return new object[] { "Required_WithDefault_Class",      typeof(string),       RegisteredString };
-            }
-        }
-
-        public static IEnumerable<object[]> Implicitly_Resolved_Registered_Optional_Data
-        {
-            get
-            {
-                yield return new object[] { "Optional_Dependency_Value",       typeof(int),          RegisteredInt };
-                yield return new object[] { "Optional_Dependency_Class",       typeof(Unresolvable), Singleton        };
-                yield return new object[] { "Optional_Dependency_Value_Named", typeof(int),          NamedInt         };
-                yield return new object[] { "Optional_Dependency_Class_Named", typeof(Unresolvable), NamedSingleton   };
-                yield return new object[] { "Optional_WithDefault_Value",      typeof(int),          RegisteredInt    };
-                yield return new object[] { "Optional_WithDefault_Class",      typeof(string),       RegisteredString };
-            }
-        }
-
-        public static IEnumerable<object[]> Injected_Data
-        {
-            get
-            {
-                yield return new object[] { "NoDefault_Value", InjectedInt,       InjectedInt };
-                yield return new object[] { "NoDefault_Class", InjectedSingleton, InjectedSingleton };
-                // TODO: non value
-            }
-        }
-
-        public static IEnumerable<object[]> Resolved_WithDefault_Data
-        {
-            get
-            {
-                yield return new object[] { "WithDefault_Value", typeof(int),    DefaultInt };
-                yield return new object[] { "WithDefault_Class", typeof(string), DefaultString };
-                // TODO: non value
-            }
-        }
-
-        public static IEnumerable<object[]> Injected_WithDefault_Data
-        {
-            get
-            {
-                yield return new object[] { "WithDefault_Value", InjectedInt,    InjectedInt };
-                yield return new object[] { "WithDefault_Class", InjectedString, InjectedString };
-                // TODO: non value
-            }
-        }
-
-        #endregion
-
 
         #region Unresolvable
 

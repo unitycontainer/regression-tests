@@ -9,44 +9,42 @@ using Unity;
 
 namespace Specification
 {
+    /// <summary>
+    /// Testing optional dependencies.
+    /// </summary>
+    /// <example>
+    /// 
+    /// public class TypeWithOptionalDependencies
+    /// {
+    ///     [InjectionConstructor]
+    ///     public TypeWithOptionalDependencies([OptionalDependency] int value)
+    /// 
+    ///     [OptionalDependency]
+    ///     public int Field = 22;
+    /// 
+    ///     [OptionalDependency(name)]
+    ///     public int Property { get; set; }
+    /// 
+    ///     [InjectionMethod]
+    ///     public void Method([OptionalDependency(name)] int value = 55)
+    /// }
+    /// 
+    /// </example>
     public abstract partial class VerificationPattern
     {
         #region Optional
 
         /// <summary>
-        /// Test optional injection from empty container.
+        /// Test injection from empty container.
         /// </summary>
-        /// <example>
-        /// 
-        /// public class TypeWithOptionalDependency
-        /// {
-        ///     [OptionalDependency]
-        ///     public int Field;
-        /// 
-        ///     [OptionalDependency(name)]
-        ///     public int Property { get; set; }
-        /// 
-        ///     [InjectionConstructor]
-        ///     public TypeWithOptionalDependency([OptionalDependency] int value) { }
-        /// 
-        ///     [InjectionMethod]
-        ///     public void Method([OptionalDependency(name)] int value) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        ///  var result = new UnityContainer()
-        ///      .Resolve(typeof(TypeWithOptionalDependency));
-        ///      
-        /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected dependency value</param>
+        /// <param name="target">A <see cref="Type"/> to resolve</param>
+        /// <param name="expected">Expected injected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Optional_Data))]
-        public virtual void Unregistered_Optional(string name, object _, object expected)
+        [DynamicData(nameof(Unregistered_Optional_Data))]
+        public virtual void Unregistered_Optional(string target, object expected)
         {
             // Arrange
-            var type = TargetType(name);
+            var type = TargetType(target);
 
             // Act
             var instance = Container.Resolve(type) as PatternBase;
@@ -56,43 +54,30 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
+        public static IEnumerable<object[]> Unregistered_Optional_Data
+        {
+            get
+            {
+                yield return new object[] { "Optional_Dependency_Class",        null };
+#if !V4
+                yield return new object[] { "Optional_Dependency_Value",        0 };
+                yield return new object[] { "Optional_Dependency_Value_Named",  0 };
+                yield return new object[] { "Optional_Dependency_Class_Named",  null };
+#endif
+            }
+        }
+
+
         /// <summary>
         /// Test optional injection from fully initialized container.
         /// </summary>
-        /// <example>
-        /// 
-        /// public class TypeWithOptionalDependency
-        /// {
-        ///     [OptionalDependency]
-        ///     public int Field;
-        /// 
-        ///     [OptionalDependency(name)]
-        ///     public int Property { get; set; }
-        /// 
-        ///     [InjectionConstructor]
-        ///     public TypeWithOptionalDependency([OptionalDependency] int value) { }
-        /// 
-        ///     [InjectionMethod]
-        ///     public void Method([OptionalDependency(name)] int value) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        /// 
-        /// var container = new UnityContainer()
-        ///     .RegisterInstance(111);
-        ///     
-        ///  var result = new UnityContainer()
-        ///      .Resolve(typeof(TypeWithOptionalDependency));
-        ///      
-        /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected dependency value</param>
+        /// <param name="target">A <see cref="Type"/> to resolve</param>
+        /// <param name="expected">Expected injected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Optional_Data))]
-        public virtual void Registered_Optional(string name, object expected, object _)
+        [DynamicData(nameof(Registered_Optional_Data))]
+        public virtual void Registered_Optional(string target, object expected)
         {
-            var type = TargetType(name);
+            var type = TargetType(target);
 
             // Arrange
             RegisterTypes();
@@ -105,16 +90,15 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
-
-        public static IEnumerable<object[]> Optional_Data
+        public static IEnumerable<object[]> Registered_Optional_Data
         {
             get
             {
-                yield return new object[] { "Optional_Dependency_Class",       Singleton, null };
+                yield return new object[] { "Optional_Dependency_Class",       Singleton      };
 #if !V4
-                yield return new object[] { "Optional_Dependency_Value",       RegisteredInt, 0 };
-                yield return new object[] { "Optional_Dependency_Value_Named", NamedInt, 0 };
-                yield return new object[] { "Optional_Dependency_Class_Named", NamedSingleton, null };
+                yield return new object[] { "Optional_Dependency_Value",       RegisteredInt  };
+                yield return new object[] { "Optional_Dependency_Value_Named", NamedInt       };
+                yield return new object[] { "Optional_Dependency_Class_Named", NamedSingleton };
 #endif
             }
         }
@@ -126,39 +110,19 @@ namespace Specification
 
 #if !V4
         /// <summary>
-        /// Test type with default values annotated for optional injection resolved from empty container.
+        /// Test optional injection with defaults from empty container.
         /// </summary>
-        /// <example>
-        /// 
-        /// public class TypeWithOptionalDependency
-        /// {
-        ///     [OptionalDependency]
-        ///     public int Field;
-        /// 
-        ///     [OptionalDependency]
-        ///     public int Property { get; set; }
-        /// 
-        ///     [InjectionConstructor]
-        ///     public TypeWithOptionalDependency([OptionalDependency] int value) { }
-        /// 
-        ///     [InjectionMethod]
-        ///     public void Method([OptionalDependency] int value) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        ///  var result = new UnityContainer()
-        ///      .Resolve(typeof(TypeWithOptionalDependency));
-        ///      
-        /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected dependency value</param>
+        /// <param name="target">A <see cref="Type"/> to resolve</param>
+        /// <param name="expected">Expected injected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Optional_WithDefault_Data))]
-        public virtual void Unregistered_Optional_WithDefault(string name, object _, object expected)
+#if !V4
+        [DataRow("Optional_WithDefault_Value", DefaultInt)]
+#endif
+        [DataRow("Optional_WithDefault_Class", DefaultString)]
+        public virtual void Unregistered_Optional_WithDefault(string target, object expected)
         {
             // Arrange
-            var type = TargetType(name);
+            var type = TargetType(target);
 
             // Act
             var instance = Container.Resolve(type) as PatternBase;
@@ -170,42 +134,18 @@ namespace Specification
 #endif
 
         /// <summary>
-        /// This test resolves type with default values and annotated for optional
-        /// injection from fully initialized container.
+        /// Test optional injection with defaults from fully initialized container.
         /// </summary>
-        /// <example>
-        /// 
-        /// public class TypeWithOptionalDependency
-        /// {
-        ///     [OptionalDependency]
-        ///     public int Field;
-        /// 
-        ///     [OptionalDependency]
-        ///     public int Property { get; set; }
-        /// 
-        ///     [InjectionConstructor]
-        ///     public TypeWithOptionalDependency([OptionalDependency] int value) { }
-        /// 
-        ///     [InjectionMethod]
-        ///     public void Method([OptionalDependency] int value) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        /// var container = new UnityContainer()
-        ///     .RegisterInstance(111);
-        ///     
-        ///  var result = new UnityContainer()
-        ///      .Resolve(typeof(TypeWithOptionalDependency));
-        ///      
-        /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected dependency value</param>
+        /// <param name="target">A <see cref="Type"/> to resolve</param>
+        /// <param name="expected">Expected injected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Optional_WithDefault_Data))]
-        public virtual void Registered_Optional_WithDefault(string name, object expected, object _)
+#if !V4
+        [DataRow("Optional_WithDefault_Value", RegisteredInt   )]
+#endif
+        [DataRow("Optional_WithDefault_Class", RegisteredString)]
+        public virtual void Registered_Optional_WithDefault(string target, object expected)
         {
-            var type = TargetType(name);
+            var type = TargetType(target);
 
             // Arrange
             RegisterTypes();
@@ -216,17 +156,6 @@ namespace Specification
             // Validate
             Assert.IsNotNull(instance);
             Assert.AreEqual(expected, instance.Value);
-        }
-
-        public static IEnumerable<object[]> Optional_WithDefault_Data
-        {
-            get
-            {
-#if !V4
-                yield return new object[] { "Optional_WithDefault_Value", RegisteredInt,    DefaultInt };
-#endif
-                yield return new object[] { "Optional_WithDefault_Class", RegisteredString, DefaultString };
-            }
         }
 
         #endregion

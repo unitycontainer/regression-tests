@@ -252,28 +252,6 @@ namespace Specification
         {
         }
 
-        public class TypeWithMethodWithRefParameter
-        {
-            [InjectionMethod]
-            public void MethodWithRefParameter(ref string ignored)
-            {
-            }
-
-            public int Property { get; set; }
-        }
-
-        public class TypeWithMethodWithOutParameter
-        {
-            [InjectionMethod]
-            public void MethodWithOutParameter(out string ignored)
-            {
-                ignored = null;
-            }
-
-            public int Property { get; set; }
-        }
-
-
         public interface I0 { }
 
         public interface I1 : I0 { }

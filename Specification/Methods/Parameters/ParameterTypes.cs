@@ -9,25 +9,6 @@ using Unity.Injection;
 
 namespace Specification
 {
-    public partial class Methods
-    {
-        [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public void Parameters_RefParameter()
-        {
-            // Act
-            Container.Resolve<TypeWithMethodWithRefParameter>();
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public void Parameters_OutParameter()
-        {
-            // Act
-            Container.Resolve<TypeWithMethodWithOutParameter>();
-        }
-    }
-
     public partial class Methods_Diagnostic
     {
 #if !NET45

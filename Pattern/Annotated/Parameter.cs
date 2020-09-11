@@ -8,28 +8,26 @@ using Unity;
 
 namespace Specification
 {
+    /// <summary>
+    /// Testing unsupported parapeter types
+    /// </summary>
+    /// <example>
+    /// 
+    /// public class PocoType 
+    /// {
+    ///     [InjectionConstructor]
+    ///     public PocoType(ref int value) { }
+    ///     
+    ///     [InjectionMethod]
+    ///     public void Method(out int value) { }
+    /// }
+    /// 
+    /// </example>
     public abstract partial class VerificationPattern
     {
         /// <summary>
-        /// This test resolves regular POCO type from empty container.
+        /// Test resolving from empty container.
         /// </summary>
-        /// <example>
-        /// 
-        /// public class PocoType 
-        /// {
-        ///     [InjectionConstructor]
-        ///     public PocoType(ref int value) { }
-        ///     
-        ///     [InjectionMethod]
-        ///     public void Method(out int value) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        ///  var result = new UnityContainer()
-        ///      .Resolve(typeof(PocoType));
-        ///      
-        /// </example>
         /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
         [DataTestMethod]
         [DataRow("Required_Dependency_Ref")]
@@ -41,7 +39,33 @@ namespace Specification
         [DataRow("Optional_Dependency_RefStruct")]
 #endif
         [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Unsupported_Parameter(string name)
+        public virtual void Unregistered_Annotated_Unsupported(string name)
+        {
+            var type = TargetType(name);
+
+            // Act
+            //_ = Container.Resolve(type);
+            var instance = Container.Resolve(type) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+        }
+
+        /// <summary>
+        /// Test resolving from initialized container.
+        /// </summary>
+        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
+        [DataTestMethod]
+        [DataRow("Required_Dependency_Ref")]
+        [DataRow("Required_Dependency_Out")]
+        [DataRow("Required_Dependency_RefStruct")]
+#if !V5 
+        [DataRow("Optional_Dependency_Ref")]
+        [DataRow("Optional_Dependency_Out")]
+        [DataRow("Optional_Dependency_RefStruct")]
+#endif
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public virtual void Registered_Annotated_Unsupported(string name)
         {
             var type = TargetType(name);
 

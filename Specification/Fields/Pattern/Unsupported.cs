@@ -11,10 +11,11 @@ namespace Specification.Pattern
     public partial class Fields
     {
         // Tests in this file are not applicable to Fields
-        public override void Unsupported_Parameter(string name) { }
+        public override void Unregistered_Annotated_Unsupported(string name) { }
         public override void Unsupported_Implicit_Parameter(string name) { }
 
 
+        public override void Registered_Annotated_Unsupported(string name) { }
 
         public override void Registered_Implicit(string target, string name, object expected) { }
 
