@@ -33,13 +33,6 @@ namespace Specification.Pattern
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
 
-        public class Implicit_Dependency_Struct : PatternBase
-        {
-            public TestStruct Field;
-
-            public override object Value { get => Field; protected set => throw new NotSupportedException(); }
-        }
-
         public class Implicit_Dependency_Generic<T> : PatternBase
         {
             public T Field;
@@ -87,16 +80,16 @@ namespace Specification.Pattern
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
 
-        public class Required_Dependency_Struct : PatternBase
+        public class Required_Dependency_Generic<T> : PatternBase
         {
-            [Dependency] public TestStruct Field;
+            [Dependency] public T Field;
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
 
-        public class Required_Dependency_Generic<T> : PatternBase
+        public class Required_Dependency_Named<T> : PatternBase
         {
-            [Dependency] public T Field;
+            [Dependency(Name)] public T Field;
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
@@ -111,20 +104,6 @@ namespace Specification.Pattern
         public class Required_WithDefault_Class : PatternBase
         {
             [Dependency] public string Field = DefaultString;
-
-            public override object Value { get => Field; protected set => throw new NotSupportedException(); }
-        }
-
-        public class Required_Dependency_Value_Named : PatternBase
-        {
-            [Dependency(Name)] public int Field;
-
-            public override object Value { get => Field; protected set => throw new NotSupportedException(); }
-        }
-
-        public class Required_Dependency_Class_Named : PatternBase
-        {
-            [Dependency(Name)] public Unresolvable Field;
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
@@ -156,16 +135,16 @@ namespace Specification.Pattern
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
 
-        public class Optional_Dependency_Struct : PatternBase
+        public class Optional_Dependency_Generic<T> : PatternBase
         {
-            [OptionalDependency] public TestStruct Field;
+            [OptionalDependency] public T Field;
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
 
-        public class Optional_Dependency_Generic<T> : PatternBase
+        public class Optional_Dependency_Named<T> : PatternBase
         {
-            [OptionalDependency] public T Field;
+            [OptionalDependency(Name)] public T Field;
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
@@ -183,21 +162,6 @@ namespace Specification.Pattern
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
-
-        public class Optional_Dependency_Value_Named : PatternBase
-        {
-            [OptionalDependency(Name)] public int Field;
-
-            public override object Value { get => Field; protected set => throw new NotSupportedException(); }
-        }
-
-        public class Optional_Dependency_Class_Named : PatternBase
-        {
-            [OptionalDependency(Name)] public Unresolvable Field;
-
-            public override object Value { get => Field; protected set => throw new NotSupportedException(); }
-        }
-
 
         #endregion
     }

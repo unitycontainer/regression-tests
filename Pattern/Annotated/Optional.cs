@@ -32,20 +32,18 @@ namespace Specification
     /// </example>
     public abstract partial class VerificationPattern
     {
-        #region Optional
-
         /// <summary>
-        /// Test injection from empty container.
+        /// Tests dependency resolution from empty container.
         /// </summary>
-        /// <param name="target">A <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected value</param>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Unregistered_Optional_Data))]
-        public virtual void Unregistered_Optional(string target, object expected)
+        [DynamicData(nameof(Annotated_Optional_Data))]
+        public virtual void Annotated_Optional(string test, Type type, string name, Type dependency, object expected)
         {
-            // Arrange
-            var type = TargetType(target);
-
             // Act
             var instance = Container.Resolve(type) as PatternBase;
 
@@ -54,110 +52,27 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
-        public static IEnumerable<object[]> Unregistered_Optional_Data
+
+        // Test Data
+        public static IEnumerable<object[]> Annotated_Optional_Data
         {
             get
             {
-                yield return new object[] { "Optional_Dependency_Class",        null };
-#if !V4
-                yield return new object[] { "Optional_Dependency_Value",        0 };
-                yield return new object[] { "Optional_Dependency_Value_Named",  0 };
-                yield return new object[] { "Optional_Dependency_Class_Named",  null };
-#endif
+                var Optional_Value  = Optional.MakeGenericType(typeof(int));
+                var Optional_Ref    = Optional.MakeGenericType(typeof(Unresolvable));
+                var Optional_Struct = Optional.MakeGenericType(typeof(TestStruct));
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //                          Test Name                   Type                    Name    Dependency           Expected
+
+                yield return new object[] { "Optional_Value",           Optional_Value,         null,   typeof(int),          0 };
+                yield return new object[] { "Optional_Class",           Optional_Ref,           null,   typeof(Unresolvable), null };
+       // TODO: yield return new object[] { "Optional_Struct",          Optional_Struct,        null,   typeof(TestStruct),   RegisteredStruct };
+
+                yield return new object[] { "Optional_Value_Named",     Optional_Value,         Name,   typeof(int),          0 };
+                yield return new object[] { "Optional_Class_Named",     Optional_Ref,           Name,   typeof(Unresolvable), null };
+                yield return new object[] { "Optional_Class_Null",      Optional_Ref,           Null,   typeof(Unresolvable), null };
             }
         }
-
-
-        /// <summary>
-        /// Test optional injection from fully initialized container.
-        /// </summary>
-        /// <param name="target">A <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected value</param>
-        [DataTestMethod]
-        [DynamicData(nameof(Registered_Optional_Data))]
-        public virtual void Registered_Optional(string target, object expected)
-        {
-            var type = TargetType(target);
-
-            // Arrange
-            RegisterTypes();
-
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-
-        public static IEnumerable<object[]> Registered_Optional_Data
-        {
-            get
-            {
-                yield return new object[] { "Optional_Dependency_Class",       Singleton      };
-#if !V4
-                yield return new object[] { "Optional_Dependency_Value",       RegisteredInt  };
-                yield return new object[] { "Optional_Dependency_Value_Named", NamedInt       };
-                yield return new object[] { "Optional_Dependency_Class_Named", NamedSingleton };
-#endif
-            }
-        }
-
-        #endregion
-
-
-        #region With Defaults
-
-#if !V4
-        /// <summary>
-        /// Test optional injection with defaults from empty container.
-        /// </summary>
-        /// <param name="target">A <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected value</param>
-        [DataTestMethod]
-#if !V4
-        [DataRow("Optional_WithDefault_Value", DefaultInt)]
-#endif
-        [DataRow("Optional_WithDefault_Class", DefaultString)]
-        public virtual void Unregistered_Optional_WithDefault(string target, object expected)
-        {
-            // Arrange
-            var type = TargetType(target);
-
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-#endif
-
-        /// <summary>
-        /// Test optional injection with defaults from fully initialized container.
-        /// </summary>
-        /// <param name="target">A <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected value</param>
-        [DataTestMethod]
-#if !V4
-        [DataRow("Optional_WithDefault_Value", RegisteredInt   )]
-#endif
-        [DataRow("Optional_WithDefault_Class", RegisteredString)]
-        public virtual void Registered_Optional_WithDefault(string target, object expected)
-        {
-            var type = TargetType(target);
-
-            // Arrange
-            RegisterTypes();
-
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-
-        #endregion
     }
 }

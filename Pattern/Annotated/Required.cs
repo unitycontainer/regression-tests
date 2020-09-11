@@ -32,119 +32,44 @@ namespace Specification
     /// </example>
     public abstract partial class VerificationPattern
     {
-        #region Required 
-
         /// <summary>
-        /// Test resolving type with required dependencies from empty container.
+        /// Tests dependency resolution from empty container.
         /// </summary>
-        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DataRow("Required_Dependency_Value")]
-        [DataRow("Required_Dependency_Class")]
-        [DataRow("Required_Dependency_Value_Named")]
-        [DataRow("Required_Dependency_Class_Named")]
+        [DynamicData(nameof(Annotated_Required_Data))]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public void Unregistered_Required(string target)
+        public virtual void Annotated_Required(string test, Type type, string name, Type dependency, object expected)
         {
-            // Arrange
-            var type = TargetType(target);
-
             // Act
-            _ = Container.Resolve(type);
+            _ = Container.Resolve(type, name) as PatternBase;
         }
 
-        /// <summary>
-        /// Test resolving type with required dependencies from  fully initialized container.
-        /// </summary>
-        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected dependency value</param>
-        [DataTestMethod]
-        [DynamicData(nameof(Registered_Required_Data))]
-        public void Registered_Required(string target, object expected)
-        {
-            var type = TargetType(target);
 
-            // Arrange
-            RegisterTypes();
-
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-
-        public static IEnumerable<object[]> Registered_Required_Data
+        // Test Data
+        public static IEnumerable<object[]> Annotated_Required_Data
         {
             get
             {
-                yield return new object[] { "Required_Dependency_Value",       RegisteredInt };
-                yield return new object[] { "Required_Dependency_Class",       Singleton };
-                yield return new object[] { "Required_Dependency_Value_Named", NamedInt };
-                yield return new object[] { "Required_Dependency_Class_Named", NamedSingleton };
+                var Required_Value  = Required.MakeGenericType(typeof(int));
+                var Required_Ref    = Required.MakeGenericType(typeof(Unresolvable));
+                var Required_Struct = Required.MakeGenericType(typeof(TestStruct));
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //                          Test Name                   Type                    Name    Dependency         Expected
+
+                yield return new object[] { "Required_Value",           Required_Value,         null, typeof(int),          RegisteredInt };
+                yield return new object[] { "Required_Class",           Required_Ref,           null, typeof(Unresolvable), Singleton };
+                yield return new object[] { "Required_Struct",          Required_Struct,        null, typeof(TestStruct),   RegisteredStruct };
+
+                yield return new object[] { "Required_Value_Named",     Required_Value,         Name, typeof(int),          RegisteredInt };
+                yield return new object[] { "Required_Class_Named",     Required_Ref,           Name, typeof(Unresolvable), Singleton };
+                yield return new object[] { "Required_Class_Null",      Required_Ref,           Null, typeof(Unresolvable), Singleton };
             }
         }
-
-        #endregion
-
-
-        #region Required with defaults
-
-#if !V4 && !NET461
-        /// <summary>
-        /// Test resolving type with required dependencies and default values from empty container.
-        /// </summary>
-        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected dependency value</param>
-        [DataTestMethod]
-        [DynamicData(nameof(Required_WithDefault_Data))]
-        public virtual void Unregistered_Required_WithDefault(string target, object _, object expected)
-        {
-            // Arrange
-            var type = TargetType(target);
-
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-#endif
-
-        /// <summary>
-        /// Test resolving type with required dependencies and default values from fully initialized container.
-        /// </summary>
-        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected dependency value</param>
-        [DataTestMethod]
-        [DynamicData(nameof(Required_WithDefault_Data))]
-        public void Registered_Required_WithDefault(string target, object expected, object _)
-        {
-            var type = TargetType(target);
-
-            // Arrange
-            RegisterTypes();
-
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-
-
-        public static IEnumerable<object[]> Required_WithDefault_Data
-        {
-            get
-            {
-                yield return new object[] { "Required_WithDefault_Value", RegisteredInt,    DefaultInt };
-                yield return new object[] { "Required_WithDefault_Class", RegisteredString, DefaultString };
-            }
-        }
-
-        #endregion
     }
 }

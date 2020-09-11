@@ -30,18 +30,6 @@ namespace Specification.Pattern
             public void Method(dynamic value) => Value = value;
         }
 
-        public class Implicit_Dependency_Struct : PatternBase
-        {
-            [InjectionMethod]
-            public void Method(TestStruct value) => Value = value;
-        }
-
-        public class Implicit_Dependency_RefStruct : PatternBase
-        {
-            [InjectionMethod]
-            public void Method(TestRefStruct value) { }
-        }
-
         public class Implicit_Dependency_Ref : PatternBase
         {
             [InjectionMethod]
@@ -95,18 +83,6 @@ namespace Specification.Pattern
             public void Method([Dependency] dynamic value) => Value = value;
         }
 
-        public class Required_Dependency_Struct : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([Dependency] TestStruct value) => Value = value;
-        }
-
-        public class Required_Dependency_RefStruct : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([Dependency] TestRefStruct value) { }
-        }
-
         public class Required_Dependency_Ref : PatternBase
         {
             [InjectionMethod]
@@ -125,6 +101,12 @@ namespace Specification.Pattern
             public void Method([Dependency] T value) => Value = value;
         }
 
+        public class Required_Dependency_Named<T> : PatternBase
+        {
+            [InjectionMethod]
+            public void Method([Dependency(Name)] T value) => Value = value;
+        }
+
         public class Required_WithDefault_Value : PatternBase
         {
             [InjectionMethod]
@@ -135,19 +117,6 @@ namespace Specification.Pattern
         {
             [InjectionMethod]
             public void Method([Dependency] string value = DefaultString) => Value = value;
-        }
-
-
-        public class Required_Dependency_Value_Named : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([Dependency(Name)] int value) => Value = value;
-        }
-
-        public class Required_Dependency_Class_Named : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([Dependency(Name)] Unresolvable value) => Value = value;
         }
 
         #endregion
@@ -173,18 +142,6 @@ namespace Specification.Pattern
             public void Method([OptionalDependency] dynamic value) => Value = value;
         }
 
-        public class Optional_Dependency_Struct : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([OptionalDependency] TestStruct value) => Value = value;
-        }
-
-        public class Optional_Dependency_RefStruct : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([OptionalDependency] TestRefStruct value) { }
-        }
-
         public class Optional_Dependency_Ref : PatternBase
         {
             [InjectionMethod]
@@ -203,6 +160,12 @@ namespace Specification.Pattern
             public void Method([OptionalDependency] T value) => Value = value;
         }
 
+        public class Optional_Dependency_Named<T> : PatternBase
+        {
+            [InjectionMethod]
+            public void Method([OptionalDependency(Name)] T value) => Value = value;
+        }
+
         public class Optional_WithDefault_Value : PatternBase
         {
             [InjectionMethod]
@@ -214,7 +177,6 @@ namespace Specification.Pattern
             [InjectionMethod]
             public void Method([OptionalDependency] string value = DefaultString) => Value = value;
         }
-
 
         public class Optional_Dependency_Value_Named : PatternBase
         {

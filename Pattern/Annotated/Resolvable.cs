@@ -11,10 +11,9 @@ namespace Specification
 {
     public abstract partial class VerificationPattern
     {
-        [Ignore]
         [DataTestMethod]
-        [DynamicData(nameof(Resolvable_Data))]
-        public virtual void Resolvable(string test, Type type, string name, Type dependency, object expected)
+        [DynamicData(nameof(Annotated_Resolvable_Data))]
+        public virtual void Annotated_Resolvable(string test, Type type, string name, Type dependency, object expected)
         {
             // Arrange
             RegisterTypes();
@@ -28,14 +27,10 @@ namespace Specification
         }
 
         // Test Data
-        public static IEnumerable<object[]> Resolvable_Data
+        public static IEnumerable<object[]> Annotated_Resolvable_Data
         {
             get
             {
-                var Poco_Value      = PocoType.MakeGenericType(typeof(int));
-                var Poco_Ref        = PocoType.MakeGenericType(typeof(Unresolvable));
-                var Poco_Struct     = PocoType.MakeGenericType(typeof(TestStruct));
-
                 var Required_Value  = Required.MakeGenericType(typeof(int));
                 var Required_Ref    = Required.MakeGenericType(typeof(Unresolvable));
                 var Required_Struct = Required.MakeGenericType(typeof(TestStruct));
@@ -44,22 +39,13 @@ namespace Specification
                 var Optional_Ref    = Optional.MakeGenericType(typeof(Unresolvable));
                 var Optional_Struct = Optional.MakeGenericType(typeof(TestStruct));
 
+                var Required_Named_Value  = Required_Named.MakeGenericType(typeof(int));
+                var Required_Named_Ref    = Required_Named.MakeGenericType(typeof(Unresolvable));
+                var Optional_Named_Value  = Optional_Named.MakeGenericType(typeof(int));
+                var Optional_Named_Ref    = Optional_Named.MakeGenericType(typeof(Unresolvable));
+
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //                          Test Name                   Type                    Name    Dependency              Expected
-
-                // Simple poco type
-
-                yield return new object[] { "Generic_Value",            Poco_Value,             null,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Generic_Class",            Poco_Ref,               null,   typeof(Unresolvable),   Singleton           };
-                yield return new object[] { "Generic_Struct",           Poco_Struct,            null,   typeof(TestStruct),     RegisteredStruct    };
-                
-                yield return new object[] { "Value_Named",              Poco_Value,             Name,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Class_Named",              Poco_Ref,               Name,   typeof(Unresolvable),   Singleton           };
-                yield return new object[] { "Class_Null",               Poco_Ref,               Null,   typeof(Unresolvable),   Singleton           };
-
-                yield return new object[] { "Default_Value",            PocoType_Default_Value, null,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Default_Class",            PocoType_Default_Class, null,   typeof(Unresolvable),   RegisteredString    };
-
 
                 // Required
 
@@ -67,9 +53,8 @@ namespace Specification
                 yield return new object[] { "Required_Class",           Required_Ref,           null,   typeof(Unresolvable),   Singleton           };
                 yield return new object[] { "Required_Struct",          Required_Struct,        null,   typeof(TestStruct),     RegisteredStruct    };
 
-                yield return new object[] { "Required_Value_Named",     Required_Value,         Name,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Required_Class_Named",     Required_Ref,           Name,   typeof(Unresolvable),   Singleton           };
-                yield return new object[] { "Required_Class_Null",      Required_Ref,           Null,   typeof(Unresolvable),   Singleton           };
+                yield return new object[] { "Required_Value_Named",     Required_Named_Value,   null,   typeof(int),            NamedInt            };
+                yield return new object[] { "Required_Class_Named",     Required_Named_Ref,     null,   typeof(Unresolvable),   NamedSingleton      };
 
                 yield return new object[] { "Required_Default_Value",   Required_Default_Value, null,   typeof(int),            RegisteredInt       };
                 yield return new object[] { "Required_Default_Class",   Required_Default_Class, null,   typeof(Unresolvable),   RegisteredString    };
@@ -80,9 +65,8 @@ namespace Specification
                 yield return new object[] { "Optional_Class",           Optional_Ref,           null,   typeof(Unresolvable),   Singleton           };
                 yield return new object[] { "Optional_Struct",          Optional_Struct,        null,   typeof(TestStruct),     RegisteredStruct    };
 
-                yield return new object[] { "Optional_Value_Named",     Optional_Value,         Name,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Optional_Class_Named",     Optional_Ref,           Name,   typeof(Unresolvable),   Singleton           };
-                yield return new object[] { "Optional_Class_Null",      Optional_Ref,           Null,   typeof(Unresolvable),   Singleton           };
+                yield return new object[] { "Optional_Value_Named",     Optional_Named_Value,   null,   typeof(int),            NamedInt            };
+                yield return new object[] { "Optional_Class_Named",     Optional_Named_Ref,     null,   typeof(Unresolvable),   NamedSingleton      };
 
                 yield return new object[] { "Optional_Default_Value",   Optional_Default_Value, null,   typeof(int),            RegisteredInt       };
                 yield return new object[] { "Optional_Default_Class",   Optional_Default_Class, null,   typeof(Unresolvable),   RegisteredString    };

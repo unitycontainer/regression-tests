@@ -32,6 +32,8 @@ namespace Specification
         protected static Type PocoType;
         protected static Type Required;
         protected static Type Optional;
+        protected static Type Required_Named;
+        protected static Type Optional_Named;
 
         protected static Type PocoType_Default_Value;
         protected static Type Required_Default_Value;

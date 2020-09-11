@@ -19,6 +19,9 @@ namespace Specification.Pattern
             Required = typeof(Required_Dependency_Generic<>);
             Optional = typeof(Optional_Dependency_Generic<>);
 
+            Required_Named = typeof(Required_Dependency_Named<>);
+            Optional_Named = typeof(Optional_Dependency_Named<>);
+
             PocoType_Default_Value = typeof(Implicit_WithDefault_Value);
             Required_Default_Value = typeof(Required_WithDefault_Value);
             Optional_Default_Value = typeof(Optional_WithDefault_Value);

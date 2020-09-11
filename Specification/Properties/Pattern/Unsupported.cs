@@ -12,8 +12,6 @@ namespace Specification.Pattern
     public partial class Properties
     {
         // Properties do not support implicit injection
-        public override void Implicit_Parameters(string name) { }
-
         public override void Implicit_Resolvable(string test, Type type, string name, Type dependency, object expected) { }
 #if !V4
         public override void Implicit_WithDefault(string test, Type type, string name, Type dependency, object expected) { }
@@ -21,13 +19,12 @@ namespace Specification.Pattern
         public override void Implicit_Unregistered(string test, Type type, string name, Type dependency, object expected) { }
 
 
+        // Properties do not support parameters
+        public override void Implicit_Parameters(string name) { }
+        public override void Annotated_Parameters(string target) { }
 
 
-        public override void Unregistered_Annotated_Unsupported(string name) { }
 
-
-        public override void Registered_Annotated_Unsupported(string name) { }
-        
         public override void Registered_Injected_MethodBase_ByType(string name, Type dependency, object expected) { }
 
         

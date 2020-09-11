@@ -54,17 +54,15 @@ namespace Specification
                 var Poco_Struct     = PocoType.MakeGenericType(typeof(TestStruct));
 
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //                          Test Name           Type            Name    Dependency              Expected         
+                //                          Test Name       Type            Name    Dependency              Expected         
                                                                                                                                  
-                // Simple poco type                                                                                              
+                yield return new object[] { "Value",        Poco_Value,     null,   typeof(int),            RegisteredInt    };
+                yield return new object[] { "Class",        Poco_Ref,       null,   typeof(Unresolvable),   Singleton        };
+                yield return new object[] { "Struct",       Poco_Struct,    null,   typeof(TestStruct),     RegisteredStruct };
                                                                                                                                  
-                yield return new object[] { "Generic_Value",    Poco_Value,     null,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Generic_Class",    Poco_Ref,       null,   typeof(Unresolvable),   Singleton        };
-                yield return new object[] { "Generic_Struct",   Poco_Struct,    null,   typeof(TestStruct),     RegisteredStruct };
-                                                                                                                                 
-                yield return new object[] { "Value_Named",      Poco_Value,     Name,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Class_Named",      Poco_Ref,       Name,   typeof(Unresolvable),   Singleton        };
-                yield return new object[] { "Class_Null",       Poco_Ref,       Null,   typeof(Unresolvable),   Singleton        };
+                yield return new object[] { "Value_Named",  Poco_Value,     Name,   typeof(int),            RegisteredInt    };
+                yield return new object[] { "Class_Named",  Poco_Ref,       Name,   typeof(Unresolvable),   Singleton        };
+                yield return new object[] { "Class_Null",   Poco_Ref,       Null,   typeof(Unresolvable),   Singleton        };
             }
         }
 
@@ -88,13 +86,12 @@ namespace Specification
         [DataTestMethod]
         [DataRow("Implicit_Dependency_Ref")]
         [DataRow("Implicit_Dependency_Out")]
-        [DataRow("Implicit_Dependency_RefStruct")] // TODO: Requires instance for validation
         [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Implicit_Parameters(string target)
         {
             var type = TargetType(target);
 
-            // Arrange
+            // Make dependencies available
             RegisterTypes();
 
             // Act

@@ -72,8 +72,9 @@
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net45'))">
 		<Compile Remove="Issues\GitHub\**" />
 		
-		<Compile Remove="Pattern\Injected\ByName.cs" />
+		<Compile Remove="Pattern\Annotated\WithDefault.cs" />
 		<Compile Remove="Pattern\Implicit\WithDefault.cs" />
+		<Compile Remove="Pattern\Injected\ByName.cs" />
 		
 		<Compile Remove="Resolution\Lazy\Enumerable.cs" />
 		<Compile Remove="Resolution\Array\BuiltInTypesResolution.V5.cs" />

@@ -33,13 +33,6 @@ namespace Specification.Pattern
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class Implicit_Dependency_Struct : PatternBase
-        {
-            public TestStruct Property { get; set; }
-
-            public override object Value { get => Property; protected set => throw new NotSupportedException(); }
-        }
-
         public class Implicit_Dependency_Generic<T> : PatternBase
         {
             public T Property { get; set; }
@@ -87,16 +80,16 @@ namespace Specification.Pattern
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class Required_Dependency_Struct : PatternBase
+        public class Required_Dependency_Generic<T> : PatternBase
         {
-            [Dependency] public TestStruct Property { get; set; }
+            [Dependency] public T Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class Required_Dependency_Generic<T> : PatternBase
+        public class Required_Dependency_Named<T> : PatternBase
         {
-            [Dependency] public T Property { get; set; }
+            [Dependency(Name)] public T Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
@@ -111,20 +104,6 @@ namespace Specification.Pattern
         public class Required_WithDefault_Class : PatternBase
         {
             [Dependency] public string Property { get; set; } = DefaultString;
-
-            public override object Value { get => Property; protected set => throw new NotSupportedException(); }
-        }
-
-        public class Required_Dependency_Value_Named : PatternBase
-        {
-            [Dependency(Name)] public int Property { get; set; }
-
-            public override object Value { get => Property; protected set => throw new NotSupportedException(); }
-        }
-
-        public class Required_Dependency_Class_Named : PatternBase
-        {
-            [Dependency(Name)] public Unresolvable Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
@@ -155,16 +134,16 @@ namespace Specification.Pattern
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class Optional_Dependency_Struct : PatternBase
+        public class Optional_Dependency_Generic<T> : PatternBase
         {
-            [OptionalDependency] public TestStruct Property { get; set; }
+            [OptionalDependency] public T Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class Optional_Dependency_Generic<T> : PatternBase
+        public class Optional_Dependency_Named<T> : PatternBase
         {
-            [OptionalDependency] public T Property { get; set; }
+            [OptionalDependency(Name)] public T Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
@@ -179,20 +158,6 @@ namespace Specification.Pattern
         public class Optional_WithDefault_Class : PatternBase
         {
             [OptionalDependency] public string Property { get; set; } = DefaultString;
-
-            public override object Value { get => Property; protected set => throw new NotSupportedException(); }
-        }
-
-        public class Optional_Dependency_Value_Named : PatternBase
-        {
-            [OptionalDependency(Name)] public int Property { get; set; }
-
-            public override object Value { get => Property; protected set => throw new NotSupportedException(); }
-        }
-
-        public class Optional_Dependency_Class_Named : PatternBase
-        {
-            [OptionalDependency(Name)] public Unresolvable Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }

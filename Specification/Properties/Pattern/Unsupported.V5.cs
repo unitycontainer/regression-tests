@@ -9,8 +9,5 @@ namespace Specification.Pattern
 {
     public partial class Properties
     {
-        public override void Unregistered_Optional_WithDefault(string name, object registered)
-        {
-        }
     }
 }

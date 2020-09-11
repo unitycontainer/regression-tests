@@ -27,16 +27,6 @@ namespace Specification.Pattern
             public Implicit_Dependency_Dynamic(dynamic value) => Value = value;
         }
 
-        public class Implicit_Dependency_Struct : PatternBase
-        {
-            public Implicit_Dependency_Struct(TestStruct value) => Value = value;
-        }
-
-        public class Implicit_Dependency_RefStruct : PatternBase
-        {
-            public Implicit_Dependency_RefStruct(TestRefStruct value) { }
-        }
-
         public class Implicit_Dependency_Ref : PatternBase
         {
             public Implicit_Dependency_Ref(ref Unresolvable value) => Value = value;
@@ -82,16 +72,6 @@ namespace Specification.Pattern
             public Required_Dependency_Dynamic([Dependency] dynamic value) => Value = value;
         }
 
-        public class Required_Dependency_Struct : PatternBase
-        {
-            public Required_Dependency_Struct([Dependency] TestStruct value) => Value = value;
-        }
-
-        public class Required_Dependency_RefStruct : PatternBase
-        {
-            public Required_Dependency_RefStruct([Dependency] TestRefStruct value) { }
-        }
-
         public class Required_Dependency_Ref : PatternBase
         {
             public Required_Dependency_Ref([Dependency] ref Unresolvable value) => Value = value;
@@ -107,6 +87,11 @@ namespace Specification.Pattern
             public Required_Dependency_Generic([Dependency] T value) => Value = value;
         }
 
+        public class Required_Dependency_Named<T> : PatternBase
+        {
+            public Required_Dependency_Named([Dependency(Name)] T value) => Value = value;
+        }
+
         public class Required_WithDefault_Value : PatternBase
         {
             public Required_WithDefault_Value([Dependency] int value = DefaultInt) => Value = value;
@@ -115,16 +100,6 @@ namespace Specification.Pattern
         public class Required_WithDefault_Class : PatternBase
         {
             public Required_WithDefault_Class([Dependency] string value = DefaultString) => Value = value;
-        }
-
-        public class Required_Dependency_Value_Named : PatternBase
-        {
-            public Required_Dependency_Value_Named([Dependency(Name)] int value) => Value = value;
-        }
-
-        public class Required_Dependency_Class_Named : PatternBase
-        {
-            public Required_Dependency_Class_Named([Dependency(Name)] Unresolvable value) => Value = value;
         }
 
         #endregion
@@ -147,16 +122,6 @@ namespace Specification.Pattern
             public Optional_Dependency_Dynamic([OptionalDependency] dynamic value) => Value = value;
         }
 
-        public class Optional_Dependency_Struct : PatternBase
-        {
-            public Optional_Dependency_Struct([OptionalDependency] TestStruct value) => Value = value;
-        }
-
-        public class Optional_Dependency_RefStruct : PatternBase
-        {
-            public Optional_Dependency_RefStruct([OptionalDependency] TestRefStruct value) { }
-        }
-
         public class Optional_Dependency_Ref : PatternBase
         {
             public Optional_Dependency_Ref([OptionalDependency] ref Unresolvable value) => Value = value;
@@ -172,6 +137,11 @@ namespace Specification.Pattern
             public Optional_Dependency_Generic([OptionalDependency] T value) => Value = value;
         }
 
+        public class Optional_Dependency_Named<T> : PatternBase
+        {
+            public Optional_Dependency_Named([OptionalDependency(Name)] T value) => Value = value;
+        }
+
         public class Optional_WithDefault_Value : PatternBase
         {
             public Optional_WithDefault_Value([OptionalDependency] int value = DefaultInt) => Value = value;
@@ -180,16 +150,6 @@ namespace Specification.Pattern
         public class Optional_WithDefault_Class : PatternBase
         {
             public Optional_WithDefault_Class([OptionalDependency] string value = DefaultString) => Value = value;
-        }
-
-        public class Optional_Dependency_Value_Named : PatternBase
-        {
-            public Optional_Dependency_Value_Named([OptionalDependency(Name)] int value) => Value = value;
-        }
-
-        public class Optional_Dependency_Class_Named : PatternBase
-        {
-            public Optional_Dependency_Class_Named([OptionalDependency(Name)] Unresolvable value) => Value = value;
         }
 
         #endregion
