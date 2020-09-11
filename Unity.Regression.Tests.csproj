@@ -62,15 +62,16 @@
 
 	<!-- Not supported by v4 -->
 
-	<ItemGroup Condition="'$(TargetFramework)' != 'net45'">
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net45')) == False">
 		<Compile Remove="Specification\Fields\Pattern\Unsupported.V4.cs" />
 		<Compile Remove="Specification\Properties\Pattern\Unsupported.V4.cs" />
 		<Compile Remove="Breaking Changes\BreakingChanges.v4.cs" />
 		<Compile Remove="Public.API\Compatibility\Compatibility.V4.cs" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net45' OR '$(TargetFramework)' == 'net451'">
+	<ItemGroup Condition="$(TargetFramework.StartsWith('net45'))">
 		<Compile Remove="Issues\GitHub\**" />
+		<Compile Remove="Pattern\Injected\ByName.cs" />
 		<Compile Remove="Resolution\Lazy\Enumerable.cs" />
 		<Compile Remove="Resolution\Array\BuiltInTypesResolution.V5.cs" />
 		<Compile Remove="Resolution\Generic\Enumerables.cs" />

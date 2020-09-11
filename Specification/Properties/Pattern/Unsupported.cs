@@ -24,7 +24,12 @@ namespace Specification.Pattern
         
         public override void Unregistered_Implicit(string name) { }
 
+#if !V4
+        public override void Unregistered_Optional_Injected_ByName(string target, object expected) { }
         public override void Unregistered_Injected_ByName_WithDefault(string target, object expected) { }
+#endif
+
+
 
         public override void Unregistered_Injected_ByType(string name, Type dependency) { }
 #if !V4 && !NET461
@@ -35,10 +40,6 @@ namespace Specification.Pattern
         public override void Unregistered_Injected_ByType_WithDefault(string name, Type dependency, object expected) { }
 
         public override void Unregistered_Injected_ByResolving_WithDefault(string name, Type dependency, object expected) { }
-#endif
-
-#if !V6
-        public override void Unregistered_Optional_Injected_ByName(string target, object expected) { }
 #endif
     }
 }
