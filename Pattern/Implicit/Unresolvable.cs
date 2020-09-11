@@ -86,9 +86,9 @@ namespace Specification
         /// </example>
         /// <param name="target">Contract name</param>
         [DataTestMethod]
-        [DataRow("NoDefault_Ref")]
-        [DataRow("NoDefault_Out")]
-        [DataRow("NoDefault_RefStruct")] // TODO: Requires instance for validation
+        [DataRow("Implicit_Dependency_Ref")]
+        [DataRow("Implicit_Dependency_Out")]
+        [DataRow("Implicit_Dependency_RefStruct")] // TODO: Requires instance for validation
         [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Implicit_Parameters(string target)
         {

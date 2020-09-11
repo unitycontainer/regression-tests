@@ -12,49 +12,49 @@ namespace Specification.Pattern
     {
         #region No Default
 
-        public class NoDefault_Value : PatternBase
+        public class Implicit_Dependency_Value : PatternBase
         {
             public int Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class NoDefault_Class : PatternBase
+        public class Implicit_Dependency_Class : PatternBase
         {
             public Unresolvable Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class NoDefault_Dynamic : PatternBase
+        public class Implicit_Dependency_Dynamic : PatternBase
         {
             public dynamic Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class NoDefault_Struct : PatternBase
+        public class Implicit_Dependency_Struct : PatternBase
         {
             public TestStruct Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class NoDefault_Generic<T> : PatternBase
+        public class Implicit_Dependency_Generic<T> : PatternBase
         {
             public T Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class WithDefault_Value : PatternBase
+        public class Implicit_WithDefault_Value : PatternBase
         {
             public int Property { get; set; } = DefaultInt;
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
-        public class WithDefault_Class : PatternBase
+        public class Implicit_WithDefault_Class : PatternBase
         {
             public string Property { get; set; } = DefaultString;
 

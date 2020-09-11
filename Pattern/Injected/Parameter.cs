@@ -31,9 +31,9 @@ namespace Specification
         /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
         [DataTestMethod]
 
-        [DataRow("NoDefault_Ref",                 typeof(Unresolvable)) ]
-        [DataRow("NoDefault_Out",                 typeof(Unresolvable)) ]
-        [DataRow("NoDefault_RefStruct",           typeof(TestRefStruct))]
+        [DataRow("Implicit_Dependency_Ref",                 typeof(Unresolvable)) ]
+        [DataRow("Implicit_Dependency_Out",                 typeof(Unresolvable)) ]
+        [DataRow("Implicit_Dependency_RefStruct",           typeof(TestRefStruct))]
 
         [DataRow("Required_Dependency_Ref",       typeof(Unresolvable)) ]
         [DataRow("Required_Dependency_Out",       typeof(Unresolvable)) ]
@@ -61,9 +61,9 @@ namespace Specification
         /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
         [DataTestMethod]
 
-        [DataRow("NoDefault_Ref",                 typeof(Unresolvable)) ]
-        [DataRow("NoDefault_Out",                 typeof(Unresolvable)) ]
-        [DataRow("NoDefault_RefStruct",           typeof(TestRefStruct))]
+        [DataRow("Implicit_Dependency_Ref",                 typeof(Unresolvable)) ]
+        [DataRow("Implicit_Dependency_Out",                 typeof(Unresolvable)) ]
+        [DataRow("Implicit_Dependency_RefStruct",           typeof(TestRefStruct))]
 
         [DataRow("Required_Dependency_Ref",       typeof(Unresolvable)) ]
         [DataRow("Required_Dependency_Out",       typeof(Unresolvable)) ]

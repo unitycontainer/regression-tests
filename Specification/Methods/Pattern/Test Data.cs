@@ -12,61 +12,61 @@ namespace Specification.Pattern
     {
         #region No Default
 
-        public class NoDefault_Value : PatternBase
+        public class Implicit_Dependency_Value : PatternBase
         {
             [InjectionMethod]
             public void Method(int value) => Value = value;
         }
 
-        public class NoDefault_Class : PatternBase
+        public class Implicit_Dependency_Class : PatternBase
         {
             [InjectionMethod]
             public void Method(Unresolvable value) => Value = value;
         }
 
-        public class NoDefault_Dynamic : PatternBase
+        public class Implicit_Dependency_Dynamic : PatternBase
         {
             [InjectionMethod]
             public void Method(dynamic value) => Value = value;
         }
 
-        public class NoDefault_Struct : PatternBase
+        public class Implicit_Dependency_Struct : PatternBase
         {
             [InjectionMethod]
             public void Method(TestStruct value) => Value = value;
         }
 
-        public class NoDefault_RefStruct : PatternBase
+        public class Implicit_Dependency_RefStruct : PatternBase
         {
             [InjectionMethod]
             public void Method(TestRefStruct value) { }
         }
 
-        public class NoDefault_Ref : PatternBase
+        public class Implicit_Dependency_Ref : PatternBase
         {
             [InjectionMethod]
             public void Method(ref Unresolvable value) => Value = value;
         }
 
-        public class NoDefault_Out : PatternBase
+        public class Implicit_Dependency_Out : PatternBase
         {
             [InjectionMethod]
             public void Method(out Unresolvable value) => value = null;
         }
 
-        public class NoDefault_Generic<T> : PatternBase
+        public class Implicit_Dependency_Generic<T> : PatternBase
         {
             [InjectionMethod]
             public void Method(T value) => Value = value;
         }
 
-        public class WithDefault_Value : PatternBase
+        public class Implicit_WithDefault_Value : PatternBase
         {
             [InjectionMethod]
             public void Method(int value = DefaultInt) => Value = value;
         }
 
-        public class WithDefault_Class : PatternBase
+        public class Implicit_WithDefault_Class : PatternBase
         {
             [InjectionMethod]
             public void Method(string value = DefaultString) => Value = value;

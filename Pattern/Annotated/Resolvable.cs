@@ -11,6 +11,7 @@ namespace Specification
 {
     public abstract partial class VerificationPattern
     {
+        [Ignore]
         [DataTestMethod]
         [DynamicData(nameof(Resolvable_Data))]
         public virtual void Resolvable(string test, Type type, string name, Type dependency, object expected)

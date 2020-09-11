@@ -39,8 +39,8 @@ namespace Specification
         /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
         /// <param name="dependency"><see cref="Type"/> of dependency</param>
         [DataTestMethod]
-        [DataRow("NoDefault_Value",                 typeof(int))]
-        [DataRow("NoDefault_Class",                 typeof(Unresolvable))]
+        [DataRow("Implicit_Dependency_Value",                 typeof(int))]
+        [DataRow("Implicit_Dependency_Class",                 typeof(Unresolvable))]
         [DataRow("Required_Dependency_Value",       typeof(int))]
         [DataRow("Required_Dependency_Class",       typeof(Unresolvable))]
         [DataRow("Required_Dependency_Value_Named", typeof(int))]
@@ -110,8 +110,8 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "WithDefault_Value",          typeof(int),    DefaultInt };
-                yield return new object[] { "WithDefault_Class",          typeof(string), DefaultString };
+                yield return new object[] { "Implicit_WithDefault_Value",          typeof(int),    DefaultInt };
+                yield return new object[] { "Implicit_WithDefault_Class",          typeof(string), DefaultString };
 
                 yield return new object[] { "Required_WithDefault_Value", typeof(int), DefaultInt };
                 yield return new object[] { "Required_WithDefault_Class", typeof(string), DefaultString };
@@ -231,10 +231,10 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "NoDefault_Value",                 typeof(int),          RegisteredInt    };
-                yield return new object[] { "NoDefault_Class",                 typeof(Unresolvable), Singleton        };
-                yield return new object[] { "WithDefault_Value",               typeof(int),          RegisteredInt    };
-                yield return new object[] { "WithDefault_Class",               typeof(string),       RegisteredString };
+                yield return new object[] { "Implicit_Dependency_Value",                 typeof(int),          RegisteredInt    };
+                yield return new object[] { "Implicit_Dependency_Class",                 typeof(Unresolvable), Singleton        };
+                yield return new object[] { "Implicit_WithDefault_Value",               typeof(int),          RegisteredInt    };
+                yield return new object[] { "Implicit_WithDefault_Class",               typeof(string),       RegisteredString };
 
                 yield return new object[] { "Required_Dependency_Value",       typeof(int),          RegisteredInt    };
                 yield return new object[] { "Required_Dependency_Class",       typeof(Unresolvable), Singleton        };

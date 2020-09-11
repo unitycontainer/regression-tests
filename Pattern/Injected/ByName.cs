@@ -42,8 +42,8 @@ namespace Specification
         /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
         /// <param name="dependency"><see cref="Type"/> of dependency</param>
         [DataTestMethod]
-        [DataRow("NoDefault_Value")]
-        [DataRow("NoDefault_Class")]
+        [DataRow("Implicit_Dependency_Value")]
+        [DataRow("Implicit_Dependency_Class")]
         [DataRow("Required_Dependency_Value")]
         [DataRow("Required_Dependency_Class")]
         [DataRow("Required_Dependency_Value_Named")]
@@ -82,8 +82,8 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "WithDefault_Value",               DefaultInt };
-                yield return new object[] { "WithDefault_Class",               DefaultString };
+                yield return new object[] { "Implicit_WithDefault_Value",               DefaultInt };
+                yield return new object[] { "Implicit_WithDefault_Class",               DefaultString };
                 yield return new object[] { "Required_WithDefault_Value",      DefaultInt };
                 yield return new object[] { "Required_WithDefault_Class",      DefaultString };
             }

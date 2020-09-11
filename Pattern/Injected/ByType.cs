@@ -65,10 +65,10 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "NoDefault_Value",                 typeof(int),          RegisteredInt    };
-                yield return new object[] { "NoDefault_Class",                 typeof(Unresolvable), Singleton        };
-                yield return new object[] { "WithDefault_Value",               typeof(int),          RegisteredInt    };
-                yield return new object[] { "WithDefault_Class",               typeof(string),       RegisteredString };
+                yield return new object[] { "Implicit_Dependency_Value",                 typeof(int),          RegisteredInt    };
+                yield return new object[] { "Implicit_Dependency_Class",                 typeof(Unresolvable), Singleton        };
+                yield return new object[] { "Implicit_WithDefault_Value",               typeof(int),          RegisteredInt    };
+                yield return new object[] { "Implicit_WithDefault_Class",               typeof(string),       RegisteredString };
 
                 yield return new object[] { "Required_Dependency_Value",       typeof(int),          RegisteredInt    };
                 yield return new object[] { "Required_Dependency_Class",       typeof(Unresolvable), Singleton        };
@@ -92,10 +92,10 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "NoDefault_Value", typeof(int), RegisteredInt };
-                yield return new object[] { "NoDefault_Class", typeof(Unresolvable), Singleton };
-                yield return new object[] { "WithDefault_Value", typeof(int), RegisteredInt };
-                yield return new object[] { "WithDefault_Class", typeof(string), RegisteredString };
+                yield return new object[] { "Implicit_Dependency_Value", typeof(int), RegisteredInt };
+                yield return new object[] { "Implicit_Dependency_Class", typeof(Unresolvable), Singleton };
+                yield return new object[] { "Implicit_WithDefault_Value", typeof(int), RegisteredInt };
+                yield return new object[] { "Implicit_WithDefault_Class", typeof(string), RegisteredString };
             }
         }
 

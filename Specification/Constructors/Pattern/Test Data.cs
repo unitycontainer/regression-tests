@@ -12,54 +12,54 @@ namespace Specification.Pattern
     {
         #region Implicit
 
-        public class NoDefault_Value : PatternBase
+        public class Implicit_Dependency_Value : PatternBase
         {
-            public NoDefault_Value(int value) => Value = value;
+            public Implicit_Dependency_Value(int value) => Value = value;
         }
 
-        public class NoDefault_Class : PatternBase
+        public class Implicit_Dependency_Class : PatternBase
         {
-            public NoDefault_Class(Unresolvable value) => Value = value;
+            public Implicit_Dependency_Class(Unresolvable value) => Value = value;
         }
 
-        public class NoDefault_Dynamic : PatternBase
+        public class Implicit_Dependency_Dynamic : PatternBase
         {
-            public NoDefault_Dynamic(dynamic value) => Value = value;
+            public Implicit_Dependency_Dynamic(dynamic value) => Value = value;
         }
 
-        public class NoDefault_Struct : PatternBase
+        public class Implicit_Dependency_Struct : PatternBase
         {
-            public NoDefault_Struct(TestStruct value) => Value = value;
+            public Implicit_Dependency_Struct(TestStruct value) => Value = value;
         }
 
-        public class NoDefault_RefStruct : PatternBase
+        public class Implicit_Dependency_RefStruct : PatternBase
         {
-            public NoDefault_RefStruct(TestRefStruct value) { }
+            public Implicit_Dependency_RefStruct(TestRefStruct value) { }
         }
 
-        public class NoDefault_Ref : PatternBase
+        public class Implicit_Dependency_Ref : PatternBase
         {
-            public NoDefault_Ref(ref Unresolvable value) => Value = value;
+            public Implicit_Dependency_Ref(ref Unresolvable value) => Value = value;
         }
 
-        public class NoDefault_Out : PatternBase
+        public class Implicit_Dependency_Out : PatternBase
         {
-            public NoDefault_Out(out Unresolvable value) => value = null;
+            public Implicit_Dependency_Out(out Unresolvable value) => value = null;
         }
 
-        public class NoDefault_Generic<T> : PatternBase
+        public class Implicit_Dependency_Generic<T> : PatternBase
         {
-            public NoDefault_Generic(T value) => Value = value;
+            public Implicit_Dependency_Generic(T value) => Value = value;
         }
 
-        public class WithDefault_Value : PatternBase
+        public class Implicit_WithDefault_Value : PatternBase
         {
-            public WithDefault_Value(int value = DefaultInt) => Value = value;
+            public Implicit_WithDefault_Value(int value = DefaultInt) => Value = value;
         }
 
-        public class WithDefault_Class : PatternBase
+        public class Implicit_WithDefault_Class : PatternBase
         {
-            public WithDefault_Class(string value = DefaultString) => Value = value;
+            public Implicit_WithDefault_Class(string value = DefaultString) => Value = value;
         }
 
         #endregion
