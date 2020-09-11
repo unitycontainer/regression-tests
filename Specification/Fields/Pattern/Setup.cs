@@ -12,6 +12,22 @@ namespace Specification.Pattern
     [TestClass]
     public partial class Fields : VerificationPattern
     {
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
+        {
+            PocoType = typeof(NoDefault_Generic<>);
+            Required = typeof(Required_Dependency_Generic<>);
+            Optional = typeof(Optional_Dependency_Generic<>);
+
+            PocoType_Default_Value = typeof(WithDefault_Value);
+            Required_Default_Value = typeof(Required_WithDefault_Value);
+            Optional_Default_Value = typeof(Optional_WithDefault_Value);
+
+            PocoType_Default_Class = typeof(WithDefault_Class);
+            Required_Default_Class = typeof(Required_WithDefault_Class);
+            Optional_Default_Class = typeof(Optional_WithDefault_Class);
+        }
+
         protected override InjectionMember GetMemberByName()
             => new InjectionField("Field");
 

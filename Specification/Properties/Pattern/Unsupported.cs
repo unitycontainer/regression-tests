@@ -8,22 +8,29 @@ using Unity.Injection;
 
 namespace Specification.Pattern
 {
+    // Tests in this file are not applicable to Properties
     public partial class Properties
     {
-        // Tests in this file are not applicable to Properties
+        // Properties do not support implicit injection
+        public override void Implicit_Parameters(string name) { }
+
+        public override void Implicit_Resolvable(string test, Type type, string name, Type dependency, object expected) { }
+#if !V4
+        public override void Implicit_WithDefault(string test, Type type, string name, Type dependency, object expected) { }
+#endif
+        public override void Implicit_Unregistered(string test, Type type, string name, Type dependency, object expected) { }
+
+
+
+
         public override void Unregistered_Annotated_Unsupported(string name) { }
-        public override void Unsupported_Implicit_Parameter(string name) { }
 
 
         public override void Registered_Annotated_Unsupported(string name) { }
-
-        public override void Registered_Implicit(string target, string name, object expected) { }
         
         public override void Registered_Injected_MethodBase_ByType(string name, Type dependency, object expected) { }
 
         
-        public override void Unregistered_Implicit(string name) { }
-
 #if !V4
         public override void Unregistered_Optional_Injected_ByName(string target, object expected) { }
         public override void Unregistered_Injected_ByName_WithDefault(string target, object expected) { }

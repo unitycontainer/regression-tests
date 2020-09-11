@@ -27,6 +27,19 @@ namespace Specification
         public readonly static Unresolvable Singleton = Unresolvable.Create("singleton");
         public readonly static Unresolvable NamedSingleton = Unresolvable.Create("named");
         public readonly static Unresolvable InjectedSingleton = SubUnresolvable.Create("injected");
+        public readonly static object RegisteredStruct = new TestStruct(55, "struct");
+
+        protected static Type PocoType;
+        protected static Type Required;
+        protected static Type Optional;
+
+        protected static Type PocoType_Default_Value;
+        protected static Type Required_Default_Value;
+        protected static Type Optional_Default_Value;
+
+        protected static Type PocoType_Default_Class;
+        protected static Type Required_Default_Class;
+        protected static Type Optional_Default_Class;
 
         protected IUnityContainer Container;
 
@@ -46,8 +59,8 @@ namespace Specification
             Container.RegisterInstance(RegisteredInt)
                      .RegisterInstance(RegisteredString)
                      .RegisterInstance(Singleton)
-                     .RegisterInstance(typeof(TestStruct), new TestStruct(55, "struct"))
-#if !V4
+                     .RegisterInstance(typeof(TestStruct), RegisteredStruct)
+#if !V4 // Only Unity v5 and up allow `null` as a value
                      .RegisterInstance(typeof(string),       Null, (object)null)
                      .RegisterInstance(typeof(Unresolvable), Null, (object)null)
 #endif
