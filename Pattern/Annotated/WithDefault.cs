@@ -34,7 +34,7 @@ namespace Specification
     {
         [DataTestMethod]
         [DynamicData(nameof(Annotated_WithDefault_Data))]
-        public virtual void Annotated_WithDefault(string test, Type type, string name, Type dependency, object expected)
+        public virtual void Annotated_Default(string test, Type type, string name, Type dependency, object expected)
         {
             // Act
             var instance = Container.Resolve(type, name) as PatternBase;

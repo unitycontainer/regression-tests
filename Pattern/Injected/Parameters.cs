@@ -29,7 +29,7 @@ namespace Specification
         [DataTestMethod]
         [DynamicData(nameof(Parameter_Data))]
         [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
-        public virtual void Injected_ByType_Parameters(string target, Type dependency)
+        public virtual void Injected_Implicitly_Parameter(string target, Type dependency)
         {
             var type = TargetType(target);
 
@@ -45,7 +45,7 @@ namespace Specification
         [DataTestMethod]
         [DynamicData(nameof(Parameter_Data))]
         [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
-        public virtual void Injected_ByName_Parameters(string target, Type dependency)
+        public virtual void Injected_ByName_Parameter(string target, Type dependency)
         {
             var type = TargetType(target);
 
@@ -61,12 +61,29 @@ namespace Specification
         [DataTestMethod]
         [DynamicData(nameof(Parameter_Data))]
         [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
-        public virtual void Injected_ByResolving_Parameters(string target, Type dependency)
+        public virtual void Injected_ByResolving_Parameter(string target, Type dependency)
         {
             var type = TargetType(target);
 
             // Arrange
             Container.RegisterType(type, GetResolvedMember(dependency, null));
+
+            RegisterTypes();
+
+            // Act
+            _ = Container.Resolve(type);
+        }
+
+
+        [DataTestMethod]
+        [DynamicData(nameof(Parameter_Data))]
+        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
+        public virtual void Injected_ByOptional_Parameter(string target, Type dependency)
+        {
+            var type = TargetType(target);
+
+            // Arrange
+            Container.RegisterType(type, GetOptionalMember(dependency, null));
 
             RegisterTypes();
 

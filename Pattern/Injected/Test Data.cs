@@ -98,22 +98,22 @@ namespace Specification
         {
             get
             {
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //                          Test Name                   Type                        Name    Dependency          
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //                          Test Name                   Type                        Name    Dependency           Expected
 
-                yield return new object[] { "Value",                    PocoType,                   null,   typeof(int)          };
-                yield return new object[] { "Class",                    PocoType,                   null,   typeof(Unresolvable) };
-                yield return new object[] { "Struct",                   PocoType,                   null,   typeof(TestStruct)   };
+                yield return new object[] { "Value",                    PocoType,                   null,   typeof(int),          0    };
+                yield return new object[] { "Class",                    PocoType,                   null,   typeof(Unresolvable), null };
+                //yield return new object[] { "Struct",                   PocoType,                   null,   typeof(TestStruct),      };
 
-                yield return new object[] { "Value_Type_Name",          PocoType,                   Name,   typeof(int)          };
-                yield return new object[] { "Class_Type_Name",          PocoType,                   Name,   typeof(Unresolvable) };
+                yield return new object[] { "Value_Type_Name",          PocoType,                   Name,   typeof(int),          0    };
+                yield return new object[] { "Class_Type_Name",          PocoType,                   Name,   typeof(Unresolvable), null };
 
-                yield return new object[] { "Required_Value",           Required,                   null,   typeof(int)          };
-                yield return new object[] { "Required_Class",           Required,                   null,   typeof(Unresolvable) };
-                yield return new object[] { "Required_Struct",          Required,                   null,   typeof(TestStruct)   };
+                yield return new object[] { "Required_Value",           Required,                   null,   typeof(int),          0    };
+                yield return new object[] { "Required_Class",           Required,                   null,   typeof(Unresolvable), null };
+                //yield return new object[] { "Required_Struct",          Required,                   null,   typeof(TestStruct),      };
 
-                yield return new object[] { "Required_Value_Named",     Required_Named,             null,   typeof(int)          };
-                yield return new object[] { "Required_Class_Named",     Required_Named,             null,   typeof(Unresolvable) };
+                yield return new object[] { "Required_Value_Named",     Required_Named,             null,   typeof(int),          0    };
+                yield return new object[] { "Required_Class_Named",     Required_Named,             null,   typeof(Unresolvable), null };
             }
         }
 

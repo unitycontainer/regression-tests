@@ -33,16 +33,16 @@ namespace Specification.Pattern
 
 
         protected override InjectionMember GetMemberByName()
-            => null;
+            => throw new NotSupportedException();
 
         protected override InjectionMember GetInjectionMethodBase(object argument) 
             => new InjectionConstructor(argument);
 
-        protected override InjectionMember GetResolvedMember(Type argument) 
-            => new InjectionConstructor(new ResolvedParameter(argument));
+        protected override InjectionMember GetResolvedMember(Type type, string name) 
+            => new InjectionConstructor(new ResolvedParameter(type, name));
 
-        protected override InjectionMember GetResolvedMember(Type argument, string name) 
-            => new InjectionConstructor(new ResolvedParameter(argument, name));
+        protected override InjectionMember GetOptionalMember(Type type, string name)
+            => new InjectionConstructor(new OptionalParameter(type, name));
 
         protected override InjectionMember GetInjectionMember(object argument) 
             => new InjectionConstructor(argument);

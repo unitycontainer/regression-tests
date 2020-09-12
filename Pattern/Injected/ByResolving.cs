@@ -63,7 +63,7 @@ namespace Specification
         [DataTestMethod]
         [DynamicData(nameof(Inject_Required_Data))]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Injected_ByResolving_Required(string test, Type type, string name, Type dependency)
+        public virtual void Injected_ByResolving_Required(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
@@ -115,6 +115,9 @@ namespace Specification
         /// <summary>
         /// Tests injecting by resolution dependencies with default from empty container
         /// </summary>
+        /// <remarks>
+        /// Injected member overrides existing default and either is resolved or throws
+        /// </remarks>
         /// <param name="test">Test name</param>
         /// <param name="type">Resolved type</param>
         /// <param name="name">Contract name</param>
@@ -122,7 +125,8 @@ namespace Specification
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
         [DynamicData(nameof(Inject_WithDefault_Data))]
-        public virtual void Injected_ByResolving_WithDefault(string test, Type type, string name, Type dependency, object expected)
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public virtual void Injected_ByResolving_Default(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
@@ -131,11 +135,7 @@ namespace Specification
             Container.RegisterType(target, GetResolvedMember(dependency, name));
 
             // Act
-            var instance = Container.Resolve(target) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
+            _ = Container.Resolve(target, name) as PatternBase;
         }
 
         #endregion

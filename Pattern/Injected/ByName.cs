@@ -62,7 +62,7 @@ namespace Specification
         [DataTestMethod]
         [DynamicData(nameof(Inject_Required_Data))]
         [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Injected_ByName_Required(string test, Type type, string name, Type dependency)
+        public virtual void Injected_ByName_Required(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
@@ -120,7 +120,7 @@ namespace Specification
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
         [DynamicData(nameof(Inject_WithDefault_Data))]
-        public virtual void Injected_ByName_WithDefault(string test, Type type, string name, Type dependency, object expected)
+        public virtual void Injected_ByName_Default(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)

@@ -37,11 +37,11 @@ namespace Specification.Pattern
         protected override InjectionMember GetInjectionMethodBase(object argument) 
             => new InjectionMethod("Method", argument);
 
-        protected override InjectionMember GetResolvedMember(Type argument) 
-            => new InjectionMethod("Method", new ResolvedParameter(argument));
+        protected override InjectionMember GetResolvedMember(Type type, string name) 
+            => new InjectionMethod("Method", new ResolvedParameter(type, name));
 
-        protected override InjectionMember GetResolvedMember(Type argument, string name) 
-            => new InjectionMethod("Method", new ResolvedParameter(argument, name));
+        protected override InjectionMember GetOptionalMember(Type type, string name)
+            => new InjectionMethod("Method", new ResolvedParameter(type, name));
 
         protected override InjectionMember GetInjectionMember(object argument) 
             => new InjectionMethod("Method", argument);
