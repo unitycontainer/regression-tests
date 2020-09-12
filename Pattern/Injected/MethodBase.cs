@@ -88,7 +88,7 @@ namespace Specification
         /// <param name="dependency"><see cref="Type"/> of dependency</param>
         /// <param name="expected">Expected default value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Injected_ByType_WithDefault_Data))]
+        [DynamicData(nameof(Injected_ByType_With_Default_Data))]
         public virtual void Unregistered_Injected_ByType_WithDefault(string name, Type dependency, object expected)
         {
             var type = TargetType(name);
@@ -106,7 +106,7 @@ namespace Specification
 
 
         // Test Data
-        public static IEnumerable<object[]> Injected_ByType_WithDefault_Data
+        public static IEnumerable<object[]> Injected_ByType_With_Default_Data
         {
             get
             {
