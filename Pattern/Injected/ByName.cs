@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 #if V4
 using Microsoft.Practices.Unity;
 #else
@@ -12,6 +11,8 @@ namespace Specification
 {
     public abstract partial class VerificationPattern
     {
+        #region Passing
+
         /// <summary>
         /// Tests injecting dependencies by member name
         /// </summary>
@@ -26,7 +27,7 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Injection_Data))]
+        [DynamicData(nameof(Inject_Registered_Data))]
         public virtual void Injected_ByName(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
@@ -45,11 +46,13 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
+        #endregion
 
 
+        #region Required
 
         /// <summary>
-        /// Tests injecting required dependencies by type from empty container
+        /// Tests injecting by name required dependencies from empty container
         /// </summary>
         /// <param name="test">Test name</param>
         /// <param name="type">Resolved type</param>
@@ -57,7 +60,7 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Injected_ByName_Required_Data))]
+        [DynamicData(nameof(Inject_Required_Data))]
         [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Injected_ByName_Required(string test, Type type, string name, Type dependency)
         {
@@ -71,33 +74,13 @@ namespace Specification
             _ = Container.Resolve(target, name) as PatternBase;
         }
 
-        // Test Data
-        public static IEnumerable<object[]> Injected_ByName_Required_Data
-        {
-            get
-            {
-                //////////////////////////////////////////////////////////////////////////////////////////////////////
-                //                          Test Name                   Type            Name    Dependency          
-                                                                        
-                yield return new object[] { "Value",                    PocoType,       null,   typeof(int)          };
-                yield return new object[] { "Class",                    PocoType,       null,   typeof(Unresolvable) };
-                yield return new object[] { "Struct",                   PocoType,       null,   typeof(TestStruct)   };
+        #endregion
 
-                yield return new object[] { "Value_Type_Name",          PocoType,       Name,   typeof(int)          };
-                yield return new object[] { "Class_Type_Name",          PocoType,       Name,   typeof(Unresolvable) };
 
-                yield return new object[] { "Required_Value",           Required,       null,   typeof(int)          };
-                yield return new object[] { "Required_Class",           Required,       null,   typeof(Unresolvable) };
-                yield return new object[] { "Required_Struct",          Required,       null,   typeof(TestStruct)   };
-
-                yield return new object[] { "Required_Value_Named",     Required_Named, null,   typeof(int)          };
-                yield return new object[] { "Required_Class_Named",     Required_Named, null,   typeof(Unresolvable) };
-            }
-        }
-
+        #region Optional
 
         /// <summary>
-        /// Tests injecting optional dependencies by type from empty container
+        /// Tests injecting by name optional dependencies from empty container
         /// </summary>
         /// <param name="test">Test name</param>
         /// <param name="type">Resolved type</param>
@@ -105,7 +88,7 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Injected_ByName_Optional_Data))]
+        [DynamicData(nameof(Inject_Optional_Data))]
         public virtual void Injected_ByName_Optional(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
@@ -122,25 +105,13 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
-        // Test Data
-        public static IEnumerable<object[]> Injected_ByName_Optional_Data
-        {
-            get
-            {
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //                          Test Name               Type            Name  Dependency            Expected
-                                                                    
-                yield return new object[] { "Optional_Value",       Optional,       null, typeof(int),          0       };
-                yield return new object[] { "Optional_Class",       Optional,       null, typeof(Unresolvable), null    };
+        #endregion
 
-                yield return new object[] { "Optional_Value_Named", Optional_Named, null, typeof(int),          0       };
-                yield return new object[] { "Optional_Class_Named", Optional_Named, null, typeof(Unresolvable), null    };
-            }
-        }
 
+        #region With Default
 
         /// <summary>
-        /// Tests injecting optional dependencies by type from empty container
+        /// Tests injecting by name dependencies with default from empty container
         /// </summary>
         /// <param name="test">Test name</param>
         /// <param name="type">Resolved type</param>
@@ -148,7 +119,7 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Injected_ByName_WithDefault_Data))]
+        [DynamicData(nameof(Inject_WithDefault_Data))]
         public virtual void Injected_ByName_WithDefault(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
@@ -165,23 +136,6 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
-        // Test Data
-        public static IEnumerable<object[]> Injected_ByName_WithDefault_Data
-        {
-            get
-            {
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //                          Test Name                 Type                     Name  Dependency     Expected
-
-                yield return new object[] { "Default_Value",          PocoType_Default_Value,  null, typeof(int),    DefaultInt     };
-                yield return new object[] { "Default_Class",          PocoType_Default_Class,  null, typeof(string), DefaultString  };
-
-                yield return new object[] { "Required_Default_Value", Required_Default_Value,  null, typeof(int),    DefaultInt     };
-                yield return new object[] { "Required_Default_Class", Required_Default_String, null, typeof(string), DefaultString  };
-
-                yield return new object[] { "Optional_Default_Value", Optional_Default_Value,  null, typeof(int),    DefaultInt     };
-                yield return new object[] { "Optional_Default_Class", Optional_Default_Class,  null, typeof(string), DefaultString  };
-            }
-        }
+        #endregion
     }
 }

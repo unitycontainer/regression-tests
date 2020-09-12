@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 #if V4
 using Microsoft.Practices.Unity;
 #else
@@ -12,194 +11,133 @@ namespace Specification
 {
     public abstract partial class VerificationPattern
     {
-        /// <summary>
-        /// Test use of <see cref="InjectionMember"/> to configure and resolve 
-        /// dependencies from empty container.
-        /// </summary>
-        /// <example>
-        /// 
-        /// public class PocoType 
-        /// {
-        ///     public int Field;
-        /// 
-        ///     public int Property { get; set; }
-        /// 
-        ///     public PocoType(int value) { }
-        ///     
-        ///     public void Method(int value) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        ///  var container = new UnityContainer()
-        ///      .RegisterType(typeof(PocoType), 
-        ///                    new InjectionConstructor(new InjectionParameter(typeof(int))),
-        ///                    new InjectionField("Field", typeof(int)),
-        ///                    new InjectionProperty("Property", typeof(int)),
-        ///                    new InjectionMethod("Method", new InjectionParameter(typeof(int))));
-        ///      
-        /// var result = container.Resolve(typeof(PocoType));
-        /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="dependency"><see cref="Type"/> of dependency</param>
-        [DataTestMethod]
-        [DataRow("Implicit_Dependency_Value",                 typeof(int))]
-        [DataRow("Implicit_Dependency_Class",                 typeof(Unresolvable))]
-        [DataRow("Required_Dependency_Value",       typeof(int))]
-        [DataRow("Required_Dependency_Class",       typeof(Unresolvable))]
-        [DataRow("Required_Dependency_Value_Named", typeof(int))]
-        [DataRow("Required_Dependency_Class_Named", typeof(Unresolvable))]
-        [DataRow("Optional_Dependency_Value",       typeof(int))]
-        [DataRow("Optional_Dependency_Class",       typeof(Unresolvable))]
-        [DataRow("Optional_Dependency_Value_Named", typeof(int))]
-        [DataRow("Optional_Dependency_Class_Named", typeof(Unresolvable))]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Unregistered_Injected_ByResolving(string name, Type dependency)
-        {
-            var type = TargetType(name);
-
-            // Arrange
-            Container.RegisterType(type, GetResolvedMember(dependency));
-
-            // Act
-            var result = Container.Resolve(type);
-        }
-
-
-#if !V4 && !NET461 
-        /// <summary>
-        /// This test resolves POCO type with default values from empty container.
-        /// </summary>
-        /// <example>
-        /// 
-        /// public class PocoTypeWithDefault
-        /// {
-        ///     public int Field = 555;
-        /// 
-        ///     public int Property { get; set; } = 444
-        /// 
-        ///     public PocoTypeWithDefault(int value = 111) { }
-        ///     
-        ///     public void Method(int value = 222) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        ///  var container = new UnityContainer()
-        ///      .RegisterType(typeof(PocoTypeWithDefault), 
-        ///                     new InjectionConstructor(typeof(int)),
-        ///                     new InjectionMethod("Method", typeof(int)));
-        ///      
-        /// var result = container.Resolve(typeof(PocoType));
-        ///      
-        /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="dependency"><see cref="Type"/> of dependency</param>
-        /// <param name="expected">Expected default value</param>
-        [DataTestMethod]
-        [DynamicData(nameof(Injected_ByResolving_WithDefault_Data))]
-        public virtual void Unregistered_Injected_ByResolving_WithDefault(string name, Type dependency, object expected)
-        {
-            var type = TargetType(name);
-
-            // Arrange
-            Container.RegisterType(type, GetResolvedMember(dependency));
-
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-
-        // Test Data
-        public static IEnumerable<object[]> Injected_ByResolving_WithDefault_Data
-        {
-            get
-            {
-                yield return new object[] { "Implicit_WithDefault_Value",          typeof(int),    DefaultInt };
-                yield return new object[] { "Implicit_WithDefault_Class",          typeof(string), DefaultString };
-
-                yield return new object[] { "Required_WithDefault_Value", typeof(int),    DefaultInt };
-                yield return new object[] { "Required_WithDefault_Class", typeof(string), DefaultString };
-            }
-        }
-#endif
-
+        #region Passing
 
         /// <summary>
-        /// Tests injecting dependencies by required resolution from empty container.
+        /// Tests injecting dependencies by resolution
         /// </summary>
         /// <example>
-        /// 
-        /// public class PocoType 
-        /// {
-        ///     public int Field;
-        /// 
-        ///     public int Property { get; set; }
-        /// 
-        ///     public PocoType(int value) { }
-        ///     
-        ///     public void Method(int value) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        ///  var container = new UnityContainer()
-        ///      .RegisterInstance(111);
-        ///      .RegisterType(typeof(PocoType), new InjectionConstructor(new ResolvedParameter(typeof(int), name)),
-        ///                                   new InjectionField("Field", new ResolvedParameter(typeof(int), name)),
-        ///                             new InjectionProperty("Property", new ResolvedParameter(typeof(int), name)),
-        ///                                 new InjectionMethod("Method", new ResolvedParameter(typeof(int), name)));
-        ///      
-        /// var result = container.Resolve(typeof(PocoType));
+        /// Container.RegisterType(target, new InjectionConstructor(new ResolvedParameter(type)), 
+        ///                                new InjectionMethod("Method", new ResolvedParameter(type)) , 
+        ///                                new InjectionField("Field",   new ResolvedParameter(type)), 
+        ///                                new InjectionProperty("Property", new ResolvedParameter(type)));
         /// </example>
-        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="type"><see cref="Type"/> of dependency</param>
-        /// <param name="name">Name of the contract</param>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Injected_ByResolving_Data))]
-        public virtual void Registered_Injected_ByResolving(string target, Type dependency, string name, object expected)
+        [DynamicData(nameof(Inject_Registered_Data))]
+        public virtual void Injected_ByResolving(string test, Type type, string name, Type dependency, object expected)
         {
-            var type = TargetType(target);
-
+            Type target = type.IsGenericTypeDefinition
+                        ? type.MakeGenericType(dependency)
+                        : type;
             // Arrange
+            Container.RegisterType(target, GetResolvedMember(dependency, name));
+
             RegisterTypes();
-            Container.RegisterType(type, GetResolvedMember(dependency, name));
 
             // Act
-            var instance = Container.Resolve(type) as PatternBase;
+            var instance = Container.Resolve(target) as PatternBase;
 
             // Validate
             Assert.IsNotNull(instance);
             Assert.AreEqual(expected, instance.Value);
         }
 
+        #endregion
 
-        // Test data
-        public static IEnumerable<object[]> Injected_ByResolving_Data
+
+        #region Required
+
+        /// <summary>
+        /// Tests injecting by resolution required dependencies from empty container
+        /// </summary>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
+        [DataTestMethod]
+        [DynamicData(nameof(Inject_Required_Data))]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public virtual void Injected_ByResolving_Required(string test, Type type, string name, Type dependency)
         {
-            get
-            {
-                yield return new object[] { "Implicit_Dependency_Value",                 typeof(int),          null,   RegisteredInt };
-                yield return new object[] { "Implicit_Dependency_Class",                 typeof(Unresolvable), null,   Singleton };
-                yield return new object[] { "Implicit_WithDefault_Value",               typeof(int),          null,   RegisteredInt };
-                yield return new object[] { "Implicit_WithDefault_Class",               typeof(string),       null,   RegisteredString };
-                                                                               
-                yield return new object[] { "Required_Dependency_Value",       typeof(int),          null,   RegisteredInt };
-                yield return new object[] { "Required_Dependency_Class",       typeof(Unresolvable), null,   Singleton };
-                yield return new object[] { "Required_Dependency_Value_Named", typeof(int),          Name,   NamedInt };
-                yield return new object[] { "Required_Dependency_Class_Named", typeof(Unresolvable), Name,   NamedSingleton };
+            Type target = type.IsGenericTypeDefinition
+                        ? type.MakeGenericType(dependency)
+                        : type;
+            // Arrange
+            Container.RegisterType(target, GetResolvedMember(dependency, name));
 
-                yield return new object[] { "Optional_Dependency_Value",       typeof(int),          null,   RegisteredInt };
-                yield return new object[] { "Optional_Dependency_Class",       typeof(Unresolvable), null,   Singleton };
-                yield return new object[] { "Optional_Dependency_Value_Named", typeof(int),          Name,   NamedInt };
-                yield return new object[] { "Optional_Dependency_Class_Named", typeof(Unresolvable), Name,   NamedSingleton };
-                yield return new object[] { "Optional_WithDefault_Value",      typeof(int),          null,   RegisteredInt };
-                yield return new object[] { "Optional_WithDefault_Class",      typeof(string),       null,   RegisteredString };
-            }                                                                                        
-        }                                                                                            
+            // Act
+            _ = Container.Resolve(target, name) as PatternBase;
+        }
+
+        #endregion
+
+
+        #region Optional
+
+        /// <summary>
+        /// Tests injecting by resolution optional dependencies from empty container
+        /// </summary>
+        /// <remarks>
+        /// The injection member overrides Optional attribute and throws if dependency 
+        /// could not be resolved.
+        /// </remarks>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
+        [DataTestMethod]
+        [DynamicData(nameof(Inject_Optional_Data))]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public virtual void Injected_ByResolving_Optional(string test, Type type, string name, Type dependency, object expected)
+        {
+            Type target = type.IsGenericTypeDefinition
+                        ? type.MakeGenericType(dependency)
+                        : type;
+            // Arrange
+            Container.RegisterType(target, GetResolvedMember(dependency, name));
+
+            // Act
+            _ = Container.Resolve(target) as PatternBase;
+        }
+
+        #endregion
+
+
+        #region With Default
+
+        /// <summary>
+        /// Tests injecting by resolution dependencies with default from empty container
+        /// </summary>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
+        [DataTestMethod]
+        [DynamicData(nameof(Inject_WithDefault_Data))]
+        public virtual void Injected_ByResolving_WithDefault(string test, Type type, string name, Type dependency, object expected)
+        {
+            Type target = type.IsGenericTypeDefinition
+                        ? type.MakeGenericType(dependency)
+                        : type;
+            // Arrange
+            Container.RegisterType(target, GetResolvedMember(dependency, name));
+
+            // Act
+            var instance = Container.Resolve(target) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
+        }
+
+        #endregion
     }
 }

@@ -76,7 +76,7 @@ namespace Specification
 
         protected abstract InjectionMember GetResolvedMember(Type argument);
 
-        protected abstract InjectionMember GetResolvedMember(Type argument, string name);
+        protected abstract InjectionMember GetResolvedMember(Type type, string name);
 
         protected abstract InjectionMember GetInjectionMember(object argument);
 

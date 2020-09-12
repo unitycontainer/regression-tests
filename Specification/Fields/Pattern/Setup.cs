@@ -37,11 +37,11 @@ namespace Specification.Pattern
         protected override InjectionMember GetInjectionMethodBase(object argument) 
             => throw new NotSupportedException();
 
-        protected override InjectionMember GetResolvedMember(Type argument) 
-            => new InjectionField("Field", new ResolvedParameter(argument));
+        protected override InjectionMember GetResolvedMember(Type type) 
+            => new InjectionField("Field", new ResolvedParameter(type));
 
-        protected override InjectionMember GetResolvedMember(Type argument, string name) 
-            => new InjectionField("Field", new ResolvedParameter(argument, name));
+        protected override InjectionMember GetResolvedMember(Type type, string name) 
+            => new InjectionField("Field", new ResolvedParameter(type, name));
 
         protected override InjectionMember GetInjectionMember(object argument) 
             => new InjectionField("Field", argument);
