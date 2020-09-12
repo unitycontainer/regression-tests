@@ -30,18 +30,6 @@ namespace Specification.Pattern
             public void Method(dynamic value) => Value = value;
         }
 
-        public class Implicit_Dependency_Ref : PatternBase
-        {
-            [InjectionMethod]
-            public void Method(ref Unresolvable value) => Value = value;
-        }
-
-        public class Implicit_Dependency_Out : PatternBase
-        {
-            [InjectionMethod]
-            public void Method(out Unresolvable value) => value = null;
-        }
-
         public class Implicit_Dependency_Generic<T> : PatternBase
         {
             [InjectionMethod]
@@ -81,18 +69,6 @@ namespace Specification.Pattern
         {
             [InjectionMethod]
             public void Method([Dependency] dynamic value) => Value = value;
-        }
-
-        public class Required_Dependency_Ref : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([Dependency] ref Unresolvable value) => Value = value;
-        }
-
-        public class Required_Dependency_Out : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([Dependency] out Unresolvable value) => value = null;
         }
 
         public class Required_Dependency_Generic<T> : PatternBase
@@ -142,18 +118,6 @@ namespace Specification.Pattern
             public void Method([OptionalDependency] dynamic value) => Value = value;
         }
 
-        public class Optional_Dependency_Ref : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([OptionalDependency] ref Unresolvable value) => Value = value;
-        }
-
-        public class Optional_Dependency_Out : PatternBase
-        {
-            [InjectionMethod]
-            public void Method([OptionalDependency] out Unresolvable value) => value = null;
-        }
-
         public class Optional_Dependency_Generic<T> : PatternBase
         {
             [InjectionMethod]
@@ -188,6 +152,90 @@ namespace Specification.Pattern
         {
             [InjectionMethod]
             public void Method([OptionalDependency(Name)] Unresolvable value) => Value = value;
+        }
+
+        #endregion
+
+
+
+
+        #region Unsupported
+
+
+        public class Implicit_Dependency_Ref : PatternBase
+        {
+            [InjectionMethod]
+            public void Method(ref Unresolvable value) => Value = value;
+        }
+
+        public class Implicit_Dependency_Out : PatternBase
+        {
+            [InjectionMethod]
+            public void Method(out Unresolvable value) => value = null;
+        }
+
+        public class Implicit_Generic_Ref<T> : PatternBase where T : class
+        {
+            [InjectionMethod]
+            public void Method(ref T value) => Value = value;
+        }
+
+        public class Implicit_Generic_Out<T> : PatternBase where T : class
+        {
+            [InjectionMethod]
+            public void Method(out T value) => value = null;
+        }
+
+
+
+        public class Required_Dependency_Ref : PatternBase
+        {
+            [InjectionMethod]
+            public void Method([Dependency] ref Unresolvable value) => Value = value;
+        }
+
+        public class Required_Dependency_Out : PatternBase
+        {
+            [InjectionMethod]
+            public void Method([Dependency] out Unresolvable value) => value = null;
+        }
+
+        public class Required_Generic_Ref<T> : PatternBase where T : class
+        {
+            [InjectionMethod]
+            public void Method([Dependency] ref T value) => Value = value;
+        }
+
+        public class Required_Generic_Out<T> : PatternBase where T : class
+        {
+            [InjectionMethod]
+            public void Method([Dependency] out T value) => value = null;
+        }
+
+
+
+        public class Optional_Dependency_Ref : PatternBase
+        {
+            [InjectionMethod]
+            public void Method([OptionalDependency] ref Unresolvable value) => Value = value;
+        }
+
+        public class Optional_Dependency_Out : PatternBase
+        {
+            [InjectionMethod]
+            public void Method([OptionalDependency] out Unresolvable value) => value = null;
+        }
+
+        public class Optional_Generic_Ref<T> : PatternBase where T : class
+        {
+            [InjectionMethod]
+            public void Method([OptionalDependency] ref T value) => Value = value;
+        }
+
+        public class Optional_Generic_Out<T> : PatternBase where T : class
+        {
+            [InjectionMethod]
+            public void Method([OptionalDependency] out T value) => value = null;
         }
 
         #endregion

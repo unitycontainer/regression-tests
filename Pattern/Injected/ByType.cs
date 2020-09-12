@@ -11,8 +11,6 @@ namespace Specification
 {
     public abstract partial class VerificationPattern
     {
-        #region Passing
-
         /// <summary>
         /// Tests injecting dependencies by type
         /// </summary>
@@ -28,8 +26,8 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Inject_Registered_Data))]
-        public virtual void Injected_Implicitly(string test, Type type, string name, Type dependency, object expected)
+        [DynamicData(nameof(Registered_Data))]
+        public virtual void Injected_Implicitly_ByType(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
@@ -47,8 +45,6 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
-        #endregion
-
 
         #region Required
 
@@ -61,7 +57,7 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Inject_Required_Data))]
+        [DynamicData(nameof(Required_Data))]
         [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Injected_Implicitly_Required(string test, Type type, string name, Type dependency, object expected)
         {
@@ -89,7 +85,7 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Inject_Optional_Data))]
+        [DynamicData(nameof(Optional_Data))]
         public virtual void Injected_Implicitly_Optional(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
@@ -120,7 +116,7 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Inject_WithDefault_Data))]
+        [DynamicData(nameof(Default_Data))]
         public virtual void Injected_Implicitly_Default(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition

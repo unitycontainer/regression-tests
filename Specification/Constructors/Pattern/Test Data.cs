@@ -27,16 +27,6 @@ namespace Specification.Pattern
             public Implicit_Dependency_Dynamic(dynamic value) => Value = value;
         }
 
-        public class Implicit_Dependency_Ref : PatternBase
-        {
-            public Implicit_Dependency_Ref(ref Unresolvable value) => Value = value;
-        }
-
-        public class Implicit_Dependency_Out : PatternBase
-        {
-            public Implicit_Dependency_Out(out Unresolvable value) => value = null;
-        }
-
         public class Implicit_Dependency_Generic<T> : PatternBase
         {
             public Implicit_Dependency_Generic(T value) => Value = value;
@@ -70,16 +60,6 @@ namespace Specification.Pattern
         public class Required_Dependency_Dynamic : PatternBase
         {
             public Required_Dependency_Dynamic([Dependency] dynamic value) => Value = value;
-        }
-
-        public class Required_Dependency_Ref : PatternBase
-        {
-            public Required_Dependency_Ref([Dependency] ref Unresolvable value) => Value = value;
-        }
-
-        public class Required_Dependency_Out : PatternBase
-        {
-            public Required_Dependency_Out([Dependency] out Unresolvable value) => value = null;
         }
 
         public class Required_Dependency_Generic<T> : PatternBase 
@@ -122,16 +102,6 @@ namespace Specification.Pattern
             public Optional_Dependency_Dynamic([OptionalDependency] dynamic value) => Value = value;
         }
 
-        public class Optional_Dependency_Ref : PatternBase
-        {
-            public Optional_Dependency_Ref([OptionalDependency] ref Unresolvable value) => Value = value;
-        }
-
-        public class Optional_Dependency_Out : PatternBase
-        {
-            public Optional_Dependency_Out([OptionalDependency] out Unresolvable value) => value = null;
-        }
-
         public class Optional_Dependency_Generic<T> : PatternBase
         {
             public Optional_Dependency_Generic([OptionalDependency] T value) => Value = value;
@@ -150,6 +120,73 @@ namespace Specification.Pattern
         public class Optional_WithDefault_Class : PatternBase
         {
             public Optional_WithDefault_Class([OptionalDependency] string value = DefaultString) => Value = value;
+        }
+
+        #endregion
+
+
+        #region Unsupported
+
+        public class Implicit_Dependency_Ref : PatternBase
+        {
+            public Implicit_Dependency_Ref(ref Unresolvable value) => Value = value;
+        }
+
+        public class Implicit_Dependency_Out : PatternBase
+        {
+            public Implicit_Dependency_Out(out Unresolvable value) => value = null;
+        }
+
+        public class Implicit_Generic_Ref<T> : PatternBase where T : class
+        {
+            public Implicit_Generic_Ref(ref T value) => Value = value;
+        }
+
+        public class Implicit_Generic_Out<T> : PatternBase where T : class
+        {
+            public Implicit_Generic_Out(out T value) => value = null;
+        }
+
+
+        public class Required_Dependency_Ref : PatternBase
+        {
+            public Required_Dependency_Ref([Dependency] ref Unresolvable value) => Value = value;
+        }
+
+        public class Required_Dependency_Out : PatternBase
+        {
+            public Required_Dependency_Out([Dependency] out Unresolvable value) => value = null;
+        }
+
+        public class Required_Generic_Ref<T> : PatternBase where T : class
+        {
+            public Required_Generic_Ref([Dependency] ref T value) => Value = value;
+        }
+
+        public class Required_Generic_Out<T> : PatternBase where T : class
+        {
+            public Required_Generic_Out([Dependency] out T value) => value = null;
+        }
+
+
+        public class Optional_Dependency_Ref : PatternBase
+        {
+            public Optional_Dependency_Ref([OptionalDependency] ref Unresolvable value) => Value = value;
+        }
+
+        public class Optional_Dependency_Out : PatternBase
+        {
+            public Optional_Dependency_Out([OptionalDependency] out Unresolvable value) => value = null;
+        }
+
+        public class Optional_Generic_Ref<T> : PatternBase where T : class
+        {
+            public Optional_Generic_Ref([OptionalDependency] ref T value) => Value = value;
+        }
+
+        public class Optional_Generic_Out<T> : PatternBase where T : class
+        {
+            public Optional_Generic_Out([OptionalDependency] out T value) => value = null;
         }
 
         #endregion

@@ -14,13 +14,13 @@ namespace Specification
         #region Passing
 
         /// <summary>
-        /// Tests injecting dependencies by resolution
+        /// Tests injecting dependencies by optional generic parameter
         /// </summary>
         /// <example>
-        /// Container.RegisterType(target, new InjectionConstructor(new ResolvedParameter(type)), 
-        ///                                new InjectionMethod("Method", new ResolvedParameter(type)) , 
-        ///                                new InjectionField("Field",   new ResolvedParameter(type)), 
-        ///                                new InjectionProperty("Property", new ResolvedParameter(type)));
+        /// Container.RegisterType(target, new InjectionConstructor(new OptionalGenericParameter(T)), 
+        ///                                new InjectionMethod("Method", new OptionalGenericParameter(T)) , 
+        ///                                new InjectionField("Field",   new OptionalGenericParameter(T)), 
+        ///                                new InjectionProperty("Property", new OptionalGenericParameter(T)));
         /// </example>
         /// <param name="test">Test name</param>
         /// <param name="type">Resolved type</param>
@@ -28,16 +28,22 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Inject_Registered_Data))]
-        public virtual void Injected_ByResolving(string test, Type type, string name, Type dependency, object expected)
+        [DynamicData(nameof(Registered_Data))]
+        public virtual void Injected_ByGenericOptional(string test, Type type, string name, Type dependency, object expected)
         {
+            if (!type.IsGenericType) return;
+
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
                         : type;
-            // Arrange
-            Container.RegisterType(target, GetResolvedMember(dependency, name));
 
+            Type definition = type.IsGenericTypeDefinition
+                            ? type
+                            : type.GetGenericTypeDefinition();
+            // Arrange
             RegisterTypes();
+
+            Container.RegisterType(definition, Get_GenericOptional_Member(dependency, name));
 
             // Act
             var instance = Container.Resolve(target) as PatternBase;
@@ -53,7 +59,7 @@ namespace Specification
         #region Required
 
         /// <summary>
-        /// Tests injecting by resolution required dependencies from empty container
+        /// Tests injecting by optional generic parameter required dependencies from empty container
         /// </summary>
         /// <param name="test">Test name</param>
         /// <param name="type">Resolved type</param>
@@ -61,18 +67,27 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Inject_Required_Data))]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Injected_ByResolving_Required(string test, Type type, string name, Type dependency, object expected)
+        [DynamicData(nameof(Required_Data))]
+        public virtual void Injected_ByGenericOptional_Required(string test, Type type, string name, Type dependency, object expected)
         {
+            if (!type.IsGenericType) return;
+
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
                         : type;
+
+            Type definition = type.IsGenericTypeDefinition
+                            ? type
+                            : type.GetGenericTypeDefinition();
             // Arrange
-            Container.RegisterType(target, GetResolvedMember(dependency, name));
+            Container.RegisterType(definition, Get_GenericOptional_Member(dependency, name));
 
             // Act
-            _ = Container.Resolve(target, name) as PatternBase;
+            var instance = Container.Resolve(target) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
         }
 
         #endregion
@@ -81,7 +96,7 @@ namespace Specification
         #region Optional
 
         /// <summary>
-        /// Tests injecting by resolution optional dependencies from empty container
+        /// Tests injecting by optional generic parameter optional dependencies from empty container
         /// </summary>
         /// <remarks>
         /// The injection member overrides Optional attribute and throws if dependency 
@@ -93,18 +108,27 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Inject_Optional_Data))]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Injected_ByResolving_Optional(string test, Type type, string name, Type dependency, object expected)
+        [DynamicData(nameof(Optional_Data))]
+        public virtual void Injected_ByGenericOptional_Optional(string test, Type type, string name, Type dependency, object expected)
         {
+            if (!type.IsGenericType) return;
+
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
                         : type;
+
+            Type definition = type.IsGenericTypeDefinition
+                            ? type
+                            : type.GetGenericTypeDefinition();
             // Arrange
-            Container.RegisterType(target, GetResolvedMember(dependency, name));
+            Container.RegisterType(definition, Get_GenericOptional_Member(dependency, name));
 
             // Act
-            _ = Container.Resolve(target) as PatternBase;
+            var instance = Container.Resolve(target) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
         }
 
         #endregion
@@ -113,7 +137,7 @@ namespace Specification
         #region With Default
 
         /// <summary>
-        /// Tests injecting by resolution dependencies with default from empty container
+        /// Tests injecting by optional generic parameter dependencies with default from empty container
         /// </summary>
         /// <remarks>
         /// Injected member overrides existing default and either is resolved or throws
@@ -124,14 +148,20 @@ namespace Specification
         /// <param name="dependency">Dependency type</param>
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DynamicData(nameof(Inject_WithDefault_Data))]
-        public virtual void Injected_ByResolving_Default(string test, Type type, string name, Type dependency, object expected)
+        [DynamicData(nameof(Default_Data))]
+        public virtual void Injected_ByGenericOptional_Default(string test, Type type, string name, Type dependency, object expected)
         {
+            if (!type.IsGenericType) return;
+
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
                         : type;
+
+            Type definition = type.IsGenericTypeDefinition
+                            ? type
+                            : type.GetGenericTypeDefinition();
             // Arrange
-            Container.RegisterType(target, GetResolvedMember(dependency, name));
+            Container.RegisterType(definition, Get_GenericOptional_Member(dependency, name));
 
             // Act
             var instance = Container.Resolve(target) as PatternBase;

@@ -31,17 +31,21 @@ namespace Specification.Pattern
             Optional_Default_Class = typeof(Optional_WithDefault_Class);
         }
 
-        protected override InjectionMember GetMemberByName()
+        protected override InjectionMember Get_ByName_Member(Type type, string name)
             => new InjectionProperty("Property");
 
-        protected override InjectionMember GetInjectionMethodBase(object argument) 
-            => throw new NotSupportedException();
 
-        protected override InjectionMember GetResolvedMember(Type type, string name) 
+        protected override InjectionMember Get_Resolved_Member(Type type, string name) 
             => new InjectionProperty("Property", new ResolvedParameter(type, name));
 
-        protected override InjectionMember GetOptionalMember(Type type, string name)
+        protected override InjectionMember Get_Optional_Member(Type type, string name)
             => new InjectionProperty("Property", new OptionalParameter(type, name));
+
+        protected override InjectionMember Get_Generic_Member(Type _, string name)
+            => new InjectionProperty("Property", new GenericParameter("T", name));
+
+        protected override InjectionMember Get_GenericOptional_Member(Type type, string name)
+            => new InjectionProperty("Property", new OptionalGenericParameter("T", name));
 
         protected override InjectionMember GetInjectionMember(object argument) 
             => new InjectionProperty("Property", argument);

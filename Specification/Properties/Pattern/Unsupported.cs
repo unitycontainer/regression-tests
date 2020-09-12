@@ -22,9 +22,6 @@ namespace Specification.Pattern
         // Properties do not support parameters
         public override void Implicit_Parameters(string name) { }
         public override void Annotated_Parameters(string target) { }
-        public override void Injected_ByName_Parameter(string target, Type dependency) { }
-        public override void Injected_Implicitly_Parameter(string target, Type dependency) { }
-        public override void Injected_ByResolving_Parameter(string target, Type dependency) { }
-        public override void Injected_ByOptional_Parameter(string target, Type dependency) { }
+        public override void Injected_Parameters(string target, string method) { }
     }
 }
