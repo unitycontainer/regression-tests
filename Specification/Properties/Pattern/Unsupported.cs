@@ -27,13 +27,6 @@ namespace Specification.Pattern
 
         public override void Registered_Injected_MethodBase_ByType(string name, Type dependency, object expected) { }
 
-        
-#if !V4
-        public override void Unregistered_Optional_Injected_ByName(string target, object expected) { }
-        public override void Unregistered_Injected_ByName_WithDefault(string target, object expected) { }
-#endif
-
-
 
         public override void Unregistered_Injected_ByType(string name, Type dependency) { }
 #if !V4 && !NET461

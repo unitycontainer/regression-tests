@@ -57,7 +57,7 @@ namespace Specification
                 yield return new object[] { "Required_Class_Named",     Required_Named_Ref,     null,   typeof(Unresolvable),   NamedSingleton      };
 
                 yield return new object[] { "Required_Default_Value",   Required_Default_Value, null,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Required_Default_Class",   Required_Default_Class, null,   typeof(Unresolvable),   RegisteredString    };
+                yield return new object[] { "Required_Default_Class",   Required_Default_String, null,   typeof(Unresolvable),   RegisteredString    };
 
                 // Optional
 

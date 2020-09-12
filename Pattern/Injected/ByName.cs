@@ -13,64 +13,152 @@ namespace Specification
     public abstract partial class VerificationPattern
     {
         /// <summary>
-        /// Test use of <see cref="InjectionMember"/> with just a name to configure and resolve 
-        /// dependencies from empty container.
+        /// Tests injecting dependencies by member name
         /// </summary>
         /// <example>
-        /// 
-        /// public class PocoType 
-        /// {
-        ///     public int Field;
-        /// 
-        ///     public int Property { get; set; }
-        /// 
-        ///     public PocoType(int value) { }
-        ///     
-        ///     public void Method(int value) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        ///  var container = new UnityContainer()
-        ///      .RegisterType(typeof(PocoType), 
-        ///                    new InjectionField("Field"),
-        ///                    new InjectionProperty("Property"),
-        ///                    new InjectionMethod("Method"));
-        ///      
-        /// var result = container.Resolve(typeof(PocoType));
+        /// Container.RegisterType(target, new InjectionMethod("Method") , 
+        ///                                new InjectionField("Field"), 
+        ///                                new InjectionProperty("Property"));
         /// </example>
-        /// <param name="target">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="dependency"><see cref="Type"/> of dependency</param>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
         [DataTestMethod]
-        [DataRow("Implicit_Dependency_Value")]
-        [DataRow("Implicit_Dependency_Class")]
-        [DataRow("Required_Dependency_Value")]
-        [DataRow("Required_Dependency_Class")]
-        [DataRow("Required_Dependency_Value_Named")]
-        [DataRow("Required_Dependency_Class_Named")]
-        [ExpectedException(typeof(ResolutionFailedException))]
-        public virtual void Unregistered_Injected_ByName(string target)
+        [DynamicData(nameof(Injection_Data))]
+        public virtual void Injected_ByName(string test, Type type, string name, Type dependency, object expected)
         {
-            var type = TargetType(target);
-
+            Type target = type.IsGenericTypeDefinition
+                        ? type.MakeGenericType(dependency)
+                        : type;
             // Arrange
-            Container.RegisterType(type, GetMemberByName());
+            Container.RegisterType(target, GetMemberByName());
+            
+            RegisterTypes();
 
             // Act
-            _ = Container.Resolve(type);
+            var instance = Container.Resolve(target, name) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
         }
 
-        [DataTestMethod]
-        [DynamicData(nameof(Injected_ByName_WithDefault_Data))]
-        public virtual void Unregistered_Injected_ByName_WithDefault(string target, object expected)
-        {
-            var type = TargetType(target);
 
+
+
+        /// <summary>
+        /// Tests injecting required dependencies by type from empty container
+        /// </summary>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
+        [DataTestMethod]
+        [DynamicData(nameof(Injected_ByName_Required_Data))]
+        [ExpectedException(typeof(ResolutionFailedException))]
+        public virtual void Injected_ByName_Required(string test, Type type, string name, Type dependency)
+        {
+            Type target = type.IsGenericTypeDefinition
+                        ? type.MakeGenericType(dependency)
+                        : type;
             // Arrange
-            Container.RegisterType(type, GetMemberByName());
+            Container.RegisterType(target, GetMemberByName());
 
             // Act
-            var instance = Container.Resolve(type) as PatternBase;
+            _ = Container.Resolve(target, name) as PatternBase;
+        }
+
+        // Test Data
+        public static IEnumerable<object[]> Injected_ByName_Required_Data
+        {
+            get
+            {
+                //////////////////////////////////////////////////////////////////////////////////////////////////////
+                //                          Test Name                   Type            Name    Dependency          
+                                                                        
+                yield return new object[] { "Value",                    PocoType,       null,   typeof(int)          };
+                yield return new object[] { "Class",                    PocoType,       null,   typeof(Unresolvable) };
+                yield return new object[] { "Struct",                   PocoType,       null,   typeof(TestStruct)   };
+
+                yield return new object[] { "Value_Type_Name",          PocoType,       Name,   typeof(int)          };
+                yield return new object[] { "Class_Type_Name",          PocoType,       Name,   typeof(Unresolvable) };
+
+                yield return new object[] { "Required_Value",           Required,       null,   typeof(int)          };
+                yield return new object[] { "Required_Class",           Required,       null,   typeof(Unresolvable) };
+                yield return new object[] { "Required_Struct",          Required,       null,   typeof(TestStruct)   };
+
+                yield return new object[] { "Required_Value_Named",     Required_Named, null,   typeof(int)          };
+                yield return new object[] { "Required_Class_Named",     Required_Named, null,   typeof(Unresolvable) };
+            }
+        }
+
+
+        /// <summary>
+        /// Tests injecting optional dependencies by type from empty container
+        /// </summary>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
+        [DataTestMethod]
+        [DynamicData(nameof(Injected_ByName_Optional_Data))]
+        public virtual void Injected_ByName_Optional(string test, Type type, string name, Type dependency, object expected)
+        {
+            Type target = type.IsGenericTypeDefinition
+                        ? type.MakeGenericType(dependency)
+                        : type;
+            // Arrange
+            Container.RegisterType(target, GetMemberByName());
+
+            // Act
+            var instance = Container.Resolve(target, name) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
+        }
+
+        // Test Data
+        public static IEnumerable<object[]> Injected_ByName_Optional_Data
+        {
+            get
+            {
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //                          Test Name               Type            Name  Dependency            Expected
+                                                                    
+                yield return new object[] { "Optional_Value",       Optional,       null, typeof(int),          0       };
+                yield return new object[] { "Optional_Class",       Optional,       null, typeof(Unresolvable), null    };
+
+                yield return new object[] { "Optional_Value_Named", Optional_Named, null, typeof(int),          0       };
+                yield return new object[] { "Optional_Class_Named", Optional_Named, null, typeof(Unresolvable), null    };
+            }
+        }
+
+
+        /// <summary>
+        /// Tests injecting optional dependencies by type from empty container
+        /// </summary>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
+        [DataTestMethod]
+        [DynamicData(nameof(Injected_ByName_WithDefault_Data))]
+        public virtual void Injected_ByName_WithDefault(string test, Type type, string name, Type dependency, object expected)
+        {
+            Type target = type.IsGenericTypeDefinition
+                        ? type.MakeGenericType(dependency)
+                        : type;
+            // Arrange
+            Container.RegisterType(target, GetMemberByName());
+
+            // Act
+            var instance = Container.Resolve(target, name) as PatternBase;
 
             // Validate
             Assert.IsNotNull(instance);
@@ -82,72 +170,17 @@ namespace Specification
         {
             get
             {
-                yield return new object[] { "Implicit_WithDefault_Value",               DefaultInt };
-                yield return new object[] { "Implicit_WithDefault_Class",               DefaultString };
-                yield return new object[] { "Required_WithDefault_Value",      DefaultInt };
-                yield return new object[] { "Required_WithDefault_Class",      DefaultString };
-            }
-        }
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                //                          Test Name                 Type                     Name  Dependency     Expected
 
-        /// <summary>
-        /// Test optional injection from empty container.
-        /// </summary>
-        /// <example>
-        /// 
-        /// public class TypeWithOptionalDependency
-        /// {
-        ///     [OptionalDependency]
-        ///     public int Field;
-        /// 
-        ///     [OptionalDependency(name)]
-        ///     public int Property { get; set; }
-        /// 
-        ///     [InjectionConstructor]
-        ///     public TypeWithOptionalDependency([OptionalDependency] int value) { }
-        /// 
-        ///     [InjectionMethod]
-        ///     public void Method([OptionalDependency(name)] int value) { }
-        /// }
-        /// 
-        /// /////////////////////////////////////
-        /// 
-        ///  var container = new UnityContainer()
-        ///      .RegisterType(typeof(PocoType), 
-        ///                    new InjectionField("Field"),
-        ///                    new InjectionProperty("Property"),
-        ///                    new InjectionMethod("Method"));
-        ///      
-        /// var result = container.Resolve(typeof(PocoType));
-        ///      
-        /// </example>
-        /// <param name="name">Name of the <see cref="Type"/> to resolve</param>
-        /// <param name="expected">Expected injected dependency value</param>
-        [DataTestMethod]
-        [DynamicData(nameof(Optional_Injected_ByName_Data))]
-        public virtual void Unregistered_Optional_Injected_ByName(string target, object expected)
-        {
-            var type = TargetType(target);
+                yield return new object[] { "Default_Value",          PocoType_Default_Value,  null, typeof(int),    DefaultInt     };
+                yield return new object[] { "Default_Class",          PocoType_Default_Class,  null, typeof(string), DefaultString  };
 
-            // Arrange
-            Container.RegisterType(type, GetMemberByName());
+                yield return new object[] { "Required_Default_Value", Required_Default_Value,  null, typeof(int),    DefaultInt     };
+                yield return new object[] { "Required_Default_Class", Required_Default_String, null, typeof(string), DefaultString  };
 
-            // Act
-            var instance = Container.Resolve(type) as PatternBase;
-
-            // Validate
-            Assert.IsNotNull(instance);
-            Assert.AreEqual(expected, instance.Value);
-        }
-
-        // Test Data
-        public static IEnumerable<object[]> Optional_Injected_ByName_Data
-        {
-            get
-            {
-                yield return new object[] { "Optional_Dependency_Value",       0 };
-                yield return new object[] { "Optional_Dependency_Class",       null };
-                yield return new object[] { "Optional_Dependency_Value_Named", 0 };
-                yield return new object[] { "Optional_Dependency_Class_Named", null };
+                yield return new object[] { "Optional_Default_Value", Optional_Default_Value,  null, typeof(int),    DefaultInt     };
+                yield return new object[] { "Optional_Default_Class", Optional_Default_Class,  null, typeof(string), DefaultString  };
             }
         }
     }

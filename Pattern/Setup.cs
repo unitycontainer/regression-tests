@@ -40,7 +40,7 @@ namespace Specification
         protected static Type Optional_Default_Value;
 
         protected static Type PocoType_Default_Class;
-        protected static Type Required_Default_Class;
+        protected static Type Required_Default_String;
         protected static Type Optional_Default_Class;
 
         protected IUnityContainer Container;

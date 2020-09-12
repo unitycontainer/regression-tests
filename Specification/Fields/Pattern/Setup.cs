@@ -27,7 +27,7 @@ namespace Specification.Pattern
             Optional_Default_Value = typeof(Optional_WithDefault_Value);
 
             PocoType_Default_Class = typeof(Implicit_WithDefault_Class);
-            Required_Default_Class = typeof(Required_WithDefault_Class);
+            Required_Default_String = typeof(Required_WithDefault_Class);
             Optional_Default_Class = typeof(Optional_WithDefault_Class);
         }
 

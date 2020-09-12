@@ -53,7 +53,7 @@ namespace Specification
                 //                          Test Name           Type                    Name    Dependency      Expected
 
                 yield return new object[] { "Required_Value",   Required_Default_Value, null,   typeof(int),    DefaultInt       };
-                yield return new object[] { "Required_Class",   Required_Default_Class, null,   typeof(string), DefaultString    };
+                yield return new object[] { "Required_Class",   Required_Default_String, null,   typeof(string), DefaultString    };
 
                 yield return new object[] { "Optional_Value",   Optional_Default_Value, null,   typeof(int),    DefaultInt       };
                 yield return new object[] { "Optional_Class",   Optional_Default_Class, null,   typeof(string), DefaultString    };
