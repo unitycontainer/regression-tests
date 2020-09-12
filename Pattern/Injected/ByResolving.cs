@@ -125,7 +125,6 @@ namespace Specification
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
         [DynamicData(nameof(Inject_WithDefault_Data))]
-        [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Injected_ByResolving_Default(string test, Type type, string name, Type dependency, object expected)
         {
             Type target = type.IsGenericTypeDefinition
@@ -135,7 +134,11 @@ namespace Specification
             Container.RegisterType(target, GetResolvedMember(dependency, name));
 
             // Act
-            _ = Container.Resolve(target, name) as PatternBase;
+            var instance = Container.Resolve(target) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
         }
 
         #endregion
