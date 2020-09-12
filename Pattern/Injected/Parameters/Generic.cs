@@ -71,7 +71,12 @@ namespace Specification
         [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Injected_ByGeneric_Required(string test, Type type, string name, Type dependency, object expected)
         {
-            if (!type.IsGenericType) throw new ResolutionFailedException(type, name, "Not Generic");
+            if (!type.IsGenericType)
+#if V4
+                throw new ResolutionFailedException(type, name, null, null);
+#else
+                throw new ResolutionFailedException(type, name, "Not Generic");
+#endif
 
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
@@ -109,7 +114,12 @@ namespace Specification
         [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Injected_ByGeneric_Optional(string test, Type type, string name, Type dependency, object expected)
         {
-            if (!type.IsGenericType) throw new ResolutionFailedException(type, name, "Not Generic");
+            if (!type.IsGenericType)
+#if V4
+                throw new ResolutionFailedException(type, name, null, null);
+#else
+            throw new ResolutionFailedException(type, name, "Not Generic");
+#endif
 
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)

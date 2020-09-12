@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Regression.Tests;
 using System;
 #if V4
 using Microsoft.Practices.Unity;
 #else
 using Unity;
 using Unity.Injection;
-using Unity.Regression.Tests;
 #endif
 
 namespace Specification

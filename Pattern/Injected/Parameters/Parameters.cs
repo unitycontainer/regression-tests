@@ -36,7 +36,7 @@ namespace Specification
         /// <param name="method"></param>
         [DataTestMethod]
         [DynamicData(nameof(Parameter_Validation_Data))]
-        [ExpectedException(typeof(ResolutionFailedException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public virtual void Injected_Parameters(string target, string method)
         {
             var type = Type.GetType(target ?? throw new InvalidOperationException());
@@ -52,39 +52,39 @@ namespace Specification
                 var factory = GetType().GetMethod(method, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 member = (InjectionMember)factory.Invoke(this, new[] { typeof(Unresolvable), null });
             }
-            catch (TargetInvocationException ex) 
+            catch (TargetInvocationException ex)
             when (ex.InnerException is NotSupportedException)
             {
-                throw new ResolutionFailedException(typeof(Unresolvable), null, "Not Supported");
+                throw new InvalidOperationException();
             }
 
-            try
+            if (type.IsGenericType)
             {
-                if (type.IsGenericType)
-                {
-                    Type definition = type.IsGenericTypeDefinition
-                                    ? type
-                                    : type.GetGenericTypeDefinition();
+                Type definition = type.IsGenericTypeDefinition
+                                ? type
+                                : type.GetGenericTypeDefinition();
     
-                    Container.RegisterType(definition, member);
-                }
-                else
-                {
-                    Container.RegisterType(type, member);
-                }
+                Container.RegisterType(definition, member);
             }
-            catch (InvalidOperationException)
+            else
             {
-                throw new ResolutionFailedException(typeof(Unresolvable), null, "Invalid Registration");
+                Container.RegisterType(type, member);
             }
 
 
             // Arrange
             RegisterTypes();
 
+            try
+            {
+                // Act
+                _ = Container.Resolve(constructed) as PatternBase;
+            }
+            catch (ResolutionFailedException ex)
+            {
+                throw new InvalidOperationException("As expected", ex);
+            }
 
-            // Act
-            _ = Container.Resolve(constructed) as PatternBase;
         }
 
         #region Test Data
