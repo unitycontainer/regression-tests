@@ -39,6 +39,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Remove="Specification\Variants\**" />
+	  <None Remove="Specification\Variants\**" />
+		<Compile Remove="Specification\Variants\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="MSTest.TestAdapter" Version="2.1.2">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
@@ -58,6 +64,11 @@
 
 	<ItemGroup>
 		<Compile Condition="'$(TargetFramework)' != 'net46'" Remove="Breaking Changes\BreakingChanges.v5.cs" />
+		<Compile Remove="Specification\Variants\Constructor.cs" />
+		<Compile Remove="Specification\Variants\Fields.cs" />
+		<Compile Remove="Specification\Variants\Methods.cs" />
+		<Compile Remove="Specification\Variants\Parameters.cs" />
+		<Compile Remove="Specification\Variants\Properties.cs" />
 	</ItemGroup>
 
 	<!-- Not supported by v4 -->
