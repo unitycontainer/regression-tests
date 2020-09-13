@@ -83,25 +83,12 @@
 		<Compile Remove="Resolution\Overrides\Dependency.V5.cs" />
 		<Compile Remove="Resolution\Enumerable\**" />
 		
-		<Compile Remove="Specification\Parameters\Injected\Value.V5.cs" />
-		<Compile Remove="Specification\Parameters\Injected\NonValue.V6.cs" />
-		<Compile Remove="Specification\Parameters\Injected\Value.V6.cs" />
-		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.cs" />
-		<Compile Remove="Specification\Parameters\Defaults\WithDefaults.V6.cs" />
  	    <Compile Remove="Specification\Fields\**" />
 		<Compile Remove="Specification\Variants\**" />
 		<Compile Remove="Specification\Constructors\Validation\**" />
 	</ItemGroup>
 
 	<!-- Not supported by v5 -->
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net461'">
-		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Injected\Value.V6.cs" />
-		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Injected\NonValue.V6.cs" />
-		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Defaults\WithDefaults.V6.cs" />
-		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Annotation\Optional.V6.cs" />
-		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Annotation\Required.V6.cs" />
-	</ItemGroup>
 
 
 
