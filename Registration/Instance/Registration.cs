@@ -44,7 +44,11 @@ namespace Registrations
         public void Null_Null_Null()
         {
             // Act
+#if V4
+            Container.RegisterInstance(null, null, null, (LifetimeManager)null);
+#else
             Container.RegisterInstance(null, null, null, (IInstanceLifetimeManager)null);
+#endif
         }
 
         [TestMethod]
