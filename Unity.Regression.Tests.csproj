@@ -86,6 +86,8 @@
  	    <Compile Remove="Specification\Fields\**" />
 		<Compile Remove="Specification\Variants\**" />
 		<Compile Remove="Specification\Constructors\Validation\**" />
+		
+		<Compile Remove="Specification.Pattern\Fields\**" />
 	</ItemGroup>
 
 	<!-- Not supported by v5 -->
