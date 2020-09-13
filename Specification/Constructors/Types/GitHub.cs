@@ -16,7 +16,7 @@ namespace Specification
         {
             using (IUnityContainer container = new UnityContainer())
             {
-                container.RegisterType(typeof(IRecInterface), typeof(RecClass), null, null, null);
+                container.RegisterType(typeof(IRecInterface), typeof(RecClass));
                 container.RegisterInstance(new RecClass());
                 var instance = container.Resolve<IRecInterface>(); //0
                 Assert.IsNotNull(instance);

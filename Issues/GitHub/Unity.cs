@@ -80,7 +80,7 @@ namespace Issues
         [TestMethod]
         public void Unity_156_Pass()
         {
-            using (var container = new UnityContainer())
+            using (IUnityContainer container = new UnityContainer())
             {
                 var td = new Service();
 
@@ -90,7 +90,7 @@ namespace Issues
                 Assert.AreSame(td, container.Resolve<IService>());
                 Assert.AreSame(td, container.Resolve<Service>());
             }
-            using (var container = new UnityContainer())
+            using (IUnityContainer container = new UnityContainer())
             {
                 var td = new Service();
 
@@ -134,7 +134,7 @@ namespace Issues
         [TestMethod]
         public void Unity_88()
         {
-            using (var unityContainer = new UnityContainer())
+            using (IUnityContainer unityContainer = new UnityContainer())
             {
                 unityContainer.RegisterInstance(true);
                 unityContainer.RegisterInstance("true", true);

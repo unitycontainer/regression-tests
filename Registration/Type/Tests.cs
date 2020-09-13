@@ -18,7 +18,7 @@ namespace Registrations
         public void DefaultLifetime()
         {
             // Arrange
-            Container.RegisterType(typeof(object), null, null, null);
+            Container.RegisterType(typeof(object));
 
             // Act
             var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
@@ -31,7 +31,7 @@ namespace Registrations
         public void CanSetLifetime()
         {
             // Arrange
-            Container.RegisterType(typeof(object), null, null, new ContainerControlledLifetimeManager());
+            Container.RegisterType(typeof(object), new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);

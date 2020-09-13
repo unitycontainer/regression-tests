@@ -213,7 +213,7 @@ namespace Issues
         [TestMethod]
         public void PerResolveIsHonoredInArrays()
         {
-            using (var container = new UnityContainer())
+            using (IUnityContainer container = new UnityContainer())
             {
                 container.RegisterType<ClassWithDependency>("instance1");
                 container.RegisterType<ClassWithDependency>("instance2");
@@ -230,7 +230,7 @@ namespace Issues
         [TestMethod]
         public void PerResolveIsHonoredInEnumerables()
         {
-            using (var container = new UnityContainer())
+            using (IUnityContainer container = new UnityContainer())
             {
                 container.RegisterType<ClassWithDependency>("instance1");
                 container.RegisterType<ClassWithDependency>("instance2");
@@ -248,7 +248,7 @@ namespace Issues
         [TestMethod]
         public void OverridesAreUsedInArrayElements()
         {
-            using (var container = new UnityContainer())
+            using (IUnityContainer container = new UnityContainer())
             {
                 var overrideInstance = new ClassWithPerResolveLifetime();
                 container.RegisterType<ClassWithDependency>("instance1");
