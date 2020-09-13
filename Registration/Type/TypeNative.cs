@@ -17,7 +17,7 @@ namespace Registrations
         public void RegistrationsToArray()
         {
             // Setup
-            Container.RegisterType(null, typeof(object), null, null);
+            Container.RegisterType(typeof(object));
 
             // Act
             var registrations = Container.Registrations.ToArray();
@@ -30,7 +30,7 @@ namespace Registrations
         public void Type()
         {
             // Setup
-            Container.RegisterType(null, typeof(object), null, null);
+            Container.RegisterType(typeof(object));
 
             // Act
             var registration = Container.Registrations
@@ -46,7 +46,7 @@ namespace Registrations
         public void Named()
         {
             // Setup
-            Container.RegisterType(null, typeof(object), Name, null);
+            Container.RegisterType(typeof(object), Name);
 
             // Act
             var registration = Container.Registrations
@@ -62,7 +62,7 @@ namespace Registrations
         public void WithLifetime()
         {
             // Setup
-            Container.RegisterType(null, typeof(object), null, new ContainerControlledLifetimeManager());
+            Container.RegisterType(typeof(object), new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations
@@ -78,7 +78,7 @@ namespace Registrations
         public void NamedWithLifetime()
         {
             // Setup
-            Container.RegisterType(null, typeof(object), Name, new ContainerControlledLifetimeManager());
+            Container.RegisterType(typeof(object), Name, new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations
@@ -95,7 +95,7 @@ namespace Registrations
         public void MappedType()
         {
             // Setup
-            Container.RegisterType(typeof(IService), typeof(Service), null, null);
+            Container.RegisterType(typeof(IService), typeof(Service));
 
             // Act
             var registration = Container.Registrations
@@ -114,7 +114,7 @@ namespace Registrations
         public void MappedNamed()
         {
             // Setup
-            Container.RegisterType(typeof(IService), typeof(Service), Name, null);
+            Container.RegisterType(typeof(IService), typeof(Service), Name);
 
             // Act
             var registration = Container.Registrations
@@ -133,7 +133,7 @@ namespace Registrations
         public void MappedWithLifetime()
         {
             // Setup
-            Container.RegisterType(typeof(IService), typeof(Service), null, new ContainerControlledLifetimeManager());
+            Container.RegisterType(typeof(IService), typeof(Service), new ContainerControlledLifetimeManager());
 
             // Act
             var registration = Container.Registrations
@@ -171,7 +171,7 @@ namespace Registrations
         public void Constructor()
         {
             // Setup
-            Container.RegisterType(null, typeof(TypeWithAmbiguousCtors), null, null, new InjectionConstructor());
+            Container.RegisterType(typeof(TypeWithAmbiguousCtors), new InjectionConstructor());
 
             // Act
             var result = Container.Resolve<TypeWithAmbiguousCtors>();
@@ -185,7 +185,7 @@ namespace Registrations
         public void ConstructorWithData()
         {
             // Setup
-            Container.RegisterType(null, typeof(TypeWithAmbiguousCtors), null, null, new InjectionConstructor("1", "2", "3"));
+            Container.RegisterType(typeof(TypeWithAmbiguousCtors), new InjectionConstructor("1", "2", "3"));
 
             // Act
             var result = Container.Resolve<TypeWithAmbiguousCtors>();

@@ -27,7 +27,7 @@ namespace Registrations
         public void Null_Null_Factory()
         {
             // Act
-            Container.RegisterFactory(null, null, (c,t,n)=> null, null);
+            Container.RegisterFactory(null, null, (c,t,n)=> null);
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace Registrations
         {
             // Arrange
             var value = new object();
-            Container.RegisterFactory(typeof(object), null, (c, t, n) => value, null);
+            Container.RegisterFactory(typeof(object), null, (c, t, n) => value);
 
             // Act
             var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
@@ -71,7 +71,7 @@ namespace Registrations
         {
             // Arrange
             var value = new object();
-            Container.RegisterFactory(typeof(object), null, (c, t, n) => value, null);
+            Container.RegisterFactory(typeof(object), null, (c, t, n) => value);
 
             // Act
             var instance = Container.Resolve<object>();
@@ -85,7 +85,7 @@ namespace Registrations
         {
             // Arrange
             var value = new object();
-            Container.RegisterFactory(typeof(object), Name, (c, t, n) => value, null);
+            Container.RegisterFactory(typeof(object), Name, (c, t, n) => value);
 
             // Act
             var instance = Container.Resolve<object>(Name);

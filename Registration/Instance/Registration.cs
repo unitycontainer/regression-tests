@@ -16,7 +16,7 @@ namespace Registrations
         public void IsNotNull()
         {
             // Arrange
-            Container.RegisterInstance(typeof(IService), null, Unresolvable.Create(), new ContainerControlledLifetimeManager());
+            Container.RegisterInstance(typeof(IService), Unresolvable.Create(), new ContainerControlledLifetimeManager());
             
             // Validate
             Assert.IsNotNull(Container.Resolve<IService>());
@@ -26,7 +26,7 @@ namespace Registrations
         public void IsNull()
         {
             // Arrange
-            Container.RegisterInstance(typeof(IService), null, null, new ContainerControlledLifetimeManager());
+            Container.RegisterInstance(typeof(IService), (object)null, new ContainerControlledLifetimeManager());
 
             // Validate
             Assert.IsNull(Container.Resolve<IService>());
@@ -36,7 +36,7 @@ namespace Registrations
         [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
         public void ThrowsOnNullNull()
         {
-            Container.RegisterInstance(null, null, null, new ContainerControlledLifetimeManager());
+            Container.RegisterInstance(null, null, (object)null, new ContainerControlledLifetimeManager());
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace Registrations
         public void Null_Null_Null()
         {
             // Act
-            Container.RegisterInstance(null, null, null, null);
+            Container.RegisterInstance(null, null, null, (IInstanceLifetimeManager)null);
         }
 
         [TestMethod]
@@ -52,7 +52,7 @@ namespace Registrations
         {
             // Arrange
             var value = new object();
-            Container.RegisterInstance(null, null, value, null);
+            Container.RegisterInstance(value);
 
             // Act
             var instance = Container.Resolve<object>();
@@ -66,7 +66,7 @@ namespace Registrations
         {
             // Arrange
             var value = new object();
-            Container.RegisterInstance(null, Name, value, null);
+            Container.RegisterInstance(Name, value);
 
             // Act
             var instance = Container.Resolve<object>(Name);
@@ -79,7 +79,7 @@ namespace Registrations
         public void Type_Null_Null()
         {
             // Arrange
-            Container.RegisterInstance(typeof(object), null, null, null);
+            Container.RegisterInstance(typeof(object), (object)null);
 
             // Act
             var instance = Container.Resolve<object>();
@@ -92,7 +92,7 @@ namespace Registrations
         public void Type_Null_Instance()
         {
             // Arrange
-            Container.RegisterInstance(typeof(object), null, Name, null);
+            Container.RegisterInstance(typeof(object), (object)Name);
 
             // Act
             var instance = Container.Resolve<object>();
@@ -105,7 +105,7 @@ namespace Registrations
         public void Type_Name_Instance()
         {
             // Arrange
-            Container.RegisterInstance(typeof(object), Name, Name, null);
+            Container.RegisterInstance(typeof(object), Name, Name);
 
             // Act
             var instance = Container.Resolve<object>(Name);
@@ -119,7 +119,7 @@ namespace Registrations
         {
             // Arrange
             var value = new object();
-            Container.RegisterInstance(typeof(object), null, value, null);
+            Container.RegisterInstance(typeof(object), null, value);
 
             // Act
             var registration = Container.Registrations.First(r => typeof(object) == r.RegisteredType);
