@@ -63,8 +63,6 @@
 	<!-- Not supported by v4 -->
 
 	<ItemGroup Condition="$(TargetFramework.StartsWith('net45')) == False">
-		<Compile Remove="Specification\Fields\Pattern\Unsupported.V4.cs" />
-		<Compile Remove="Specification\Properties\Pattern\Unsupported.V4.cs" />
 		<Compile Remove="Breaking Changes\BreakingChanges.v4.cs" />
 		<Compile Remove="Public.API\Compatibility\Compatibility.V4.cs" />
 	</ItemGroup>
@@ -96,10 +94,6 @@
 	</ItemGroup>
 
 	<!-- Not supported by v5 -->
-	<ItemGroup Condition="'$(TargetFramework)' != 'net46' AND '$(TargetFramework)' != 'net461'">
-		<Compile Remove="Specification\Fields\Pattern\Unsupported.V5.cs" />
-		<Compile Remove="Specification\Properties\Pattern\Unsupported.V5.cs" />
-	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net46' OR '$(TargetFramework)' == 'net461'">
 		<Compile Condition="'$(Configuration)' == 'Release'" Remove="Specification\Parameters\Injected\Value.V6.cs" />
