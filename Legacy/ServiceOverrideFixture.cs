@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 #if V4
 using Microsoft.Practices.Unity;
 #else
@@ -8,7 +9,7 @@ using Unity.Resolution;
 #endif
 
 
-namespace Unity.Legacy
+namespace Unity.V4
 {
     [TestClass]
     public class ServiceOverrideFixture
@@ -169,14 +170,12 @@ namespace Unity.Legacy
             Assert.IsNull(result.MySomething);
         }
 
-        //[TestMethod]
-        //public void CreatingAPropertyOverrideForANullValueThrows()
-        //{
-        //    AssertExtensions.AssertException<ArgumentNullException>(() =>
-        //    {
-        //        new PropertyOverride("ignored", null);
-        //    });
-        //}
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void CreatingAPropertyOverrideForANullValueThrows()
+        {
+            new PropertyOverride("ignored", null);
+        }
 
         [TestMethod]
         public void CanOverrideDependencyWithExplicitInjectionParameterValue()
@@ -193,23 +192,19 @@ namespace Unity.Legacy
             Assert.AreEqual(50, instance.Inner.LogLevel);
         }
 
-        //[TestMethod]
-        //public void CreatingATypeOverrideForANullTypeThrows()
-        //{
-        //    AssertExtensions.AssertException<ArgumentNullException>(() =>
-        //    {
-        //        new TypeBasedOverride(null, new PropertyOverride("ignored", 10));
-        //    });
-        //}
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void CreatingATypeOverrideForANullTypeThrows()
+        {
+            new TypeBasedOverride(null, new PropertyOverride("ignored", 10));
+        }
 
-        //[TestMethod]
-        //public void CreatingATypeOverrideForANullOverrideThrows()
-        //{
-        //    AssertExtensions.AssertException<ArgumentNullException>(() =>
-        //    {
-        //        new TypeBasedOverride(typeof(object), null);
-        //    });
-        //}
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void CreatingATypeOverrideForANullOverrideThrows()
+        {
+            new TypeBasedOverride(typeof(object), null);
+        }
 
         public class SimpleTestObject
         {
