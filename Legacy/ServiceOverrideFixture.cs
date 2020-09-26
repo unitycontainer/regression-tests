@@ -192,6 +192,7 @@ namespace Unity.V4
             Assert.AreEqual(50, instance.Inner.LogLevel);
         }
 
+#if NET45
 #pragma warning disable CS0618 // Type or member is obsolete
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -207,7 +208,7 @@ namespace Unity.V4
             new TypeBasedOverride(typeof(object), null);
         }
 #pragma warning restore CS0618 // Type or member is obsolete
-
+#endif
         public class SimpleTestObject
         {
             public SimpleTestObject()
