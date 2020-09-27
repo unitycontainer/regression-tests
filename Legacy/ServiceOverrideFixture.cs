@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.ComponentModel.Composition;
 #if V4
 using Microsoft.Practices.Unity;
 #else
@@ -111,6 +112,20 @@ namespace Unity.V4
         public void ParameterOverrideCanResolveOverride()
         {
             var container = new UnityContainer()
+                .RegisterType<ISomething, Something1>()
+                .RegisterType<ISomething, Something2>("other");
+
+            var result = container.Resolve<ObjectTakingASomething>(
+                new ParameterOverride("something", new ResolvedParameter<ISomething>("other")));
+
+            Assert.IsInstanceOfType(result.MySomething, typeof(Something2));
+        }
+
+        [TestMethod]
+        public void ParameterOverrideCanResolveOverride_Registered()
+        {
+            var container = new UnityContainer()
+                .RegisterType<ObjectTakingASomething>()
                 .RegisterType<ISomething, Something1>()
                 .RegisterType<ISomething, Something2>("other");
 
@@ -242,10 +257,10 @@ namespace Unity.V4
         public class ObjectTakingASomething
         {
             public ISomething MySomething { get; set; }
-            public ObjectTakingASomething()
-            {
-            }
+            
+            public ObjectTakingASomething() { }
 
+            [ImportingConstructor]
             public ObjectTakingASomething(ISomething something)
             {
                 MySomething = something;
