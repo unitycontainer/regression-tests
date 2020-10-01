@@ -151,6 +151,22 @@ namespace Unity.V4
         }
 
 
+
+        [TestMethod]
+        public void Constructor_Override_Registered()
+        {
+            var container = new UnityContainer()
+                .RegisterType<ObjectTakingSomething>(new InjectionConstructor(typeof(Something1)))
+                .RegisterType<ISomething, Something1>()
+                .RegisterType<ISomething, Something2>("other");
+
+            var result = container.Resolve<ObjectTakingSomething>(
+                new ParameterOverride("something", new ResolvedParameter<ISomething>("other")));
+
+            Assert.IsInstanceOfType(result.MySomething, typeof(Something2));
+        }
+
+
         public class ObjectTakingSomething
         {
             public ISomething MySomething { get; set; }
