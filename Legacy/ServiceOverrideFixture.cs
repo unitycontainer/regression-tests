@@ -57,6 +57,21 @@ namespace Unity.V4
         }
 
         [TestMethod]
+        public void OverrideIsUsedInRecursiveBuilds_Registered()
+        {
+            const int ExpectedValue = 42; // Just need a number, value has no significance.
+            var container = new UnityContainer();
+
+            container.RegisterType<SimpleTestObject>()
+                     .RegisterType<ObjectThatDependsOnSimpleObject>();
+
+            var result = container.Resolve<ObjectThatDependsOnSimpleObject>(
+                new ParameterOverride("x", ExpectedValue));
+
+            Assert.AreEqual(ExpectedValue, result.TestObject.X);
+        }
+
+        [TestMethod]
         public void NonMatchingOverridesAreIgnored()
         {
             const int ExpectedValue = 42; // Just need a number, value has no significance.
@@ -271,10 +286,6 @@ namespace Unity.V4
 #endif
         public class SimpleTestObject
         {
-            public SimpleTestObject()
-            {
-            }
-
             public SimpleTestObject(int x)
             {
                 X = x;
