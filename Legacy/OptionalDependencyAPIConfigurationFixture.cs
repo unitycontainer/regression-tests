@@ -1,7 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 #if V4
 using Microsoft.Practices.Unity;
 #else
@@ -68,7 +65,7 @@ namespace Unity.V4
         {
             container.RegisterType<GuineaPig>(
                 new InjectionConstructor(),
-                new InjectionProperty("Pig", new OptionalParameter<IGuineaPig>()));
+                new InjectionProperty(nameof(GuineaPig.Pig), new OptionalParameter<IGuineaPig>()));
 
             var result = container.Resolve<GuineaPig>();
 
@@ -82,7 +79,7 @@ namespace Unity.V4
 
             container.RegisterType<GuineaPig>(
                     new InjectionConstructor(),
-                    new InjectionMethod("SetPig", new OptionalParameter<IGuineaPig>("named")))
+                    new InjectionMethod(nameof(GuineaPig.SetPig), new OptionalParameter<IGuineaPig>("named")))
                 .RegisterInstance("named", expected);
 
             var result = container.Resolve<GuineaPig>();
