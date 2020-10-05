@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 #if V4
 using Microsoft.Practices.Unity;
 #else
@@ -17,7 +16,7 @@ namespace Unity.V4
         [TestMethod]
         public void CanProvideConstructorParameterViaResolveCall()
         {
-            const int ConfiguredValue = 15; // Just need a number, value has no signficance.
+            const int ConfiguredValue = 15; // Just need a number, value has no significance.
             const int ExpectedValue = 42; // Just need a number, value has no significance.
             var container = new UnityContainer()
                 .RegisterType<SimpleTestObject>(new InjectionConstructor(ConfiguredValue));
@@ -31,7 +30,7 @@ namespace Unity.V4
         [TestMethod]
         public void OverrideDoesntLastAfterResolveCall()
         {
-            const int ConfiguredValue = 15; // Just need a number, value has no signficance.
+            const int ConfiguredValue = 15; // Just need a number, value has no significance.
             const int OverrideValue = 42; // Just need a number, value has no significance.
             var container = new UnityContainer()
                 .RegisterType<SimpleTestObject>(new InjectionConstructor(ConfiguredValue));
@@ -86,12 +85,28 @@ namespace Unity.V4
             Assert.AreEqual(ExpectedValue, result.X);
         }
 
+
+        [TestMethod]
+        public void NonMatchingOverridesAreIgnored_Registered()
+        {
+            const int ExpectedValue = 42; // Just need a number, value has no significance.
+            var container = new UnityContainer().RegisterType<SimpleTestObject>();
+
+            var result = container.Resolve<SimpleTestObject>(
+                new ParameterOverrides
+                {
+                    { "y", ExpectedValue * 2 },
+                    { "x", ExpectedValue }
+                }.OnType<SimpleTestObject>());
+
+            Assert.AreEqual(ExpectedValue, result.X);
+        }
+
         [TestMethod]
         public void DependencyOverrideOccursEverywhereTypeMatches()
         {
             var container = new UnityContainer()
-                .RegisterType<ObjectThatDependsOnSimpleObject>(
-                    new InjectionProperty("OtherTestObject"))
+                .RegisterType<ObjectThatDependsOnSimpleObject>(new InjectionProperty("OtherTestObject"))
                 .RegisterType<SimpleTestObject>(new InjectionConstructor());
 
             var overrideValue = new SimpleTestObject(15); // arbitrary value
@@ -102,25 +117,6 @@ namespace Unity.V4
             Assert.AreSame(overrideValue, result.TestObject);
             Assert.AreSame(overrideValue, result.OtherTestObject);
         }
-
-        //[TestMethod]
-        //public void ParameterOverrideMatchesWhenCurrentOperationIsResolvingMatchingParameter()
-        //{
-        //    var context = new MockBuilderContext
-        //    {
-        //        CurrentOperation = new ConstructorArgumentResolveOperation(typeof(SimpleTestObject), "int x", "x")
-        //    };
-
-        //    var overrider = new ParameterOverride("x", 42);
-
-        //    var resolver = overrider.GetResolver(context, typeof(int));
-
-        //    Assert.IsNotNull(resolver);
-        //    AssertExtensions.IsInstanceOfType(resolver, typeof(LiteralValueDependencyResolverPolicy));
-
-        //    var result = (int)resolver.Resolve(context);
-        //    Assert.AreEqual(42, result);
-        //}
 
         [TestMethod]
         public void ParameterOverrideCanResolveOverride()
@@ -198,14 +194,14 @@ namespace Unity.V4
 
             Assert.IsNull(result.MySomething);
         }
-
+#if NET45
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void CreatingAPropertyOverrideForANullValueThrows()
         {
             new PropertyOverride("ignored", null);
         }
-
+#endif
         [TestMethod]
         public void CanOverrideDependencyWithExplicitInjectionParameterValue()
         {
