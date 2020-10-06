@@ -35,7 +35,11 @@ namespace Specification.Pattern
             => new InjectionProperty("Property");
 
         protected override InjectionMember GetByNameOptional(Type type, string name)
+#if NET46 || NET461
+            => new InjectionProperty("Property", true);
+#else
             => new OptionalProperty("Property");
+#endif
 
         protected override InjectionMember GetResolvedMember(Type type, string name) 
             => new InjectionProperty("Property", new ResolvedParameter(type, name));
@@ -44,7 +48,11 @@ namespace Specification.Pattern
             => new InjectionProperty("Property", new OptionalParameter(type, name));
 
         protected override InjectionMember GetOptionalOptional(Type type, string name)
+#if NET46 || NET461
+            => new InjectionProperty("Property", new OptionalParameter(type, name));
+#else
             => new OptionalProperty("Property", new OptionalParameter(type, name));
+#endif
 
         protected override InjectionMember GetGenericMember(Type _, string name)
             => new InjectionProperty("Property", new GenericParameter("T", name));
@@ -56,6 +64,10 @@ namespace Specification.Pattern
             => new InjectionProperty("Property", argument);
 
         protected override InjectionMember GetInjectionOptional(object argument)
+#if NET46 || NET461
+            => new InjectionProperty("Property", argument);
+#else
             => new OptionalProperty("Property", argument);
+#endif
     }
 }

@@ -35,7 +35,11 @@ namespace Specification.Pattern
             => new InjectionField("Field");
 
         protected override InjectionMember GetByNameOptional(Type type, string name)
+#if NET46 || NET461
+            => new InjectionField("Field", true);
+#else
             => new OptionalField("Field");
+#endif
 
         protected override InjectionMember GetResolvedMember(Type type, string name) 
             => new InjectionField("Field", new ResolvedParameter(type, name));
@@ -44,7 +48,11 @@ namespace Specification.Pattern
             => new InjectionField("Field", new OptionalParameter(type, name));
 
         protected override InjectionMember GetOptionalOptional(Type type, string name)
+#if NET46 || NET461
+            => new InjectionField("Field", new OptionalParameter(type, name));
+#else
             => new OptionalField("Field", new OptionalParameter(type, name));
+#endif
 
         protected override InjectionMember GetGenericMember(Type _, string name)
             => new InjectionField("Field", new GenericParameter("T", name));
@@ -56,6 +64,10 @@ namespace Specification.Pattern
             => new InjectionField("Field", argument);
 
         protected override InjectionMember GetInjectionOptional(object argument)
+#if NET46 || NET461
+            => new InjectionField("Field", argument);
+#else
             => new OptionalField("Field", argument);
+#endif
     }
 }
