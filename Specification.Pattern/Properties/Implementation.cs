@@ -35,7 +35,9 @@ namespace Specification.Pattern
             => new InjectionProperty("Property");
 
         protected override InjectionMember GetByNameOptional(Type type, string name)
-#if NET46 || NET461
+#if NET45 || NET451
+            => new InjectionProperty("Property");
+#elif NET46 || NET461
             => new InjectionProperty("Property", true);
 #else
             => new OptionalProperty("Property");

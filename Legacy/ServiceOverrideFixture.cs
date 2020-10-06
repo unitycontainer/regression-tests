@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 #if V4
+using System;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
