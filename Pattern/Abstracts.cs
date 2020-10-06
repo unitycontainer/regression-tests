@@ -11,17 +11,22 @@ namespace Specification
 {
     public abstract partial class VerificationPattern
     {
-        protected abstract InjectionMember Get_ByName_Member(Type type, string name);
+        protected abstract InjectionMember GetByNameMember(Type type, string name);
 
-        protected abstract InjectionMember Get_Resolved_Member(Type type, string name);
+        protected abstract InjectionMember GetByNameOptional(Type type, string name);
 
-        protected abstract InjectionMember Get_Optional_Member(Type type, string name);
+        protected abstract InjectionMember GetResolvedMember(Type type, string name);
 
-        protected abstract InjectionMember Get_Generic_Member(Type type, string name);
+        protected abstract InjectionMember GetOptionalMember(Type type, string name);
 
-        protected abstract InjectionMember Get_GenericOptional_Member(Type type, string name);
+        protected abstract InjectionMember GetOptionalOptional(Type type, string name);
+
+        protected abstract InjectionMember GetGenericMember(Type type, string name);
+
+        protected abstract InjectionMember GetGenericOptional(Type type, string name);
         
-
         protected abstract InjectionMember GetInjectionMember(object argument);
+
+        protected abstract InjectionMember GetInjectionOptional(object argument);
     }
 }

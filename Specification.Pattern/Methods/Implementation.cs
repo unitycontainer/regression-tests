@@ -45,22 +45,31 @@ namespace Specification.Pattern
             Type_Optional_Generic_Out = typeof(Optional_Generic_Out<>).FullName;
         }
 
-        protected override InjectionMember Get_ByName_Member(Type type, string name)
+        protected override InjectionMember GetByNameMember(Type type, string name)
             => new InjectionMethod("Method");
 
-        protected override InjectionMember Get_Resolved_Member(Type type, string name) 
+        protected override InjectionMember GetByNameOptional(Type type, string name)
+            => new InjectionMethod("Method");
+
+        protected override InjectionMember GetResolvedMember(Type type, string name) 
             => new InjectionMethod("Method", new ResolvedParameter(type, name));
 
-        protected override InjectionMember Get_Optional_Member(Type type, string name)
+        protected override InjectionMember GetOptionalMember(Type type, string name)
             => new InjectionMethod("Method", new ResolvedParameter(type, name));
 
-        protected override InjectionMember Get_Generic_Member(Type _, string name)
+        protected override InjectionMember GetOptionalOptional(Type type, string name)
+            => new InjectionMethod("Method", new OptionalParameter(type, name));
+
+        protected override InjectionMember GetGenericMember(Type _, string name)
             => new InjectionMethod("Method", new GenericParameter("T", name));
 
-        protected override InjectionMember Get_GenericOptional_Member(Type type, string name)
+        protected override InjectionMember GetGenericOptional(Type type, string name)
             => new InjectionMethod("Method", new OptionalGenericParameter("T", name));
 
         protected override InjectionMember GetInjectionMember(object argument) 
+            => new InjectionMethod("Method", argument);
+
+        protected override InjectionMember GetInjectionOptional(object argument)
             => new InjectionMethod("Method", argument);
     }
 }

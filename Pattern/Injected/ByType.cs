@@ -92,7 +92,7 @@ namespace Specification
                         ? type.MakeGenericType(dependency)
                         : type;
             // Arrange
-            Container.RegisterType(target, GetInjectionMember(dependency));
+            Container.RegisterType(target, GetInjectionOptional(dependency));
 
             // Act
             var instance = Container.Resolve(target, name) as PatternBase;

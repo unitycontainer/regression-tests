@@ -31,23 +31,31 @@ namespace Specification.Pattern
             Optional_Default_Class = typeof(Optional_WithDefault_Class);
         }
 
-        protected override InjectionMember Get_ByName_Member(Type type, string name)
+        protected override InjectionMember GetByNameMember(Type type, string name)
             => new InjectionProperty("Property");
 
+        protected override InjectionMember GetByNameOptional(Type type, string name)
+            => new OptionalProperty("Property");
 
-        protected override InjectionMember Get_Resolved_Member(Type type, string name) 
+        protected override InjectionMember GetResolvedMember(Type type, string name) 
             => new InjectionProperty("Property", new ResolvedParameter(type, name));
 
-        protected override InjectionMember Get_Optional_Member(Type type, string name)
+        protected override InjectionMember GetOptionalMember(Type type, string name)
             => new InjectionProperty("Property", new OptionalParameter(type, name));
 
-        protected override InjectionMember Get_Generic_Member(Type _, string name)
+        protected override InjectionMember GetOptionalOptional(Type type, string name)
+            => new OptionalProperty("Property", new OptionalParameter(type, name));
+
+        protected override InjectionMember GetGenericMember(Type _, string name)
             => new InjectionProperty("Property", new GenericParameter("T", name));
 
-        protected override InjectionMember Get_GenericOptional_Member(Type type, string name)
+        protected override InjectionMember GetGenericOptional(Type type, string name)
             => new InjectionProperty("Property", new OptionalGenericParameter("T", name));
 
         protected override InjectionMember GetInjectionMember(object argument) 
             => new InjectionProperty("Property", argument);
+
+        protected override InjectionMember GetInjectionOptional(object argument)
+            => new OptionalProperty("Property", argument);
     }
 }

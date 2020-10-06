@@ -44,6 +44,20 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
+        [DataTestMethod]
+        [DynamicData(nameof(Annotated_WithDefault_Data))]
+        public virtual void Annotated_Default_Registered(string test, Type type, string name, Type dependency, object expected)
+        {
+            // Act
+            Container.RegisterType(type, name);
+
+            var instance = Container.Resolve(type, name) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
+        }
+
         // Test Data
         public static IEnumerable<object[]> Annotated_WithDefault_Data
         {

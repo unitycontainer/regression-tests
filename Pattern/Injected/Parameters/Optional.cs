@@ -35,7 +35,7 @@ namespace Specification
                         ? type.MakeGenericType(dependency)
                         : type;
             // Arrange
-            Container.RegisterType(target, Get_Optional_Member(dependency, name));
+            Container.RegisterType(target, GetOptionalMember(dependency, name));
 
             RegisterTypes();
 
@@ -68,7 +68,7 @@ namespace Specification
                         ? type.MakeGenericType(dependency)
                         : type;
             // Arrange
-            Container.RegisterType(target, Get_Optional_Member(dependency, name));
+            Container.RegisterType(target, GetOptionalMember(dependency, name));
 
             // Act
             var instance = Container.Resolve(target) as PatternBase;
@@ -103,7 +103,7 @@ namespace Specification
                         ? type.MakeGenericType(dependency)
                         : type;
             // Arrange
-            Container.RegisterType(target, Get_Optional_Member(dependency, name));
+            Container.RegisterType(target, GetOptionalMember(dependency, name));
 
             // Act
             var instance = Container.Resolve(target) as PatternBase;
@@ -134,7 +134,7 @@ namespace Specification
                         ? type.MakeGenericType(dependency)
                         : type;
             // Arrange
-            Container.RegisterType(target, Get_Optional_Member(dependency, name));
+            Container.RegisterType(target, GetOptionalMember(dependency, name));
 
             // Act
             var instance = Container.Resolve(target) as PatternBase;

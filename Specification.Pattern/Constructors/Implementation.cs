@@ -46,22 +46,31 @@ namespace Specification.Pattern
         }
 
 
-        protected override InjectionMember Get_ByName_Member(Type type, string name)
+        protected override InjectionMember GetByNameMember(Type type, string name)
             => throw new NotSupportedException();
 
-        protected override InjectionMember Get_Resolved_Member(Type type, string name) 
+        protected override InjectionMember GetByNameOptional(Type type, string name)
+            => throw new NotSupportedException();
+
+        protected override InjectionMember GetResolvedMember(Type type, string name) 
             => new InjectionConstructor(new ResolvedParameter(type, name));
 
-        protected override InjectionMember Get_Optional_Member(Type type, string name)
+        protected override InjectionMember GetOptionalMember(Type type, string name)
+            => new InjectionConstructor(new InjectionParameter(type, name)); 
+
+        protected override InjectionMember GetOptionalOptional(Type type, string name)
             => new InjectionConstructor(new OptionalParameter(type, name));
 
-        protected override InjectionMember Get_Generic_Member(Type _, string name)
+        protected override InjectionMember GetGenericMember(Type _, string name)
             => new InjectionConstructor(new GenericParameter("T", name));
 
-        protected override InjectionMember Get_GenericOptional_Member(Type type, string name)
+        protected override InjectionMember GetGenericOptional(Type type, string name)
             => new InjectionConstructor(new OptionalGenericParameter("T", name));
 
         protected override InjectionMember GetInjectionMember(object argument) 
+            => new InjectionConstructor(argument);
+
+        protected override InjectionMember GetInjectionOptional(object argument)
             => new InjectionConstructor(argument);
     }
 }
