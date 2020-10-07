@@ -25,7 +25,7 @@ namespace Specification
         protected const string DefaultString = "default";
         protected const string InjectedString = "injected";
         protected const string RegisteredString = "registered";
-        public readonly static Unresolvable Singleton = Unresolvable.Create("singleton");
+        public readonly static Unresolvable RegisteredUnresolvable = Unresolvable.Create("singleton");
         public readonly static Unresolvable NamedSingleton = Unresolvable.Create("named");
         public readonly static Unresolvable InjectedSingleton = SubUnresolvable.Create("injected");
         public readonly static object RegisteredStruct = new TestStruct(55, "struct");
@@ -74,7 +74,7 @@ namespace Specification
         {
             Container.RegisterInstance(RegisteredInt)
                      .RegisterInstance(RegisteredString)
-                     .RegisterInstance(Singleton)
+                     .RegisterInstance(RegisteredUnresolvable)
                      .RegisterInstance(typeof(TestStruct), RegisteredStruct)
 #if !V4 // Only Unity v5 and up allow `null` as a value
                      .RegisterInstance(typeof(string),       Null, (object)null)

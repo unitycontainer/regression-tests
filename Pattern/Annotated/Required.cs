@@ -63,12 +63,12 @@ namespace Specification
                 //                          Test Name                   Type                    Name    Dependency         Expected
 
                 yield return new object[] { "Required_Value",           Required_Value,         null, typeof(int),          RegisteredInt };
-                yield return new object[] { "Required_Class",           Required_Ref,           null, typeof(Unresolvable), Singleton };
+                yield return new object[] { "Required_Class",           Required_Ref,           null, typeof(Unresolvable), RegisteredUnresolvable };
                 yield return new object[] { "Required_Struct",          Required_Struct,        null, typeof(TestStruct),   RegisteredStruct };
 
                 yield return new object[] { "Required_Value_Named",     Required_Value,         Name, typeof(int),          RegisteredInt };
-                yield return new object[] { "Required_Class_Named",     Required_Ref,           Name, typeof(Unresolvable), Singleton };
-                yield return new object[] { "Required_Class_Null",      Required_Ref,           Null, typeof(Unresolvable), Singleton };
+                yield return new object[] { "Required_Class_Named",     Required_Ref,           Name, typeof(Unresolvable), RegisteredUnresolvable };
+                yield return new object[] { "Required_Class_Null",      Required_Ref,           Null, typeof(Unresolvable), RegisteredUnresolvable };
             }
         }
     }

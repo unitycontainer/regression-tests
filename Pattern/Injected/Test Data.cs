@@ -65,39 +65,39 @@ namespace Specification
 
                 // Implicit
                                                                         
-                yield return new object[] { "Implicit_Value",           PocoType,                   null,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Implicit_Class",           PocoType,                   null,   typeof(Unresolvable),   Singleton        };
-                yield return new object[] { "Implicit_Struct",          PocoType,                   null,   typeof(TestStruct),     RegisteredStruct };
+                yield return new object[] { "Implicit_Value",           PocoType,                   null,   typeof(int),            RegisteredInt           };
+                yield return new object[] { "Implicit_Class",           PocoType,                   null,   typeof(Unresolvable),   RegisteredUnresolvable  };
+                yield return new object[] { "Implicit_Struct",          PocoType,                   null,   typeof(TestStruct),     RegisteredStruct        };
 
-                yield return new object[] { "Implicit_Value_Type_Name", PocoType,                   null,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Implicit_Class_Type_Name", PocoType,                   null,   typeof(Unresolvable),   Singleton        };
+                yield return new object[] { "Implicit_Value_Type_Name", PocoType,                   null,   typeof(int),            RegisteredInt           };
+                yield return new object[] { "Implicit_Class_Type_Name", PocoType,                   null,   typeof(Unresolvable),   RegisteredUnresolvable  };
 
-                yield return new object[] { "Implicit_Default_Value",   PocoType_Default_Value,     null,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Implicit_Default_Class",   PocoType_Default_Class,     null,   typeof(string),         RegisteredString };
+                yield return new object[] { "Implicit_Default_Value",   PocoType_Default_Value,     null,   typeof(int),            RegisteredInt           };
+                yield return new object[] { "Implicit_Default_Class",   PocoType_Default_Class,     null,   typeof(string),         RegisteredString        };
 
                 // Required
 
-                yield return new object[] { "Required_Value",           Required,                   null,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Required_Class",           Required,                   null,   typeof(Unresolvable),   Singleton        };
-                yield return new object[] { "Required_Struct",          Required,                   null,   typeof(TestStruct),     RegisteredStruct };
+                yield return new object[] { "Required_Value",           Required,                   null,   typeof(int),            RegisteredInt           };
+                yield return new object[] { "Required_Class",           Required,                   null,   typeof(Unresolvable),   RegisteredUnresolvable  };
+                yield return new object[] { "Required_Struct",          Required,                   null,   typeof(TestStruct),     RegisteredStruct        };
 
-                yield return new object[] { "Required_Value_Named",     Required_Named,             Name,   typeof(int),            NamedInt         };
-                yield return new object[] { "Required_Class_Named",     Required_Named,             Name,   typeof(Unresolvable),   NamedSingleton   };
+                yield return new object[] { "Required_Value_Named",     Required_Named,             Name,   typeof(int),            NamedInt                };
+                yield return new object[] { "Required_Class_Named",     Required_Named,             Name,   typeof(Unresolvable),   NamedSingleton          };
 
-                yield return new object[] { "Required_Default_Value",   Required_Default_Value,     null,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Required_Default_Class",   Required_Default_String,    null,   typeof(string),         RegisteredString };
+                yield return new object[] { "Required_Default_Value",   Required_Default_Value,     null,   typeof(int),            RegisteredInt           };
+                yield return new object[] { "Required_Default_Class",   Required_Default_String,    null,   typeof(string),         RegisteredString        };
 
                 //// Optional
 
-                yield return new object[] { "Optional_Value",           Optional,                   null,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Optional_Class",           Optional,                   null,   typeof(Unresolvable),   Singleton        };
-                yield return new object[] { "Optional_Struct",          Optional,                   null,   typeof(TestStruct),     RegisteredStruct };
+                yield return new object[] { "Optional_Value",           Optional,                   null,   typeof(int),            RegisteredInt           };
+                yield return new object[] { "Optional_Class",           Optional,                   null,   typeof(Unresolvable),   RegisteredUnresolvable  };
+                yield return new object[] { "Optional_Struct",          Optional,                   null,   typeof(TestStruct),     RegisteredStruct        };
 
-                yield return new object[] { "Optional_Value_Named",     Optional_Named,             Name,   typeof(int),            NamedInt         };
-                yield return new object[] { "Optional_Class_Named",     Optional_Named,             Name,   typeof(Unresolvable),   NamedSingleton   };
+                yield return new object[] { "Optional_Value_Named",     Optional_Named,             Name,   typeof(int),            NamedInt                };
+                yield return new object[] { "Optional_Class_Named",     Optional_Named,             Name,   typeof(Unresolvable),   NamedSingleton          };
 
-                yield return new object[] { "Optional_Default_Value",   Optional_Default_Value,     null,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Optional_Default_Class",   Optional_Default_Class,     null,   typeof(string),         RegisteredString };
+                yield return new object[] { "Optional_Default_Value",   Optional_Default_Value,     null,   typeof(int),            RegisteredInt           };
+                yield return new object[] { "Optional_Default_Class",   Optional_Default_Class,     null,   typeof(string),         RegisteredString        };
             }
         }
 

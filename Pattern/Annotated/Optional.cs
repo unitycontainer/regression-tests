@@ -52,6 +52,29 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
+        /// <summary>
+        /// Tests dependency resolution from empty container.
+        /// </summary>
+        /// <param name="test">Test name</param>
+        /// <param name="type">Resolved type</param>
+        /// <param name="name">Contract name</param>
+        /// <param name="dependency">Dependency type</param>
+        /// <param name="expected">Expected value</param>
+        [DataTestMethod]
+        [DynamicData(nameof(Annotated_Optional_Data))]
+        public virtual void Annotated_Optional_Registered(string test, Type type, string name, Type dependency, object expected)
+        {
+            // Arrange
+            Container.RegisterType(type, name);
+
+            // Act
+            var instance = Container.Resolve(type) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
+        }
+
 
         // Test Data
         public static IEnumerable<object[]> Annotated_Optional_Data

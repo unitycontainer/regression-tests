@@ -57,12 +57,12 @@ namespace Specification
                 //                          Test Name       Type            Name    Dependency              Expected         
                                                                                                                                  
                 yield return new object[] { "Value",        Poco_Value,     null,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Class",        Poco_Ref,       null,   typeof(Unresolvable),   Singleton        };
+                yield return new object[] { "Class",        Poco_Ref,       null,   typeof(Unresolvable),   RegisteredUnresolvable        };
                 yield return new object[] { "Struct",       Poco_Struct,    null,   typeof(TestStruct),     RegisteredStruct };
                                                                                                                                  
                 yield return new object[] { "Value_Named",  Poco_Value,     Name,   typeof(int),            RegisteredInt    };
-                yield return new object[] { "Class_Named",  Poco_Ref,       Name,   typeof(Unresolvable),   Singleton        };
-                yield return new object[] { "Class_Null",   Poco_Ref,       Null,   typeof(Unresolvable),   Singleton        };
+                yield return new object[] { "Class_Named",  Poco_Ref,       Name,   typeof(Unresolvable),   RegisteredUnresolvable        };
+                yield return new object[] { "Class_Null",   Poco_Ref,       Null,   typeof(Unresolvable),   RegisteredUnresolvable        };
             }
         }
 

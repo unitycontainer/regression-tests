@@ -26,6 +26,23 @@ namespace Specification
             Assert.AreEqual(expected, instance.Value);
         }
 
+        [DataTestMethod]
+        [DynamicData(nameof(Annotated_Resolvable_Data))]
+        public virtual void Annotated_Resolvable_Registered(string test, Type type, string name, Type dependency, object expected)
+        {
+            // Arrange
+            RegisterTypes();
+            Container.RegisterType(type, name);
+
+            // Act
+            var instance = Container.Resolve(type, name) as PatternBase;
+
+            // Validate
+            Assert.IsNotNull(instance);
+            Assert.AreEqual(expected, instance.Value);
+        }
+
+
         // Test Data
         public static IEnumerable<object[]> Annotated_Resolvable_Data
         {
@@ -50,7 +67,7 @@ namespace Specification
                 // Required
 
                 yield return new object[] { "Required_Value",           Required_Value,         null,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Required_Class",           Required_Ref,           null,   typeof(Unresolvable),   Singleton           };
+                yield return new object[] { "Required_Class",           Required_Ref,           null,   typeof(Unresolvable),   RegisteredUnresolvable           };
                 yield return new object[] { "Required_Struct",          Required_Struct,        null,   typeof(TestStruct),     RegisteredStruct    };
 
                 yield return new object[] { "Required_Value_Named",     Required_Named_Value,   null,   typeof(int),            NamedInt            };
@@ -62,7 +79,7 @@ namespace Specification
                 // Optional
 
                 yield return new object[] { "Optional_Value",           Optional_Value,         null,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Optional_Class",           Optional_Ref,           null,   typeof(Unresolvable),   Singleton           };
+                yield return new object[] { "Optional_Class",           Optional_Ref,           null,   typeof(Unresolvable),   RegisteredUnresolvable           };
                 yield return new object[] { "Optional_Struct",          Optional_Struct,        null,   typeof(TestStruct),     RegisteredStruct    };
 
                 yield return new object[] { "Optional_Value_Named",     Optional_Named_Value,   null,   typeof(int),            NamedInt            };

@@ -41,12 +41,12 @@ namespace Specification
                 // Simple poco type
 
                 yield return new object[] { "Generic_Value",            Poco_Value,             null,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Generic_Class",            Poco_Ref,               null,   typeof(Unresolvable),   Singleton           };
+                yield return new object[] { "Generic_Class",            Poco_Ref,               null,   typeof(Unresolvable),   RegisteredUnresolvable           };
                 yield return new object[] { "Generic_Struct",           Poco_Struct,            null,   typeof(TestStruct),     RegisteredStruct    };
                 
                 yield return new object[] { "Value_Named",              Poco_Value,             Name,   typeof(int),            RegisteredInt       };
-                yield return new object[] { "Class_Named",              Poco_Ref,               Name,   typeof(Unresolvable),   Singleton           };
-                yield return new object[] { "Class_Null",               Poco_Ref,               Null,   typeof(Unresolvable),   Singleton           };
+                yield return new object[] { "Class_Named",              Poco_Ref,               Name,   typeof(Unresolvable),   RegisteredUnresolvable           };
+                yield return new object[] { "Class_Null",               Poco_Ref,               Null,   typeof(Unresolvable),   RegisteredUnresolvable           };
 
                 yield return new object[] { "Default_Value",            PocoType_Default_Value, null,   typeof(int),            RegisteredInt       };
                 yield return new object[] { "Default_Class",            PocoType_Default_Class, null,   typeof(Unresolvable),   RegisteredString    };
