@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Unity;
+using Unity.Injection;
 using Unity.Resolution;
 
 namespace Resolution
@@ -113,14 +114,14 @@ namespace Resolution
         {
             // Setup
             Container
-                .RegisterType<Outer>(Invoke.Constructor(typeof(Inner), 10))
-                .RegisterType<Inner>(Invoke.Constructor(20, "ignored"));
+                .RegisterType<Outer>(new InjectionConstructor(typeof(Inner), 10))
+                .RegisterType<Inner>(new InjectionConstructor(20, "ignored"));
 
             // resolves overriding only the parameter for the Bar instance
 
             // Act
             var instance = Container.Resolve<Outer>(
-                Override.Parameter<int>(Inject.Parameter(50)).OnType<Inner>());
+                Override.Parameter<int>(new InjectionParameter(50)).OnType<Inner>());
 
             // Verify
             Assert.AreEqual(10, instance.LogLevel);
@@ -134,7 +135,7 @@ namespace Resolution
             var noOverride = "default";
             var depOverride = "custom-via-override";
 
-            Container.RegisterType<TestType>(Invoke.Constructor(noOverride));
+            Container.RegisterType<TestType>(new InjectionConstructor(noOverride));
             // Act
             var defaultValue = Container.Resolve<TestType>().ToString();
             var depValue     = Container.Resolve<TestType>(Override.Dependency<string>(depOverride)).ToString();
@@ -152,7 +153,7 @@ namespace Resolution
             // Setup
             var noOverride = "default";
             var depOverride = "custom-via-override";
-            Container.RegisterType<TestType>(Inject.Field(nameof(TestType.DependencyField), noOverride));
+            Container.RegisterType<TestType>(new InjectionField(nameof(TestType.DependencyField), noOverride));
 
             // Act
             var defaultValue = Container.Resolve<TestType>().DependencyField;
