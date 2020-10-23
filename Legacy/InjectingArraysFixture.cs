@@ -116,6 +116,51 @@ namespace Unity.V4
         }
 
         [TestMethod]
+        public void ResolvesArray()
+        {
+            ILogger[] expected = new ILogger[] { new MockLogger(), new SpecialLogger() };
+            IUnityContainer container = new UnityContainer()
+                .RegisterInstance("one", expected[0])
+                .RegisterInstance("two", expected[1]);
+
+            var result = container.Resolve<ILogger[]>();
+
+            Assert.AreEqual(2, result.Length);
+        }
+
+
+        [TestMethod]
+        public void ResolvesEnumerable()
+        {
+            ILogger[] expected = new ILogger[] { new MockLogger(), new SpecialLogger() };
+            IUnityContainer container = new UnityContainer()
+                .RegisterInstance(expected[0])
+                .RegisterInstance(expected[1])
+                .RegisterInstance("one", expected[0])
+                .RegisterInstance("two", expected[1]);
+
+            var result = container.Resolve<IEnumerable<ILogger>>()
+                                  .ToArray();
+
+            Assert.AreEqual(2, result.Length);
+        }
+
+        [TestMethod]
+        public void ResolvesArrayTwice()
+        {
+            ILogger[] expected = new ILogger[] { new MockLogger(), new SpecialLogger() };
+            IUnityContainer container = new UnityContainer()
+                .RegisterInstance("one", expected[0])
+                .RegisterInstance("two", expected[1]);
+
+            var result = container.Resolve<ILogger[]>();
+            var result1 = container.Resolve<ILogger[]>();
+
+            Assert.AreNotSame(result, result1);
+            Assert.AreEqual(2, result.Length);
+        }
+
+        [TestMethod]
         public void ContainerAutomaticallyResolvesAllWhenInjectingArrays()
         {
             ILogger[] expected = new ILogger[] { new MockLogger(), new SpecialLogger() };

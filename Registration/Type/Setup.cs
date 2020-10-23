@@ -90,6 +90,10 @@ namespace Registrations
         public class MockLogger : ILogger
         {
         }
+        
+        public class OtherLogger : ILogger
+        {
+        }
 
         public interface IService
         {

@@ -37,6 +37,25 @@ namespace Unity.V4
             CollectionAssert.AreEqual(new object[0], results);
         }
 
+
+        [TestMethod]
+        public void ResolveAll()
+        {
+            IUnityContainer container = new UnityContainer();
+            object o1 = new object();
+            object o2 = new object();
+
+            container
+                .RegisterInstance<object>("o1", o1)
+                .RegisterInstance<object>("o2", o2);
+
+            var results  = container.Resolve<object[]>();
+            var results1 = container.Resolve<object[]>();
+
+            Assert.IsNotNull(results);
+            Assert.IsInstanceOfType(results, typeof(object[]));
+        }
+
         [TestMethod]
         public void ResolveAllReturnsRegisteredObjects()
         {

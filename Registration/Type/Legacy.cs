@@ -27,7 +27,6 @@ namespace Registrations
             Assert.AreEqual(Container.Resolve<IService>(), instance);
         }
 
-
         [TestMethod]
         public void Registration_ShowsUpInRegistrationsSequence()
         {
@@ -35,17 +34,34 @@ namespace Registrations
             Container.RegisterInstance(Name);
             Container.RegisterType<ILogger, MockLogger>();
             Container.RegisterType<ILogger, MockLogger>(Name);
-
-            var service = new Service();
-            Container.RegisterInstance<IService>(service);
-            Container.RegisterInstance<IService>(Name, service);
-
-            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>));
-            Container.RegisterType(typeof(IFoo<>), typeof(Foo<>), Name);
+            Container.RegisterType<ILogger, OtherLogger>(Name);
 
             var registrations = (from r in Container.Registrations
                                  where r.RegisteredType == typeof(ILogger)
                                  select r).ToList();
+
+            Assert.AreEqual(2, registrations.Count);
+
+            Assert.IsTrue(registrations.Any(r => r.Name == null));
+            Assert.IsTrue(registrations.Any(r => r.Name == Name));
+        }
+
+
+        [TestMethod]
+        public void Registration_ShowsUpInChildSequence()
+        {
+            // Arrange
+            Container.RegisterType<ILogger, MockLogger>();
+            Container.RegisterType<ILogger, MockLogger>(Name);
+            
+            var child = Container.CreateChildContainer();
+            child.RegisterType<ILogger, OtherLogger>(Name);
+
+            var registrations = (from r in child.Registrations
+                                 where r.RegisteredType == typeof(ILogger)
+                                 select r).ToList();
+            
+            var array = child.Registrations.ToArray();
 
             Assert.AreEqual(2, registrations.Count);
 
@@ -123,8 +139,9 @@ namespace Registrations
                                                      r.Name == local);
 
             var parentRegistration = Container.Registrations
-                                               .FirstOrDefault(r => r.RegisteredType == typeof(ILogger) &&
-                                                                    r.Name == local);
+                                              .Cast<IContainerRegistration>()
+                                              .FirstOrDefault(r => r.RegisteredType == typeof(ILogger) &&
+                                                                   r.Name == local);
             Assert.IsNull(parentRegistration);
             Assert.IsNotNull(childRegistration);
         }
