@@ -37,9 +37,8 @@ namespace Unity.V4
             CollectionAssert.AreEqual(new object[0], results);
         }
 
-
         [TestMethod]
-        public void ResolveAll()
+        public void ResolveAllRoot()
         {
             IUnityContainer container = new UnityContainer();
             object o1 = new object();
@@ -47,12 +46,41 @@ namespace Unity.V4
 
             container
                 .RegisterInstance<object>("o1", o1)
+                .RegisterInstance<object>(o1)
+                .RegisterInstance<object>(container)
                 .RegisterInstance<object>("o2", o2);
 
             var results  = container.Resolve<object[]>();
             var results1 = container.Resolve<object[]>();
 
             Assert.IsNotNull(results);
+            Assert.IsInstanceOfType(results, typeof(object[]));
+        }
+
+        [TestMethod]
+        public void ResolveAll()
+        {
+            IUnityContainer root = new UnityContainer();
+            object o1 = new object();
+            object o2 = new object();
+
+            root
+                .RegisterInstance<object>("o1", o1)
+                .RegisterInstance<object>(o1)
+                .RegisterInstance<object>(root)
+                .RegisterInstance<object>("o2", o2);
+
+            var obj = "child";
+            var child = root.CreateChildContainer()
+                .RegisterInstance<object>(obj)
+                .RegisterInstance<object>(o1)
+                .RegisterInstance<object>("o2", obj);
+
+            var results = root.Resolve<object[]>();
+            var results1 = child.Resolve<object[]>();
+
+            Assert.IsNotNull(results);
+            Assert.IsNotNull(results1);
             Assert.IsInstanceOfType(results, typeof(object[]));
         }
 
