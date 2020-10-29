@@ -33,8 +33,8 @@ namespace Unity.V4
 
             Assert.IsNotNull(resolved.Loggers);
             Assert.AreEqual(2, resolved.Loggers.Length);
-            Assert.AreSame(o1, resolved.Loggers[0]);
-            Assert.AreSame(o2, resolved.Loggers[1]);
+            Assert.IsTrue(resolved.Loggers.Contains(o1));
+            Assert.IsTrue(resolved.Loggers.Contains(o2));
         }
 
         [TestMethod]
@@ -52,8 +52,8 @@ namespace Unity.V4
 
             Assert.IsNotNull(resolved.Loggers);
             Assert.AreEqual(2, resolved.Loggers.Length);
-            Assert.AreSame(o1, resolved.Loggers[0]);
-            Assert.AreSame(o2, resolved.Loggers[1]);
+            Assert.IsTrue(resolved.Loggers.Contains(o1));
+            Assert.IsTrue(resolved.Loggers.Contains(o2));
         }
 
         [TestMethod]
