@@ -32,10 +32,6 @@ namespace Resolution
 
         public class Foo<TEntity> : IFoo<TEntity>
         {
-            public Foo()
-            {
-            }
-
             public Foo(TEntity value)
             {
                 Value = value;

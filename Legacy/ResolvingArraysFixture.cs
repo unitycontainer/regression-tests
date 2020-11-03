@@ -38,23 +38,19 @@ namespace Unity.V4
         }
 
         [TestMethod]
-        public void ResolveAllRoot()
+        public void ResolveAllof100()
         {
             IUnityContainer container = new UnityContainer();
-            object o1 = new object();
-            object o2 = new object();
 
-            container
-                .RegisterInstance<object>("o1", o1)
-                .RegisterInstance<object>(o1)
-                .RegisterInstance<object>(container)
-                .RegisterInstance<object>("o2", o2);
+            for (var i = 0; i < 100; i++)
+            {
+                container.RegisterInstance(i.ToString(), i);
+            }
 
-            var results  = container.Resolve<object[]>();
-            var results1 = container.Resolve<object[]>();
+            var results  = container.Resolve<int[]>();
 
             Assert.IsNotNull(results);
-            Assert.IsInstanceOfType(results, typeof(object[]));
+            Assert.IsInstanceOfType(results, typeof(int[]));
         }
 
         [TestMethod]

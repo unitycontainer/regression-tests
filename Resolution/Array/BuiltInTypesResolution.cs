@@ -17,6 +17,7 @@ namespace Resolution
         public void ArrayOfRegistered()
         {
             // Arrange
+            Container.RegisterInstance(new Service());
             Container.RegisterType<IService, Service>("1");
             Container.RegisterType<IService, Service>("2");
             Container.RegisterType<IService, OtherService>("3");

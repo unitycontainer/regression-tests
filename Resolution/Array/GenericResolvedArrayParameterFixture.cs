@@ -98,6 +98,7 @@ namespace Resolution
             Assert.AreSame(a1, result.InjectedValue[1]);
         }
 
+        [Ignore]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void AppropriateExceptionIsThrownWhenNoMatchingConstructorCanBeFound()

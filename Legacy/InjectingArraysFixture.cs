@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Breaking.Changes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,6 +104,7 @@ namespace Unity.V4
             Assert.AreSame(logger2, result.Loggers[2]);
         }
 
+        [Ignore("Breaking Change V6, no longer validates during registration")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void CreatingResolvedArrayParameterWithValuesOfNonCompatibleType()
@@ -141,8 +143,12 @@ namespace Unity.V4
 
             var result = container.Resolve<IEnumerable<ILogger>>()
                                   .ToArray();
-
+// TODO: Document differences
+#if NET45 || NET46 
             Assert.AreEqual(2, result.Length);
+#else
+            Assert.AreEqual(4, result.Length);
+#endif
         }
 
         [TestMethod]
@@ -202,7 +208,7 @@ namespace Unity.V4
             public T[] Prop { get; set; }
         }
 
-        #region Test Data
+#region Test Data
 
         public interface ILogger
         {
@@ -216,6 +222,6 @@ namespace Unity.V4
         {
         }
 
-        #endregion
+#endregion
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 #if V4
 using Microsoft.Practices.Unity;
@@ -361,5 +362,54 @@ namespace Resolution
             Assert.IsNotNull(enumerable[0]);
             Assert.IsNotNull(enumerable[1]);
         }
+
+        [TestMethod]
+        public void ResolveAllof100()
+        {
+            IUnityContainer container = new UnityContainer();
+
+            for (var i = 0; i < 50; i++)
+            {
+                container.RegisterInstance(i);
+            }
+
+            for (var i = 50; i < 100; i++)
+            {
+                container.RegisterInstance(i.ToString(), i);
+            }
+
+            var results = container.Resolve<IEnumerable<int>>();
+
+            Assert.IsNotNull(results);
+            Assert.AreEqual(100, results.Count());
+            Assert.IsInstanceOfType(results, typeof(int[]));
+        }
+
+        [TestMethod]
+        public void ResolveInChildAll100()
+        {
+            var container = Container;
+
+            // Arrange
+            for (var j = 0; j < 4; j++)
+            {
+                var start = j * 20;
+                var end = start + 20;
+
+                for (var i = start; i < end; i++)
+                {
+                    container.RegisterInstance(i);
+                }
+                container = container.CreateChildContainer();
+            }
+
+            // Act
+            var instance = container.Resolve<IEnumerable<int>>();
+
+            Assert.IsNotNull(instance);
+            Assert.IsInstanceOfType(instance, typeof(int[]));
+            Assert.AreEqual(80, instance.Count());
+        }
+
     }
 }

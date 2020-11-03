@@ -102,20 +102,6 @@ namespace Resolution
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void CreatingResolvedArrayParameterWithValuesOfNonCompatibleType()
-        {
-            // Arrange
-            ILogger logger2 = new SpecialLogger();
-
-            //Act
-            var resolver = new ResolvedArrayParameter<ILogger>(
-                    new ResolvedParameter<ILogger>("log1"),
-                    typeof(int),
-                    logger2);
-        }
-
-        [TestMethod]
         public void ContainerAutomaticallyResolvesAllWhenInjectingArrays()
         {
             // Arrange

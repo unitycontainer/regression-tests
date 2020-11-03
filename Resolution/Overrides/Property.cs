@@ -16,11 +16,12 @@ namespace Resolution
             var noOverride = "default";
             var propOverride = "custom-via-propertyoverride";
 
-            Container.RegisterType<TestType>(Inject.Property(nameof(TestType.DependencyProperty), noOverride));
+            Container.RegisterType<TestType>(Invoke.Constructor(), 
+                                             Inject.Property(nameof(TestType.DependencyProperty), noOverride));
             // Act
             var defaultValue = Container.Resolve<TestType>().DependencyProperty;
             var propValue = Container.Resolve<TestType>(Override.Property(nameof(TestType.DependencyProperty), propOverride))
-                                    .DependencyProperty;
+                                     .DependencyProperty;
             // Verify
             Assert.AreSame(noOverride, defaultValue);
             Assert.AreSame(propOverride, propValue);

@@ -105,7 +105,7 @@ namespace Resolution
         public void WithLazyDependencies()
         {
             // Setup
-            Container.RegisterType<Lazy<EmailService>>();
+            Container.RegisterType<Lazy<EmailService>>(new InjectionConstructor(typeof(Func<EmailService>)));
             Container.RegisterType<ILazyDependency, LazyDependency>();
 
             // Act
@@ -139,7 +139,7 @@ namespace Resolution
         public void BuildupLazyInstance()
         {
             // Setup
-            Container.RegisterType<Lazy<EmailService>>();
+            Container.RegisterType<Lazy<EmailService>>(new InjectionConstructor(typeof(Func<EmailService>)));
             var lazyDependency = new Lazy<LazyDependency>();
 
             // Act
@@ -158,8 +158,8 @@ namespace Resolution
         public void InjectToNonDefaultConstructorWithLazy()
         {
             // Setup
-            Container.RegisterType<Lazy<EmailService>>();
-            Container.RegisterType<Lazy<LazyDependency>>();
+            Container.RegisterType<Lazy<EmailService>>(new InjectionConstructor(typeof(Func<EmailService>)));
+            Container.RegisterType<Lazy<LazyDependency>>(new InjectionConstructor(typeof(Func<LazyDependency>)));
 
             // Act
             var resolved = Container.Resolve<Lazy<LazyDependency>>();

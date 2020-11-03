@@ -173,9 +173,6 @@ namespace Resolution
     public class ObjectTakingASomething
     {
         public IService MySomething { get; set; }
-        public ObjectTakingASomething()
-        {
-        }
 
         public ObjectTakingASomething(IService something)
         {

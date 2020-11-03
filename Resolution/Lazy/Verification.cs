@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 using Unity.Lifetime;
 #endif
 
@@ -136,7 +137,7 @@ namespace Resolution
             // Setup
             Container
                 .RegisterType<ILogger, MockLogger>()
-                .RegisterType(typeof(Lazy<>), new PerResolveLifetimeManager());
+                .RegisterType(typeof(Lazy<>), new PerResolveLifetimeManager(), new InjectionConstructor(typeof(Func<ILogger>)));
 
             // Act
             var result = Container.Resolve<ObjectThatGetsMultipleLazy>();
