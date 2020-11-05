@@ -98,15 +98,6 @@ namespace Resolution
             Assert.AreSame(a1, result.InjectedValue[1]);
         }
 
-        [Ignore]
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void AppropriateExceptionIsThrownWhenNoMatchingConstructorCanBeFound()
-        {
-            Container.RegisterType(typeof(GenericTypeWithArrayProperty<>),
-                    new InjectionConstructor(new GenericResolvedArrayParameter("T")));
-        }
-
         [TestMethod]
         public void ResolvesMixedOpenClosedGenericsAsArray()
         {

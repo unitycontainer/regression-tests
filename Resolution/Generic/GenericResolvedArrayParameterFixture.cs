@@ -80,17 +80,5 @@ namespace Resolution
             Assert.AreSame(a0, result.InjectedValue[0]);
             Assert.AreSame(a1, result.InjectedValue[1]);
         }
-
-        [TestMethod]
-#if V4
-        [ExpectedException(typeof(Exception), AllowDerivedTypes = true)]
-#else
-        [ExpectedException(typeof(InvalidOperationException))]
-#endif
-        public void AppropriateExceptionIsThrownWhenNoMatchingConstructorCanBeFound()
-        {
-            Container.RegisterType(typeof(ClassWithOneGenericParameter<>),
-                    new InjectionConstructor(new GenericResolvedArrayParameter("T")));
-        }
     }
 }
