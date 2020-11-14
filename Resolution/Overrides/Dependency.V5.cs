@@ -143,7 +143,7 @@ namespace Resolution
 
             // Verify
             Assert.AreSame(noOverride, defaultValue);
-            Assert.AreSame(noOverride, depValue);
+            Assert.AreSame(depOverride, depValue);
             Assert.AreSame(depOverride, propValue);
         }
 
@@ -162,7 +162,7 @@ namespace Resolution
 
             // Verify
             Assert.AreSame(noOverride, defaultValue);
-            Assert.AreSame(noOverride, dependValue);
+            Assert.AreSame(depOverride, dependValue);
             Assert.AreSame(depOverride, fieldValue);
         }
     }

@@ -84,8 +84,8 @@ namespace Unity.V4
         public void ResolveAllReturnsRegisteredObjects()
         {
             IUnityContainer container = new UnityContainer();
-            object o1 = new object();
-            object o2 = new object();
+            object o1 = "one";
+            object o2 = "two";
 
             container
                 .RegisterInstance<object>("o1", o1)

@@ -90,7 +90,7 @@ namespace Resolution
             
             // Verify
             Assert.AreSame(noOverride, defaultValue);
-            Assert.AreSame(noOverride, depValue);
+            Assert.AreSame(depOverride, depValue);
             Assert.AreSame(depOverride, propValue);
         }
     }

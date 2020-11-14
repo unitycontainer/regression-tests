@@ -58,6 +58,7 @@ namespace Unity.V4
             Assert.AreSame(named, result.InjectedValue);
         }
 
+        [Ignore("Breaking Change, v6 ")]
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public void ResolvingOpenGenericWithConstructorParameterAmbiguityThrows()
@@ -70,6 +71,7 @@ namespace Unity.V4
             container.Resolve<GenericTypeWithMultipleGenericTypeParameters<string, string>>();
         }
 
+        [Ignore("Breaking Change, v6 ")]
         [TestMethod]
         [ExpectedException(typeof(ResolutionFailedException))]
         public void ResolvingOpenGenericWithMethodAmbiguityThrows()
