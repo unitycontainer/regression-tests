@@ -45,7 +45,6 @@ namespace Specification.Pattern
             Type_Optional_Generic_Out    = typeof(Optional_Generic_Out<>).FullName;
         }
 
-
         protected override InjectionMember GetByNameMember(Type type, string name)
             => throw new NotSupportedException();
 
@@ -56,7 +55,7 @@ namespace Specification.Pattern
             => new InjectionConstructor(new ResolvedParameter(type, name));
 
         protected override InjectionMember GetOptionalMember(Type type, string name)
-            => new InjectionConstructor(new InjectionParameter(type, name)); 
+            => new InjectionConstructor(new OptionalParameter(type, name)); 
 
         protected override InjectionMember GetOptionalOptional(Type type, string name)
             => new InjectionConstructor(new OptionalParameter(type, name));
@@ -67,7 +66,7 @@ namespace Specification.Pattern
         protected override InjectionMember GetGenericOptional(Type type, string name)
             => new InjectionConstructor(new OptionalGenericParameter("T", name));
 
-        protected override InjectionMember GetInjectionMember(object argument) 
+        protected override InjectionMember GetInjectionValue(object argument) 
             => new InjectionConstructor(argument);
 
         protected override InjectionMember GetInjectionOptional(object argument)

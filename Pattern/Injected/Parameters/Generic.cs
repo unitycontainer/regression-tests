@@ -98,11 +98,10 @@ namespace Specification
         #region Optional
 
         /// <summary>
-        /// Tests injecting by generic parameter optional dependencies from empty container
+        /// Tests injecting optional dependencies by generic parameter from empty container
         /// </summary>
         /// <remarks>
-        /// The injection member overrides Optional attribute and throws if dependency 
-        /// could not be resolved.
+        /// The injection member overrides Optional attribute with Optional dependency.
         /// </remarks>
         /// <param name="test">Test name</param>
         /// <param name="type">Resolved type</param>
@@ -111,16 +110,15 @@ namespace Specification
         /// <param name="expected">Expected value</param>
         [DataTestMethod]
         [DynamicData(nameof(Optional_Data))]
-        [ExpectedException(typeof(ResolutionFailedException))]
         public virtual void Injected_ByGeneric_Optional(string test, Type type, string name, Type dependency, object expected)
         {
-            if (!type.IsGenericType)
 #if V4
+            if (!type.IsGenericType)
                 throw new ResolutionFailedException(type, name, null, null);
 #else
-            throw new ResolutionFailedException(type, name, "Not Generic");
+            if (!type.IsGenericType)
+                throw new ResolutionFailedException(type, name, "Not Generic");
 #endif
-
             Type target = type.IsGenericTypeDefinition
                         ? type.MakeGenericType(dependency)
                         : type;
@@ -132,7 +130,10 @@ namespace Specification
             Container.RegisterType(definition, GetGenericOptional(dependency, name));
 
             // Act
-            _ = Container.Resolve(target) as PatternBase;
+            var value = Container.Resolve(target) as PatternBase;
+
+            Assert.IsNotNull(value);
+            Assert.AreEqual(value.Value, expected);
         }
 
         #endregion

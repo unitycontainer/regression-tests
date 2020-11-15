@@ -64,7 +64,7 @@ namespace Specification.Pattern
         protected override InjectionMember GetGenericOptional(Type type, string name)
             => new InjectionProperty("Property", new OptionalGenericParameter("T", name));
 
-        protected override InjectionMember GetInjectionMember(object argument) 
+        protected override InjectionMember GetInjectionValue(object argument) 
             => new InjectionProperty("Property", argument);
 
         protected override InjectionMember GetInjectionOptional(object argument)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 #if V4
 using Microsoft.Practices.Unity;
 #else
@@ -96,14 +97,18 @@ namespace Specification.Pattern
 
         public class Required_WithDefault_Value : PatternBase
         {
-            [Dependency] public int Property { get; set; } = DefaultInt;
+            [Dependency]
+            [DefaultValue(DefaultInt)]
+            public int Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }
 
         public class Required_WithDefault_Class : PatternBase
         {
-            [Dependency] public string Property { get; set; } = DefaultString;
+            [Dependency]
+            [DefaultValue(DefaultString)]
+            public string Property { get; set; }
 
             public override object Value { get => Property; protected set => throw new NotSupportedException(); }
         }

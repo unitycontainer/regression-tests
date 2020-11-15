@@ -12,6 +12,7 @@ namespace Specification
 {
     public partial class Constructors
     {
+        [Ignore("v6 Does not validate on register")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void Injection_NoConstructor()

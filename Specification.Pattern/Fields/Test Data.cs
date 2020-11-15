@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 #if V4
 using Microsoft.Practices.Unity;
 #else
@@ -42,6 +43,7 @@ namespace Specification.Pattern
 
         public class Implicit_WithDefault_Value : PatternBase
         {
+            [DefaultValue(DefaultInt)]
             public int Field = DefaultInt;
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
@@ -49,6 +51,7 @@ namespace Specification.Pattern
 
         public class Implicit_WithDefault_Class : PatternBase
         {
+            [DefaultValue(DefaultString)]
             public string Field = DefaultString;
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
@@ -96,14 +99,18 @@ namespace Specification.Pattern
 
         public class Required_WithDefault_Value : PatternBase
         {
-            [Dependency] public int Field = DefaultInt;
+            [Dependency]
+            [DefaultValue(DefaultInt)]
+            public int Field;
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }
 
         public class Required_WithDefault_Class : PatternBase
         {
-            [Dependency] public string Field = DefaultString;
+            [Dependency]
+            [DefaultValue(DefaultString)]
+            public string Field = DefaultString;
 
             public override object Value { get => Field; protected set => throw new NotSupportedException(); }
         }

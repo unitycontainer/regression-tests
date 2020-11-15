@@ -12,7 +12,6 @@ namespace Specification
 {
     public partial class Constructors
     {
-        [Ignore] // TODO: Intermittent
         [TestMethod]
         public virtual void Override_CtorParameter()
         {
@@ -23,7 +22,7 @@ namespace Specification
             var value = Container.Resolve<Service>(new DependencyOverride<string>(_override));
 
             // Verify
-            Assert.AreSame(_data, value.Data);
+            Assert.AreSame(_override, value.Data);
         }
     }
 

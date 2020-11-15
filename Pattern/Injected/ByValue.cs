@@ -33,7 +33,7 @@ namespace Specification
                         ? type.MakeGenericType(dependency)
                         : type;
             // Arrange
-            Container.RegisterType(target, name, GetInjectionMember(expected));
+            Container.RegisterType(target, name, GetInjectionValue(expected));
             
             RegisterTypes();
 
@@ -64,7 +64,7 @@ namespace Specification
                         ? type.MakeGenericType(dependency)
                         : type;
             // Arrange
-            Container.RegisterType(target, name, GetInjectionMember(expected));
+            Container.RegisterType(target, name, GetInjectionValue(expected));
 
             // Act
             var instance = Container.Resolve(target, name) as PatternBase;

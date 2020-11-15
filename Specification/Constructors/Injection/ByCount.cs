@@ -64,7 +64,6 @@ namespace Specification
         public virtual void Injection_ByCountNamedGeneric()
         {
             // Arrange
-            #region inject_count_named_generic
             Container.RegisterType<IService, Service>()
                      .RegisterType<IService, ServiceOne>("one")
                      .RegisterType<IService, ServiceTwo>("two");
@@ -75,11 +74,6 @@ namespace Specification
                     new GenericParameter("T")));
 
             var instance = Container.Resolve<SampleType<object>>();
-
-            // 2 == instance.Ctor
-            // typeof(Service) == instance.Service.GetType()
-
-            #endregion
 
             // Validate
             Assert.AreEqual(2, instance.Ctor);

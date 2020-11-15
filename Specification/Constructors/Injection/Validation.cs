@@ -12,6 +12,7 @@ namespace Specification
 {
     public partial class Constructors
     {
+        [Ignore("v6, no validation during registration")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void Injection_NoDefaultConstructor()
@@ -20,6 +21,7 @@ namespace Specification
             Container.RegisterType<ClassWithTreeConstructors>(new InjectionConstructor());
         }
 
+        [Ignore("v6, no validation during registration")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void Injection_NoBogusConstructor()
@@ -29,7 +31,7 @@ namespace Specification
                 new InjectionConstructor(typeof(int), typeof(string)));
         }
 
-
+        [Ignore("v6, no validation during registration")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void Injection_NoBogusValuesConstructor()
@@ -38,8 +40,6 @@ namespace Specification
             Container.RegisterType<ClassWithTreeConstructors>(
                 new InjectionConstructor( 1, "test"));
         }
-
-
 
         [TestMethod]
         public void Injection_SelectByValueTypes()

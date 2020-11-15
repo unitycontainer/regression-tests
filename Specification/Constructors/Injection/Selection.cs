@@ -49,15 +49,39 @@ namespace Specification
             // Format: Type typeFrom, Type typeTo, string name, Type typeToResolve, object[] parameters, Func<object, bool> validator
             get
             {
+                // SelectByValues
+                yield return new object[]
+                {
+                    "SelectByValues",                           //  string name, 
+                    null,                                       //  Type typeFrom, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeToResolve, 
+                    new object[] { 0, string.Empty, 0.0f },     //  object[] parameters, 
+                                                                //  Func<object, bool> validator
+                    new Func<object, bool>(r => TypeWithMultipleCtors.Two == ((TypeWithMultipleCtors)r).Signature)           
+                };
+                
+                // DefaultConstructorGeneric
+                yield return new object[]
+                {
+                    "DefaultConstructorGeneric",                //  string name, 
+                    null,                                       //  Type typeFrom, 
+                    typeof(InjectionTestCollection<>),          //  Type typeTo, 
+                    typeof(InjectionTestCollection<object>),    //  Type typeToResolve, 
+                    new object[] { },                           //  object[] parameters, 
+                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
+                        typeof(InjectionTestCollection<>).Name == ((InjectionTestCollection<object>)r).CollectionName)
+                };
+
                 // SelectAndResolveByValue
                 yield return new object[]
                 {
-                    "SelectAndResolveByValue",                  //  string name, 
+                    "SelectAndResolveByValue",                  //  Legacy name, 
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeToResolve, 
                     new object[] {
-                        new ResolvedParameter(typeof(string)),      //  object[] parameters, 
+                        new ResolvedParameter(typeof(string)),  //  object[] parameters, 
                         string.Empty,
                         string.Empty },
                     new Func<object, bool>(r =>                 //  Func<object, bool> validator
@@ -67,16 +91,16 @@ namespace Specification
                 // ResolveUnNamedTypeArgument
                 yield return new object[]
                 {
-                    "ResolveUnNamedTypeArgument",                 //  string name, 
+                    "ResolveUnNamedTypeArgument",               //  Legacy name,  
                     null,                                       //  Type typeFrom, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeTo, 
+                    typeof(TypeWithMultipleCtors),              //  Type typeToResolve, 
                     new object[] {
                         typeof(string),                         //  object[] parameters, 
                         typeof(string),
                         typeof(Type)},
                     new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        TypeWithMultipleCtors.Four == ((TypeWithMultipleCtors)r).Signature)
+                        TypeWithMultipleCtors.Three == ((TypeWithMultipleCtors)r).Signature)
                 };
 #if !NET45
                 // ResolveNamedTypeArgument
@@ -91,34 +115,9 @@ namespace Specification
                         typeof(string),
                         typeof(IUnityContainer)},
                     new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        TypeWithMultipleCtors.Five == ((TypeWithMultipleCtors)r).Signature)
+                        TypeWithMultipleCtors.Three == ((TypeWithMultipleCtors)r).Signature)
                 };
 #endif
-                // SelectByValues
-                yield return new object[]
-                {
-                    "SelectByValues",                           //  string name, 
-                    null,                                       //  Type typeFrom, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeTo, 
-                    typeof(TypeWithMultipleCtors),             //  Type typeToResolve, 
-                    new object[] { 0, string.Empty, 0.0f },     //  object[] parameters, 
-                    new Func<object, bool>(r => TypeWithMultipleCtors.Two == ((TypeWithMultipleCtors)r).Signature)           //  Func<object, bool> validator
-                };
-
-
-                // DefaultConstructorGeneric
-                yield return new object[]
-                {
-                    "DefaultConstructorGeneric",                //  string name, 
-                    null,                                       //  Type typeFrom, 
-                    typeof(InjectionTestCollection<>),          //  Type typeTo, 
-                    typeof(InjectionTestCollection<object>),    //  Type typeToResolve, 
-                    new object[] { },                           //  object[] parameters, 
-                    new Func<object, bool>(r =>                 //  Func<object, bool> validator
-                        typeof(InjectionTestCollection<>).Name == ((InjectionTestCollection<object>)r).CollectionName)  
-                };
-
-
                 //
                 yield return new object[]
                 {

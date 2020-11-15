@@ -25,6 +25,7 @@ namespace Specification
             Assert.IsTrue(result.WasInjected);
         }
 
+        [Ignore("v6, No diagnostic during registration")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void Injection_MethodWithOutParameter()
@@ -33,6 +34,7 @@ namespace Specification
             Container.RegisterType<OutParams>(new InjectionMethod(nameof(OutParams.InjectMe), 12));
         }
 
+        [Ignore("v6, No diagnostic during registration")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void Injection_MethodWithRefParameter()
@@ -127,6 +129,7 @@ namespace Specification
             Assert.IsFalse(GuineaPig.StaticMethodWasCalled);
         }
 
+        [Ignore("v6, No diagnostic during registration")]
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void Injection_InjectingStaticMethod()

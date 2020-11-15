@@ -39,7 +39,7 @@ namespace Specification
             // Arrange
             var resolver = new ValidatingResolver(expected);
             var parameter = new InjectionParameter(dependency, resolver);
-            Container.RegisterType(target, name, GetInjectionMember(parameter));
+            Container.RegisterType(target, name, GetInjectionValue(parameter));
 
             RegisterTypes();
 
@@ -65,7 +65,7 @@ namespace Specification
             // Arrange
             var resolver = new ValidatingResolver(expected);
             var parameter = new InjectionParameter(dependency, resolver);
-            Container.RegisterType(target, name, GetInjectionMember(parameter));
+            Container.RegisterType(target, name, GetInjectionValue(parameter));
 
             // Act
             var instance = Container.Resolve(target, name) as PatternBase;

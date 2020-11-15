@@ -25,7 +25,7 @@ namespace Specification
 
         protected abstract InjectionMember GetGenericOptional(Type type, string name);
         
-        protected abstract InjectionMember GetInjectionMember(object argument);
+        protected abstract InjectionMember GetInjectionValue(object argument);
 
         protected abstract InjectionMember GetInjectionOptional(object argument);
     }

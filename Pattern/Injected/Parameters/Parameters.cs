@@ -94,7 +94,7 @@ namespace Specification
             get
             {
                 foreach (var info in typeof(VerificationPattern).GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                                                                .Where(method => method.Name.StartsWith("Get_") && method.Name.EndsWith("_Member"))
+                                                                .Where(method => method.Name.StartsWith("Get") && method.Name.EndsWith("Member"))
                                                                 .Select(method => method.Name))
                 {
                     yield return new object[] { Type_Implicit_Dependency_Ref, info };

@@ -59,7 +59,7 @@ namespace Resolution
         {
             // Setup
             Container
-                .RegisterType<ObjectTakingASomething>(new InjectionConstructor(), new InjectionProperty("MySomething"))
+                .RegisterType<ObjectTakingASomething>(new InjectionProperty("MySomething"))
                 .RegisterType<IService, Service1>()
                 .RegisterType<IService, Service2>("other");
 
