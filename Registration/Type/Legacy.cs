@@ -139,7 +139,9 @@ namespace Registrations
                                                      r.Name == local);
 
             var parentRegistration = Container.Registrations
+#if !V4
                                               .Cast<IContainerRegistration>()
+#endif
                                               .FirstOrDefault(r => r.RegisteredType == typeof(ILogger) &&
                                                                    r.Name == local);
             Assert.IsNull(parentRegistration);

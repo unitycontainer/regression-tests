@@ -3,6 +3,7 @@
 using Microsoft.Practices.Unity;
 #else
 using Unity;
+using Unity.Injection;
 #endif
 
 namespace Resolution
@@ -16,8 +17,8 @@ namespace Resolution
             var noOverride = "default";
             var propOverride = "custom-via-propertyoverride";
 
-            Container.RegisterType<TestType>(Invoke.Constructor(), 
-                                             Inject.Property(nameof(TestType.DependencyProperty), noOverride));
+            Container.RegisterType<TestType>(new InjectionConstructor(), 
+                                             new InjectionProperty(nameof(TestType.DependencyProperty), noOverride));
             // Act
             var defaultValue = Container.Resolve<TestType>().DependencyProperty;
             var propValue = Container.Resolve<TestType>(Override.Property(nameof(TestType.DependencyProperty), propOverride))

@@ -78,8 +78,8 @@ namespace Resolution
             // Setup
             var noOverride = "default";
             var depOverride = "custom-via-override";
-            Container.RegisterType<TestType>(Invoke.Constructor(), 
-                                             Inject.Property(nameof(TestType.DependencyProperty), noOverride));
+            Container.RegisterType<TestType>(new InjectionConstructor(), 
+                                             new InjectionProperty(nameof(TestType.DependencyProperty), noOverride));
 
             // Act
             var theType = Container.Resolve<TestType>();
