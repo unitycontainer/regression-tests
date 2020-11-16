@@ -25,7 +25,7 @@ namespace Specification
     }
 
 
-    [TestClass]
+    // TODO: [TestClass]
     public partial class Methods_Diagnostic : Methods
     {
         [TestInitialize]

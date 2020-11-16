@@ -33,7 +33,7 @@ namespace Specification
         }
     }
 
-    [TestClass]
+    // TODO: [TestClass]
     public partial class Properties_Diagnostic : Properties
     {
         [TestInitialize]

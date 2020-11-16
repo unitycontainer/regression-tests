@@ -28,7 +28,7 @@ namespace Specification
         }
     }
 
-    [TestClass]
+    // TODO: [TestClass]
     public partial class Fields_Diagnostic : Fields
     {
         [TestInitialize]

@@ -24,7 +24,7 @@ namespace Specification
         }
     }
 
-    [TestClass]
+    // TODO: [TestClass]
     public partial class Parameters_Diagnostic : Parameters
     {
         [TestInitialize]

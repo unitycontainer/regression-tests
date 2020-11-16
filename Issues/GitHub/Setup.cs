@@ -384,7 +384,7 @@ namespace Issues
     }
 
 
-    [TestClass]
+    // TODO: [TestClass]
     public partial class GitHub_Diagnostic : GitHub
     {
         [TestInitialize]

@@ -54,18 +54,24 @@ namespace Registrations
         [TestMethod]
         public void ChildContainersAreAllowedToBeCollectedWhenDisposed()
         {
-            var child = Container.CreateChildContainer();
-            var wr = new WeakReference(child);
-            child.Dispose();
-            child = null;
-
+            var wr = GetWeakReferenceToChildContainer();
 #if V4
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true);
 #else
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
 #endif
-            child = (UnityContainer)wr.Target;
+            GC.WaitForPendingFinalizers();
+
             Assert.IsFalse(wr.IsAlive);
+
+            WeakReference GetWeakReferenceToChildContainer()
+            {
+                var child = Container.CreateChildContainer();
+                var weak = new WeakReference(child);
+                child.Dispose();
+
+                return weak;
+            }
         }
 
         [TestMethod]

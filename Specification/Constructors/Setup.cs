@@ -22,7 +22,7 @@ namespace Specification
         }
     }
 
-    [TestClass]
+    // TODO: [TestClass]
     public partial class Constructors_Diagnostic : Constructors
     {
         [TestInitialize]
