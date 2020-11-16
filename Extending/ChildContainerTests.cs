@@ -34,7 +34,6 @@ namespace Extending
 
             // Validate
             Assert.AreSame(Container, extension1.ExtensionContext.Container);
-            Assert.AreEqual(0, extension1.ExtensionContext.Lifetime.Count);
             Assert.IsNotNull(extension1.ExtensionContext.Policies);
         }
 
@@ -54,9 +53,6 @@ namespace Extending
 
             Assert.IsNotNull(extension1.ExtensionContext.Policies);
             Assert.IsNotNull(extension2.ExtensionContext.Policies);
-
-            Assert.AreEqual(1, extension1.ExtensionContext.Lifetime.Count);
-            Assert.AreEqual(0, extension2.ExtensionContext.Lifetime.Count);
         }
 
         [TestMethod]

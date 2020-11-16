@@ -64,6 +64,7 @@ namespace Registrations
 #else
             GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced, true, true);
 #endif
+            child = (UnityContainer)wr.Target;
             Assert.IsFalse(wr.IsAlive);
         }
 

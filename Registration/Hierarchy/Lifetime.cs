@@ -212,12 +212,11 @@ namespace Registrations
         [TestMethod]
         public void DisposeChildContainer_WithTransientConsumer_THEN_SingletonConsumer_IsDisposed_AND_Singleton_NotDisposed()
         {
-            var rootContainer = Container;
 
-            rootContainer.RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), TypeLifetime.PerContainerTransient);
-            rootContainer.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
+            Container.RegisterType(typeof(ISingletonConsumer), typeof(SingletonConsumer), TypeLifetime.PerContainerTransient);
+            Container.RegisterType(typeof(ISingletonService), typeof(SingletonService), new ContainerControlledLifetimeManager());
 
-            var childContainer = rootContainer.CreateChildContainer().CreateChildContainer();
+            var childContainer = Container.CreateChildContainer().CreateChildContainer();
 
             var consumerInstanceFromChildContainer = childContainer.Resolve<ISingletonConsumer>();
             var singletonInstanceFromChildContainer = childContainer.Resolve<ISingletonService>();

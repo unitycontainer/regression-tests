@@ -77,9 +77,11 @@ namespace Public.API
             var child = Container.CreateChildContainer()
                 .RegisterType<object>("named");
 
-            var childRegistration = child.Registrations.Where(r => r.RegisteredType == typeof(object)).First();
+            var childRegistration = child.Registrations
+                .Cast<IContainerRegistration>()
+                .Where(r => r.RegisteredType == typeof(object)).First();
             var parentRegistration =
-                Container.Registrations.Where(r => r.RegisteredType == typeof(object)).FirstOrDefault();
+                Container.Registrations.Cast<IContainerRegistration>().Where(r => r.RegisteredType == typeof(object)).FirstOrDefault();
 
             Assert.IsNull(parentRegistration);
             Assert.IsNotNull(childRegistration);
@@ -113,13 +115,13 @@ namespace Public.API
             var registrations = Container.Registrations;
 
 
-            var @default = registrations.SingleOrDefault(c => c.Name == null &&
-                                                           c.RegisteredType == typeof(ILogger));
+            var @default = registrations.Cast<IContainerRegistration>()
+                                        .FirstOrDefault(c => c.Name != null && c.RegisteredType == typeof(ILogger));
 
             Assert.IsNotNull(@default);
             Assert.AreEqual(typeof(MockLoggerWithCtor), @default.MappedToType);
 
-            var foo = registrations.SingleOrDefault(c => c.Name == "foo");
+            var foo = registrations.Cast<IContainerRegistration>().SingleOrDefault(c => c.Name == "foo");
 
             Assert.IsNotNull(foo);
             Assert.AreEqual(typeof(MockLoggerWithCtor), @default.MappedToType);

@@ -67,7 +67,7 @@ namespace Registrations
             Assert.IsInstanceOfType(registration.LifetimeManager, manager);
         }
 
-
+        [Ignore("v6 no upfront diagnostics")]
         [DataTestMethod]
         [DynamicData(nameof(ArgumetTestDataFailingDiagnostic))]
 #if V4

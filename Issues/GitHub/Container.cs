@@ -5,7 +5,6 @@ using Microsoft.Practices.Unity;
 using Unity;
 using Unity.Injection;
 using Unity.Lifetime;
-using Unity.Resolution;
 #endif
 
 namespace Issues
@@ -31,7 +30,7 @@ namespace Issues
             // Verify
             Assert.AreSame(noOverride, defaultValue);
             Assert.AreSame(parOverride, parValue);
-            Assert.AreSame(noOverride, depValue);
+            Assert.AreSame(depOverride, depValue);
         }
 #endif
 
