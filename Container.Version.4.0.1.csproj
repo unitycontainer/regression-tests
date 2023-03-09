@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Unity v4 -->
+	
+  <PropertyGroup> 
+    <DefineConstants>UNITY_V4;$(DefineConstants)</DefineConstants>
+    <UnityContainer>..\..\unity\source\Unity\Src\Unity.csproj</UnityContainer>
+  </PropertyGroup>	
+	
+  <ItemGroup>
+    <ProjectReference Condition="Exists('$(UnityContainer)') " Include="$(UnityContainer)" />
+    <PackageReference Condition="!Exists('$(UnityContainer)')" Include="Unity" Version="4.0.1" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+
+	<!-- Configuration Settings -->
+
+  <PropertyGroup>
+    <DefineConstants Condition="'$(Configuration)'=='v4'">$(DefineConstants);BEHAVIOR_V4</DefineConstants>
+    <DefineConstants Condition="'$(Configuration)'=='Release'">$(DefineConstants);BEHAVIOR_V4</DefineConstants>
+  </PropertyGroup>
+
+	<!-- v4 Exclusions -->
+	
+  <ItemGroup>
+    <Compile Remove="**\*.!v4.cs" />
+    <Compile Remove="**\*.v5.cs" />
+    <Compile Remove="**\*.v8.cs" />
+
+    <Compile Remove="Patterns\Abstractions\Resolvers\ValidatingResolverFactory.cs" />
+    <Compile Remove="Patterns\Abstractions\Resolvers\ValidatintResolver.cs" />
+    <Compile Remove="Patterns\Abstractions\FixtureBase.Fields.cs" />
+    <Compile Remove="Patterns\Abstractions\Data\Fields\**" />
+    <Compile Remove="Patterns\Dependency\DefaultValue.cs" />
+    <Compile Remove="Patterns\Dependency\DefaultAttribute.cs" />
+    <Compile Remove="Patterns\Dependency\Data\Fields\**" />
+    <Compile Remove="Patterns\Dependency\Implementation\Fields\**" />
+    <Compile Remove="Patterns\Injection\Implementation\Fields\**" />
+    <Compile Remove="Patterns\Injection\Data\Fields\**" />
+    <Compile Remove="Patterns\Injection\Annotation\Overrides\Dependency.Import.cs" />
+    <Compile Remove="Patterns\Injection\Annotation\Overrides\OptionalParameter.cs" />
+    <Compile Remove="Patterns\Injection\Annotation\Overrides\ResolvedParameter.cs" />
+    <Compile Remove="Patterns\Injection\Override\Dependency.Injected.!v4.cs" />
+    <Compile Remove="Patterns\Lifetime\LifetimeManager.cs" />
+    <Compile Remove="Patterns\Lifetime\LifetimeManager\Disposable.cs" />
+    <Compile Remove="Patterns\Selection\Implementation\Fields\Annotated.cs" />
+    <Compile Remove="Patterns\Selection\Implementation\Fields.cs" />
+    <Compile Remove="Resolution\Enumerable\**" />
+    <Compile Remove="Resolution\Generic\Constrained.cs" />
+    <Compile Remove="Registration\Validation\Factory.cs" />
+    <Compile Remove="Registration\BuiltIn\IServiceProvider.cs" />
+    <Compile Remove="Registration\BuiltIn\IUnityContainerAsync.cs" />
+    <Compile Remove="Container\Extension\BuilderAware\BuilderAwareStrategy.cs" />
+    <Compile Remove="Container\Extension\BuilderAware\IBuilderAware.cs" />
+    <Compile Remove="Registration\Validation\Factory.cs" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Using Remove="System.Net.Http" />
+    <None Remove=".git" />
+    <None Remove=".gitignore" />
+	  <None Remove="*.slnf" />
+	  <None Remove="*.props" />
+  </ItemGroup>
+
+</Project>

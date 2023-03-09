@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Unity v6 -->
+  
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework> 
+    <UnityContainer>..\Container\src\Unity.Container.csproj</UnityContainer>
+    <DefineConstants>UNITY_V6;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Condition="Exists('$(UnityContainer)') " Include="$(UnityContainer)" />
+    <PackageReference Condition="!Exists('$(UnityContainer)')" Include="Unity.Container" Version="6.0.*-*" />
+  </ItemGroup>
+
+  <!-- Configuration Settings -->
+
+  <PropertyGroup>
+    <DefineConstants Condition="'$(Configuration)'=='v6'">$(DefineConstants);BEHAVIOR_V6</DefineConstants>
+    <DefineConstants Condition="'$(Configuration)'=='Release'">$(DefineConstants);BEHAVIOR_V6</DefineConstants>
+    <DefineConstants Condition="'$(Configuration)'=='Debug'">$(DefineConstants);BEHAVIOR_V6</DefineConstants>
+  </PropertyGroup>
+
+
+  <!-- v6 Exclusions -->
+  
+  <ItemGroup>
+  	<Compile Remove="**\*.v4.cs" />
+  	<Compile Remove="**\*.v8.cs" />
+  
+    <Compile Remove="Patterns\Abstractions\Resolvers\ValidatingResolverFactory.cs" />
+    <Compile Remove="Patterns\Abstractions\Resolvers\ValidatintResolver.cs" />
+    <Compile Remove="Patterns\Dependency\DefaultAttribute.cs" />
+    <Compile Remove="Patterns\Lifetime\LifetimeManager.cs" />
+    <Compile Remove="Registration\Validation\Factory.cs" />
+    <Compile Remove="Registration\BuiltIn\IServiceProvider.cs" />
+    <Compile Remove="Registration\BuiltIn\IUnityContainerAsync.cs" />
+    <Compile Remove="Registration\Validation\Factory.cs" />
+  </ItemGroup>
+  
+  
+  <ItemGroup>
+    <Using Remove="System.Net.Http" />
+    <None Remove=".git" />
+    <None Remove=".gitignore" />
+	  <None Remove="*.slnf" />
+	  <None Remove="*.props" />
+  </ItemGroup>
+
+</Project>
