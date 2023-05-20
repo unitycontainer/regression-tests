@@ -35,9 +35,9 @@ namespace Specification.Pattern
             => new InjectionProperty("Property");
 
         protected override InjectionMember GetByNameOptional(Type type, string name)
-#if NET45 || NET451
+#if UNITY_V4
             => new InjectionProperty("Property", new OptionalParameter(type, name));
-#elif NET46 || NET461
+#elif UNITY_V5
             => new InjectionProperty("Property", true);
 #else
             => new OptionalProperty("Property");
@@ -50,9 +50,9 @@ namespace Specification.Pattern
             => new InjectionProperty("Property", new OptionalParameter(type, name));
 
         protected override InjectionMember GetOptionalOptional(Type type, string name)
-#if NET45 || NET451
+#if UNITY_V4
             => new InjectionProperty("Property", new OptionalParameter(type, name));
-#elif NET46 || NET461
+#elif UNITY_V5
             => new InjectionProperty("Property", new OptionalParameter(type, name));
 #else
             => new OptionalProperty("Property", new OptionalParameter(type, name));
@@ -68,9 +68,9 @@ namespace Specification.Pattern
             => new InjectionProperty("Property", argument);
 
         protected override InjectionMember GetInjectionOptional(object argument)
-#if NET45 || NET451
+#if UNITY_V4
             => new InjectionProperty("Property", argument);
-#elif NET46 || NET461
+#elif UNITY_V5
             => new InjectionProperty("Property", argument);
 #else
             => new OptionalProperty("Property", argument);

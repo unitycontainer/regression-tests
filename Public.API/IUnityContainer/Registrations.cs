@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 #else
 using Unity.Injection;
 using Unity.Lifetime;
+using Unity.Registration;
 using Unity;
 #endif
 

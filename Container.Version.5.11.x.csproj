@@ -3,6 +3,7 @@
   <!-- Unity v5 -->
   
   <PropertyGroup>
+    <TargetFramework Condition=" '$(TargetFramework)' == '' ">net6.0</TargetFramework>
     <UnityContainer>..\Container\src\Unity.Container.csproj</UnityContainer>
     <DefineConstants>UNITY_V5;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
@@ -10,6 +11,12 @@
   <ItemGroup>
     <ProjectReference Condition="Exists('$(UnityContainer)') " Include="$(UnityContainer)" />
     <PackageReference Condition="!Exists('$(UnityContainer)')" Include="Unity.Container" Version="5.11.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
   </ItemGroup>
 
   <!-- Configuration Settings -->

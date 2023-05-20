@@ -248,8 +248,8 @@ namespace Registrations
             var obj3 = Container.Resolve<OtherService>("hi");
             
             Assert.AreSame(obj, obj1);
-            Assert.AreNotSame(obj, obj2);
-            Assert.AreNotSame(obj1, obj2);
+            Assert.AreNotSame<object>(obj, obj2);
+            Assert.AreNotSame<object>(obj1, obj2);
             Assert.AreSame(obj2, obj3);
         }
 

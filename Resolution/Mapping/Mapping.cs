@@ -148,7 +148,7 @@ namespace Resolution
             Assert.IsNotNull(service1);
             Assert.IsNotNull(service2);
 
-            Assert.AreSame(service1, service2);
+            Assert.AreSame<object>(service1, service2);
         }
 
         [TestMethod]

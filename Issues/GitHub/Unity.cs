@@ -37,7 +37,7 @@ namespace Issues
             Container.RegisterType<IOtherService, OtherService>();
 
 
-            Assert.AreSame(Container.Resolve<IService>(), Container.Resolve<IOtherService>());
+            Assert.AreSame<object>(Container.Resolve<IService>(), Container.Resolve<IOtherService>());
         }
 
         [TestMethod]
@@ -69,7 +69,7 @@ namespace Issues
             Container.RegisterType<IService, OtherService>();
             Container.RegisterType<IOtherService, OtherService>(new InjectionConstructor(Container));
 
-            Assert.AreNotSame(Container.Resolve<IService>(),
+            Assert.AreNotSame<object>(Container.Resolve<IService>(),
                               Container.Resolve<IOtherService>());
 
             Assert.AreSame(Container.Resolve<IService>(),
@@ -109,7 +109,7 @@ namespace Issues
             Container.RegisterType<IService, OtherService>();
             Container.RegisterType<IOtherService, OtherService>();
 
-            Assert.AreSame(Container.Resolve<IService>(),
+            Assert.AreSame<object>(Container.Resolve<IService>(),
                            Container.Resolve<IOtherService>());
         }
 

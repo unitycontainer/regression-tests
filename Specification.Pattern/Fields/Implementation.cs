@@ -35,7 +35,7 @@ namespace Specification.Pattern
             => new InjectionField("Field");
 
         protected override InjectionMember GetByNameOptional(Type type, string name)
-#if NET46 || NET461
+#if UNITY_V5
             => new InjectionField("Field", true);
 #else
             => new OptionalField("Field");
@@ -48,7 +48,7 @@ namespace Specification.Pattern
             => new InjectionField("Field", new OptionalParameter(type, name));
 
         protected override InjectionMember GetOptionalOptional(Type type, string name)
-#if NET46 || NET461
+#if UNITY_V5
             => new InjectionField("Field", new OptionalParameter(type, name));
 #else
             => new OptionalField("Field", new OptionalParameter(type, name));
@@ -64,7 +64,7 @@ namespace Specification.Pattern
             => new InjectionField("Field", argument);
 
         protected override InjectionMember GetInjectionOptional(object argument)
-#if NET46 || NET461
+#if UNITY_V5
             => new InjectionField("Field", argument);
 #else
             => new OptionalField("Field", argument);

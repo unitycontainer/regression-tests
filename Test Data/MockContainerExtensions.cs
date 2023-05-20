@@ -1,7 +1,7 @@
 ﻿#if NET45
 using Microsoft.Practices.Unity;
 #else
-using Unity;
+using Unity.Extension;
 #endif
 
 namespace Unity.Regression.Tests
